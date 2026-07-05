@@ -1,1 +1,0 @@
-import{B as e,g as t}from"./index-DYYt4jMA.js";var n=e(),r={hidden:{opacity:0,y:24},show:{opacity:1,y:0,transition:{duration:.8,ease:[.22,1,.36,1]}}};function i({children:e,delay:i=0,className:a,as:o=`div`}){let s=t[o];return(0,n.jsx)(s,{initial:`hidden`,whileInView:`show`,viewport:{once:!0,margin:`-80px`},variants:r,transition:{delay:i},className:a,children:e})}export{i as t};
