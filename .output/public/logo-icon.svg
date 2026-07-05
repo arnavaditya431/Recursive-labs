@@ -1,0 +1,6 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Recursion Labs icon">
+  <rect x="4" y="4" width="40" height="40" rx="4" fill="none" stroke="#6EA8FF" stroke-width="1.5" opacity="0.35"/>
+  <rect x="10" y="10" width="28" height="28" rx="3" fill="none" stroke="#6EA8FF" stroke-width="1.5" opacity="0.55"/>
+  <rect x="16" y="16" width="16" height="16" rx="2" fill="#6EA8FF" opacity="0.95"/>
+  <path d="M22 24L26 20M26 20L30 24M26 20V28" stroke="#060912" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

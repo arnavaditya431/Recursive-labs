@@ -1,0 +1,85 @@
+//#region node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-D5Afbz3_.js
+var tsrStartManifest = () => ({ routes: {
+	__root__: {
+		filePath: "D:/recursive labs - Copy/src/routes/__root.tsx",
+		children: [
+			"/",
+			"/about",
+			"/contact",
+			"/services",
+			"/sitemap.xml",
+			"/team",
+			"/api/chat"
+		],
+		preloads: ["/assets/index-DYYt4jMA.js", "/assets/react-Ca03aNmg.js"],
+		scripts: [{ attrs: {
+			type: "module",
+			async: !0,
+			src: "/assets/index-DYYt4jMA.js"
+		} }]
+	},
+	"/": {
+		filePath: "D:/recursive labs - Copy/src/routes/index.tsx",
+		children: void 0,
+		preloads: [
+			"/assets/routes-CDNoHF1v.js",
+			"/assets/arrow-right-D1-WdWkq.js",
+			"/assets/reveal-BgVUd8Px.js",
+			"/assets/portrait-Ds6PtVhb.js"
+		]
+	},
+	"/about": {
+		filePath: "D:/recursive labs - Copy/src/routes/about.tsx",
+		children: void 0,
+		preloads: ["/assets/about-CGkXbDxY.js", "/assets/reveal-BgVUd8Px.js"]
+	},
+	"/contact": {
+		filePath: "D:/recursive labs - Copy/src/routes/contact.tsx",
+		children: void 0,
+		preloads: [
+			"/assets/contact-jsJRTn-h.js",
+			"/assets/arrow-right-D1-WdWkq.js",
+			"/assets/mail-BshskZkQ.js",
+			"/assets/reveal-BgVUd8Px.js"
+		]
+	},
+	"/services": {
+		filePath: "D:/recursive labs - Copy/src/routes/services.tsx",
+		children: void 0,
+		preloads: [
+			"/assets/services-DDlNvsv1.js",
+			"/assets/arrow-right-D1-WdWkq.js",
+			"/assets/reveal-BgVUd8Px.js"
+		]
+	},
+	"/team": {
+		filePath: "D:/recursive labs - Copy/src/routes/team.tsx",
+		children: ["/team/$slug", "/team/"],
+		preloads: ["/assets/team-p90XGGJn.js"]
+	},
+	"/team/$slug": {
+		filePath: "D:/recursive labs - Copy/src/routes/team.$slug.tsx",
+		children: void 0,
+		preloads: [
+			"/assets/team._slug-BacApDrw.js",
+			"/assets/arrow-left-DBuL1d22.js",
+			"/assets/mail-BshskZkQ.js",
+			"/assets/reveal-BgVUd8Px.js",
+			"/assets/portrait-Ds6PtVhb.js",
+			"/assets/team._slug-C6E6WWzB.js",
+			"/assets/team._slug-Cd7RIlW4.js"
+		]
+	},
+	"/team/": {
+		filePath: "D:/recursive labs - Copy/src/routes/team.index.tsx",
+		children: void 0,
+		preloads: [
+			"/assets/team.index-BkyIEgIJ.js",
+			"/assets/arrow-right-D1-WdWkq.js",
+			"/assets/reveal-BgVUd8Px.js",
+			"/assets/portrait-Ds6PtVhb.js"
+		]
+	}
+} });
+//#endregion
+export { tsrStartManifest };
