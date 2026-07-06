@@ -449,8 +449,8 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
       <AnimatePresence>
         {showText && (
           <motion.div
-            className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none"
-            style={{ paddingTop: isMobileSafe() ? "130px" : "220px" }}
+            className="absolute inset-x-0 z-10 flex flex-col items-center justify-start pointer-events-none"
+            style={{ top: "50%", marginTop: isMobileSafe() ? "90px" : "160px" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
