@@ -2,6 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { LogoFull, LogoIcon } from "@/components/brand/logo";
+import { ThemeToggle } from "@/components/site/theme-toggle";
 import { BRAND } from "@/lib/brand";
 
 const links = [
@@ -133,8 +134,9 @@ export function SiteNav() {
           })}
         </nav>
 
-        {/* Desktop CTA */}
-        <div className="hidden md:block">
+        {/* Desktop CTA + Theme Toggle */}
+        <div className="hidden md:flex items-center gap-2">
+          <ThemeToggle />
           <Link
             to="/contact"
             className="group inline-flex items-center gap-2 rounded-full border hairline px-4 py-2 text-sm hover:bg-foreground hover:text-background transition-colors"
@@ -213,6 +215,10 @@ export function SiteNav() {
                 transition={{ delay: 0.4, duration: 0.4 }}
                 className="space-y-5"
               >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground uppercase tracking-widest">Theme</span>
+                  <ThemeToggle />
+                </div>
                 <Link
                   to="/contact"
                   className="flex w-full items-center justify-center gap-3 rounded-full bg-foreground px-6 py-4 text-sm font-medium text-background transition hover:bg-primary hover:text-primary-foreground touch-target shadow-xl shadow-foreground/5"

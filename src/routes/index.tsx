@@ -87,9 +87,9 @@ function HomePage() {
               transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="mt-6 sm:mt-8 font-display font-bold text-[clamp(4rem,14vw,9.5rem)] leading-[0.82] tracking-tighter uppercase text-foreground drop-shadow-xl"
             >
-              Recursion
+              Recursive
               <br />
-              Labs
+              Lab
             </motion.h1>
 
             <motion.p

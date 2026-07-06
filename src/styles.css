@@ -2,7 +2,7 @@
 @source "../src";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is([data-theme="dark"] *));
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -36,33 +36,36 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
+/* ============================================================
+   LIGHT THEME (DEFAULT) — Premium Enterprise
+   ============================================================ */
 :root,
-[data-theme="corporate-blue"] {
-  --radius: 0.25rem;
-  --background: oklch(0.16 0.028 260);
-  --foreground: oklch(0.96 0.008 90);
-  --ink: oklch(0.11 0.02 260);
-  --ivory: oklch(0.96 0.012 85);
-  --card: oklch(0.20 0.030 260);
-  --card-foreground: oklch(0.96 0.008 90);
-  --popover: oklch(0.18 0.028 260);
-  --popover-foreground: oklch(0.96 0.008 90);
-  --primary: oklch(0.62 0.20 252);
-  --primary-foreground: oklch(0.12 0.02 260);
-  --secondary: oklch(0.24 0.028 260);
-  --secondary-foreground: oklch(0.96 0.008 90);
-  --muted: oklch(0.22 0.025 260);
-  --muted-foreground: oklch(0.68 0.02 260);
-  --accent: oklch(0.72 0.16 78);
-  --accent-foreground: oklch(0.12 0.02 260);
-  --destructive: oklch(0.63 0.22 27);
-  --destructive-foreground: oklch(0.98 0.005 90);
-  --border: oklch(0.30 0.028 260);
-  --input: oklch(0.28 0.028 260);
-  --ring: oklch(0.62 0.20 252);
-  --hairline: oklch(1 0 0 / 0.08);
+[data-theme="light"] {
+  --radius: 0.3rem;
+  --background: oklch(0.985 0.003 80);
+  --foreground: oklch(0.15 0.02 260);
+  --ink: oklch(0.12 0.018 260);
+  --ivory: oklch(0.985 0.003 80);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0.02 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.02 260);
+  --primary: oklch(0.48 0.18 252);
+  --primary-foreground: oklch(0.99 0.002 90);
+  --secondary: oklch(0.96 0.004 260);
+  --secondary-foreground: oklch(0.20 0.02 260);
+  --muted: oklch(0.96 0.003 80);
+  --muted-foreground: oklch(0.46 0.015 260);
+  --accent: oklch(0.72 0.14 78);
+  --accent-foreground: oklch(0.15 0.02 260);
+  --destructive: oklch(0.55 0.22 27);
+  --destructive-foreground: oklch(0.99 0.002 90);
+  --border: oklch(0.91 0.004 80);
+  --input: oklch(0.93 0.004 80);
+  --ring: oklch(0.48 0.18 252);
+  --hairline: oklch(0 0 0 / 0.07);
 
-  /* Fluid typography tokens - adjusted for premium mobile impact */
+  /* Fluid typography tokens */
   --text-h1: clamp(2.25rem, 7vw + 1rem, 5.5rem);
   --text-h2: clamp(1.75rem, 5vw + 0.75rem, 4.5rem);
   --text-h3: clamp(1.5rem, 3vw + 0.5rem, 3rem);
@@ -73,62 +76,68 @@
   --section-py: clamp(4rem, 8vw, 8rem);
   --section-py-lg: clamp(5rem, 10vw, 10rem);
   --container-px: clamp(1.25rem, 5vw, 3rem);
+
+  /* Hero overlay vars for light theme */
+  --hero-overlay-start: oklch(0.98 0.003 80 / 0.85);
+  --hero-overlay-mid: oklch(0.98 0.003 80 / 0.70);
+  --hero-overlay-end: oklch(0.98 0.003 80 / 0.45);
+  --hero-overlay-bottom: oklch(0.985 0.003 80 / 0.90);
+
+  /* Shadow system for light mode */
+  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.04);
+  --shadow-md: 0 2px 8px oklch(0 0 0 / 0.06), 0 1px 2px oklch(0 0 0 / 0.04);
+  --shadow-lg: 0 4px 16px oklch(0 0 0 / 0.08), 0 2px 4px oklch(0 0 0 / 0.04);
+  --shadow-xl: 0 8px 32px oklch(0 0 0 / 0.10), 0 4px 8px oklch(0 0 0 / 0.04);
 }
 
-[data-theme="midnight-dark"] {
-  --background: oklch(0.11 0.015 260);
-  --foreground: oklch(0.94 0.006 90);
-  --ink: oklch(0.08 0.012 260);
-  --ivory: oklch(0.94 0.008 85);
-  --card: oklch(0.14 0.018 260);
-  --card-foreground: oklch(0.94 0.006 90);
-  --popover: oklch(0.13 0.016 260);
-  --popover-foreground: oklch(0.94 0.006 90);
-  --primary: oklch(0.60 0.18 252);
-  --primary-foreground: oklch(0.1 0.012 260);
-  --secondary: oklch(0.18 0.018 260);
-  --secondary-foreground: oklch(0.94 0.006 90);
-  --muted: oklch(0.16 0.016 260);
-  --muted-foreground: oklch(0.62 0.018 260);
-  --accent: oklch(0.68 0.14 78);
-  --accent-foreground: oklch(0.1 0.012 260);
-  --border: oklch(0.22 0.018 260);
-  --input: oklch(0.2 0.018 260);
-  --ring: oklch(0.60 0.18 252);
-  --hairline: oklch(1 0 0 / 0.06);
+/* ============================================================
+   DARK THEME — Refined Cinematic
+   ============================================================ */
+[data-theme="dark"] {
+  --background: oklch(0.13 0.02 260);
+  --foreground: oklch(0.95 0.007 90);
+  --ink: oklch(0.09 0.015 260);
+  --ivory: oklch(0.95 0.007 90);
+  --card: oklch(0.17 0.022 260);
+  --card-foreground: oklch(0.95 0.007 90);
+  --popover: oklch(0.15 0.02 260);
+  --popover-foreground: oklch(0.95 0.007 90);
+  --primary: oklch(0.60 0.19 252);
+  --primary-foreground: oklch(0.10 0.015 260);
+  --secondary: oklch(0.20 0.02 260);
+  --secondary-foreground: oklch(0.95 0.007 90);
+  --muted: oklch(0.18 0.018 260);
+  --muted-foreground: oklch(0.60 0.018 260);
+  --accent: oklch(0.70 0.14 78);
+  --accent-foreground: oklch(0.10 0.015 260);
+  --destructive: oklch(0.63 0.22 27);
+  --destructive-foreground: oklch(0.98 0.005 90);
+  --border: oklch(0.25 0.02 260);
+  --input: oklch(0.22 0.02 260);
+  --ring: oklch(0.60 0.19 252);
+  --hairline: oklch(1 0 0 / 0.07);
+
+  --hero-overlay-start: oklch(0.11 0.02 260 / 0.92);
+  --hero-overlay-mid: oklch(0.11 0.02 260 / 0.78);
+  --hero-overlay-end: oklch(0.11 0.02 260 / 0.55);
+  --hero-overlay-bottom: oklch(0.11 0.02 260 / 0.85);
+
+  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.20);
+  --shadow-md: 0 2px 8px oklch(0 0 0 / 0.25), 0 1px 2px oklch(0 0 0 / 0.15);
+  --shadow-lg: 0 4px 16px oklch(0 0 0 / 0.30), 0 2px 4px oklch(0 0 0 / 0.15);
+  --shadow-xl: 0 8px 32px oklch(0 0 0 / 0.35), 0 4px 8px oklch(0 0 0 / 0.15);
 }
 
-[data-theme="clean-light"] {
-  --background: oklch(0.985 0.004 90);
-  --foreground: oklch(0.18 0.02 260);
-  --ink: oklch(0.14 0.02 260);
-  --ivory: oklch(0.985 0.004 90);
-  --card: oklch(0.97 0.004 90);
-  --card-foreground: oklch(0.18 0.02 260);
-  --popover: oklch(0.99 0.003 90);
-  --popover-foreground: oklch(0.18 0.02 260);
-  --primary: oklch(0.52 0.18 252);
-  --primary-foreground: oklch(0.98 0.004 90);
-  --secondary: oklch(0.94 0.006 90);
-  --secondary-foreground: oklch(0.18 0.02 260);
-  --muted: oklch(0.94 0.006 90);
-  --muted-foreground: oklch(0.48 0.02 260);
-  --accent: oklch(0.55 0.12 78);
-  --accent-foreground: oklch(0.98 0.004 90);
-  --border: oklch(0.88 0.008 260);
-  --input: oklch(0.9 0.008 260);
-  --ring: oklch(0.52 0.18 252);
-  --hairline: oklch(0 0 0 / 0.08);
-}
-
-.dark {
-  --background: oklch(0.16 0.028 260);
-  --foreground: oklch(0.96 0.008 90);
-}
-
+/* ============================================================
+   GLOBAL BASE STYLES
+   ============================================================ */
 @layer base {
   * {
     border-color: var(--color-border);
+    /* Smooth theme transitions on every element */
+    transition-property: background-color, color, border-color, box-shadow, opacity;
+    transition-duration: 0.35s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
   html, body {
     background-color: var(--color-background);
@@ -142,21 +151,39 @@
   html {
     scroll-behavior: smooth;
   }
-  body {
+
+  /* Light mode: very subtle warm ambient gradient */
+  [data-theme="light"] body {
+    background-image:
+      radial-gradient(1200px 600px at 80% -10%, oklch(0.92 0.03 252 / 0.08), transparent 60%),
+      radial-gradient(900px 500px at -10% 30%, oklch(0.90 0.02 78 / 0.06), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  /* Dark mode: richer blue ambient gradients */
+  [data-theme="dark"] body {
     background-image:
       radial-gradient(1200px 600px at 80% -10%, oklch(0.35 0.09 245 / 0.35), transparent 60%),
       radial-gradient(900px 500px at -10% 30%, oklch(0.32 0.08 260 / 0.35), transparent 60%);
     background-attachment: fixed;
   }
-  /* Smaller, lighter bg gradients on mobile for GPU perf */
+
+  /* Mobile-optimised background gradients */
   @media (max-width: 767px) {
-    body {
+    [data-theme="light"] body {
+      background-image:
+        radial-gradient(400px 300px at 80% -10%, oklch(0.92 0.03 252 / 0.06), transparent 60%),
+        radial-gradient(350px 250px at -10% 30%, oklch(0.90 0.02 78 / 0.04), transparent 60%);
+      background-attachment: scroll;
+    }
+    [data-theme="dark"] body {
       background-image:
         radial-gradient(400px 300px at 80% -10%, oklch(0.35 0.09 245 / 0.25), transparent 60%),
         radial-gradient(350px 250px at -10% 30%, oklch(0.32 0.08 260 / 0.25), transparent 60%);
       background-attachment: scroll;
     }
   }
+
   h1,h2,h3,h4 { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; }
   ::selection { background: var(--color-primary); color: var(--color-primary-foreground); }
 }
@@ -171,6 +198,9 @@
   }
 }
 
+/* ============================================================
+   UTILITIES
+   ============================================================ */
 @utility container-editorial {
   width: 100%;
   max-width: 1360px;
@@ -213,17 +243,18 @@
   50% { transform: translateY(-12px); }
 }
 
+/* Hero overlay — now uses CSS variables for theme support */
 @utility hero-overlay {
   background:
-    linear-gradient(105deg, oklch(0.11 0.02 260 / 0.92) 0%, oklch(0.11 0.02 260 / 0.78) 45%, oklch(0.11 0.02 260 / 0.55) 100%),
-    linear-gradient(to top, oklch(0.11 0.02 260 / 0.85), transparent 40%);
+    linear-gradient(105deg, var(--hero-overlay-start) 0%, var(--hero-overlay-mid) 45%, var(--hero-overlay-end) 100%),
+    linear-gradient(to top, var(--hero-overlay-bottom), transparent 40%);
 }
 /* Denser overlay on mobile so text remains legible */
 @media (max-width: 767px) {
   .hero-overlay {
     background:
-      linear-gradient(180deg, oklch(0.11 0.02 260 / 0.95) 0%, oklch(0.11 0.02 260 / 0.82) 50%, oklch(0.11 0.02 260 / 0.65) 100%),
-      linear-gradient(to top, oklch(0.11 0.02 260 / 0.9), transparent 50%);
+      linear-gradient(180deg, var(--hero-overlay-start) 0%, var(--hero-overlay-mid) 50%, var(--hero-overlay-end) 100%),
+      linear-gradient(to top, var(--hero-overlay-bottom), transparent 50%);
   }
 }
 
@@ -266,7 +297,7 @@
   padding-block: var(--section-py-lg);
 }
 
-/* Touch target minimum - Enforced for mobile accessibility */
+/* Touch target minimum — Enforced for mobile accessibility */
 @utility touch-target {
   min-height: 44px;
   min-width: 44px;
@@ -274,6 +305,14 @@
   align-items: center;
   justify-content: center;
 }
+
+/* Removed empty utility causing build error */
+
+/* Shadow utilities */
+@utility shadow-theme-sm { box-shadow: var(--shadow-sm); }
+@utility shadow-theme-md { box-shadow: var(--shadow-md); }
+@utility shadow-theme-lg { box-shadow: var(--shadow-lg); }
+@utility shadow-theme-xl { box-shadow: var(--shadow-xl); }
 
 /* Body scroll lock for mobile menu */
 .body-scroll-locked {

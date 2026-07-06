@@ -103,7 +103,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" data-theme="corporate-blue">
+    <html lang="en" data-theme="light">
       <head>
         <HeadContent />
         <StructuredData data={[organizationSchema(), websiteSchema()]} />

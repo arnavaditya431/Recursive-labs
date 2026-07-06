@@ -1,26 +1,24 @@
-export type ThemeId = "corporate-blue" | "midnight-dark" | "clean-light";
+export type ThemeId = "light" | "dark";
+
+export type ThemeMode = "light" | "dark" | "system";
 
 export const themes: Record<
   ThemeId,
-  { label: string; description: string; className?: string; dataTheme: string }
+  { label: string; description: string; dataTheme: string }
 > = {
-  "corporate-blue": {
-    label: "Corporate Blue",
-    description: "Default enterprise palette with refined navy and cobalt accents.",
-    dataTheme: "corporate-blue",
+  light: {
+    label: "Light",
+    description: "Premium light palette for clarity and professionalism.",
+    dataTheme: "light",
   },
-  "midnight-dark": {
-    label: "Midnight Dark",
-    description: "Deep charcoal foundation for immersive, cinematic experiences.",
-    dataTheme: "midnight-dark",
-  },
-  "clean-light": {
-    label: "Clean Light",
-    description: "Bright editorial layout for presentations and print-friendly contexts.",
-    dataTheme: "clean-light",
+  dark: {
+    label: "Dark",
+    description: "Refined dark palette for immersive, cinematic experiences.",
+    dataTheme: "dark",
   },
 };
 
-export const DEFAULT_THEME: ThemeId = "corporate-blue";
+export const DEFAULT_THEME: ThemeId = "light";
 
-export const THEME_STORAGE_KEY = "recursion-labs-theme";
+export const THEME_STORAGE_KEY = "recursive-lab-theme";
+export const THEME_MODE_KEY = "recursive-lab-theme-mode";
