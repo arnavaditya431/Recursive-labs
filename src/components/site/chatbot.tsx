@@ -165,7 +165,7 @@ export function Chatbot({ onClose }: { onClose: () => void }) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 30, scale: 0.95 }}
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed bottom-24 right-6 z-[90] flex h-[620px] w-[420px] flex-col overflow-hidden rounded-2xl border hairline bg-[#05060A]/95 shadow-2xl backdrop-blur-md max-sm:bottom-0 max-sm:right-0 max-sm:h-full max-sm:w-full max-sm:rounded-none max-sm:border-none"
+      className="fixed bottom-24 right-6 z-[90] flex h-[620px] w-[420px] flex-col overflow-hidden rounded-2xl border hairline bg-background/95 shadow-2xl backdrop-blur-md max-sm:bottom-0 max-sm:right-0 max-sm:h-full max-sm:w-full max-sm:rounded-none max-sm:border-none"
     >
       {/* Glow highlight */}
       <div className="absolute -left-16 -top-16 pointer-events-none h-48 w-48 rounded-full bg-primary/20 blur-3xl" />
