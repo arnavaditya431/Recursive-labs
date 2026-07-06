@@ -68,16 +68,36 @@ function generateLogoDots(cx: number, cy: number, maxR: number) {
   const dots: { x: number; y: number; size: number }[] = [];
   const n = 72;
   const turns = 3.0;
+  
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  
   for (let i = 1; i <= n; i++) {
     const t = i / n;
     const theta = t * turns * Math.PI * 2 + Math.PI * 0.5;
     const r = t * maxR;
-    dots.push({
-      x: cx + Math.cos(theta) * r,
-      y: cy + Math.sin(theta) * r,
-      size: Math.max(1.2, (1.5 + t * 6) * (maxR / 140)),
-    });
+    const x = cx + Math.cos(theta) * r;
+    const y = cy + Math.sin(theta) * r;
+    const size = Math.max(1.2, (1.5 + t * 6) * (maxR / 140));
+    
+    dots.push({ x, y, size });
+    
+    minX = Math.min(minX, x - size);
+    maxX = Math.max(maxX, x + size);
+    minY = Math.min(minY, y - size);
+    maxY = Math.max(maxY, y + size);
   }
+  
+  // Center the spiral optically by aligning its bounding box to CX, CY
+  const bboxCenterX = (minX + maxX) / 2;
+  const bboxCenterY = (minY + maxY) / 2;
+  const offsetX = cx - bboxCenterX;
+  const offsetY = cy - bboxCenterY;
+  
+  for (const dot of dots) {
+    dot.x += offsetX;
+    dot.y += offsetY;
+  }
+  
   return dots;
 }
 
