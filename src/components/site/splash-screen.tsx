@@ -161,7 +161,7 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
               />
               
               <div className="relative overflow-hidden p-2">
-                <LogoIcon className="h-[64px] sm:h-[80px] md:h-[96px] lg:h-[112px]" />
+                <LogoIcon className="h-[64px] sm:h-[80px] md:h-[96px] lg:h-[112px] invert" />
                 {/* Subtle metallic light sweep */}
                 <motion.div
                   className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-20deg]"
