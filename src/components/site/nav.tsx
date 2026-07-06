@@ -107,7 +107,7 @@ export function SiteNav() {
       }`}
     >
       <div className="container-editorial flex h-14 items-center justify-between md:h-16 lg:h-20">
-        <Link to="/" className="group relative z-[60]" aria-label="RECURSION LABS home">
+        <Link to="/" className="group relative z-[60]" aria-label="RECURSIVE LAB home">
           <LogoFull className="hidden sm:block h-[36px] md:h-[42px] lg:h-[48px]" />
           <LogoIcon className="block sm:hidden h-[32px]" />
         </Link>

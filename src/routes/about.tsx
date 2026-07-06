@@ -9,7 +9,7 @@ export const Route = createFileRoute("/about")({
     defaultMeta({
       title: "About",
       description:
-        "The story, vision, and values of RECURSION LABS — a premium boutique technology consultancy engineering long-term systems for ambitious organisations.",
+        "The story, vision, and values of RECURSIVE LAB — a premium boutique technology consultancy engineering long-term systems for ambitious organisations.",
       path: "/about",
     }),
   component: AboutPage,
@@ -28,7 +28,7 @@ const timeline = [
   {
     year: "2026",
     title: "Founded",
-    body: "Recursion Labs is officially founded by a team of engineers, designers and strategists with the vision of building modern software and digital products.",
+    body: "Recursive Lab is officially founded by a team of engineers, designers and strategists with the vision of building modern software and digital products.",
   },
   {
     year: "2026",
@@ -43,7 +43,7 @@ const timeline = [
   {
     year: "2026",
     title: "Today",
-    body: "Recursion Labs operates as a modern technology consultancy focused on software engineering, AI, cloud solutions and product innovation.",
+    body: "Recursive Lab operates as a modern technology consultancy focused on software engineering, AI, cloud solutions and product innovation.",
   },
 ];
 

@@ -14,7 +14,7 @@ const SUGGESTED_PROMPTS = [
   "Recommend a tech stack",
   "Estimate my project",
   "Build an AI roadmap",
-  "Why choose Recursion Labs?",
+  "Why choose Recursive Lab?",
   "How can I contact your team?",
 ];
 
@@ -177,7 +177,7 @@ export function Chatbot({ onClose }: { onClose: () => void }) {
             <Sparkles className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="font-display font-semibold text-base leading-none text-foreground">Recursion AI</h3>
+            <h3 className="font-display font-semibold text-base leading-none text-foreground">Recursive AI</h3>
             <span className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1.5 block">Your AI Technology Consultant</span>
           </div>
         </div>
@@ -210,9 +210,9 @@ export function Chatbot({ onClose }: { onClose: () => void }) {
         {messages.length === 0 ? (
           <div className="space-y-6 py-4">
             <div className="space-y-3">
-              <h4 className="font-display text-2xl text-foreground">Hello! I'm Recursion AI.</h4>
+              <h4 className="font-display text-2xl text-foreground">Hello! I'm Recursive AI.</h4>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                I can answer questions about Recursion Labs, our services, software engineering, AI, cloud solutions, digital transformation, startup technology and product development.
+                I can answer questions about Recursive Lab, our services, software engineering, AI, cloud solutions, digital transformation, startup technology and product development.
               </p>
               <p className="text-xs text-primary/80">How can I help today?</p>
             </div>

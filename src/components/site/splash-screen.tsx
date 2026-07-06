@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { LogoLockup } from "@/components/brand/logo";
+import { LogoIcon } from "@/components/brand/logo";
 import { BRAND } from "@/lib/brand";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -95,7 +95,7 @@ function useSplashParticles(canvasRef: React.RefObject<HTMLCanvasElement | null>
 
 export function SplashScreen({ onComplete }: { onComplete: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [phase, setPhase] = useState<"ambient" | "particles" | "logo" | "tagline" | "exit">("ambient");
+  const [phase, setPhase] = useState<"ambient" | "particles" | "logo" | "name" | "tagline" | "exit">("ambient");
   const isMobile = useIsMobile();
   
   useSplashParticles(canvasRef, phase === "ambient" || phase === "particles" || phase === "logo");
@@ -106,20 +106,23 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
     // T1: particles begin converging intensely
     const t1 = setTimeout(() => setPhase("particles"), 200 * speedMultiplier);
     
-    // T2: Logo fades in with scale and sweep
+    // T2: Logo (Icon) fades in with scale and sweep
     const t2 = setTimeout(() => setPhase("logo"), 1200 * speedMultiplier);
     
-    // T3: Tagline fades in
-    const t3 = setTimeout(() => setPhase("tagline"), 2200 * speedMultiplier);
+    // T3: Company name fades in
+    const t3 = setTimeout(() => setPhase("name"), 2000 * speedMultiplier);
     
-    // T4: Exit transition begins
-    const t4 = setTimeout(() => setPhase("exit"), 3600 * speedMultiplier);
+    // T4: Tagline fades in
+    const t4 = setTimeout(() => setPhase("tagline"), 2800 * speedMultiplier);
     
-    // T5: Complete and unmount
-    const t5 = setTimeout(onComplete, 4200 * speedMultiplier);
+    // T5: Exit transition begins
+    const t5 = setTimeout(() => setPhase("exit"), 4200 * speedMultiplier);
+    
+    // T6: Complete and unmount
+    const t6 = setTimeout(onComplete, 4800 * speedMultiplier);
     
     return () => {
-      clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5);
+      clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); clearTimeout(t6);
     };
   }, [onComplete, isMobile]);
 
@@ -141,7 +144,7 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />
 
       <AnimatePresence>
-        {(phase === "logo" || phase === "tagline" || phase === "exit") && (
+        {(phase === "logo" || phase === "name" || phase === "tagline" || phase === "exit") && (
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -158,7 +161,7 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
               />
               
               <div className="relative overflow-hidden p-2">
-                <LogoLockup />
+                <LogoIcon className="h-[64px] sm:h-[80px] md:h-[96px] lg:h-[112px]" />
                 {/* Subtle metallic light sweep */}
                 <motion.div
                   className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-20deg]"
@@ -168,6 +171,19 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
                 />
               </div>
             </div>
+
+            <AnimatePresence>
+              {(phase === "name" || phase === "tagline" || phase === "exit") && (
+                <motion.h1
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  className="mt-6 sm:mt-8 font-display text-2xl sm:text-3xl md:text-4xl font-semibold text-ivory tracking-wide"
+                >
+                  Recursive Lab
+                </motion.h1>
+              )}
+            </AnimatePresence>
 
             <AnimatePresence>
               {(phase === "tagline" || phase === "exit") && (

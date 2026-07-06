@@ -15,7 +15,7 @@ export const Route = createFileRoute("/team/")({
     defaultMeta({
       title: "Leadership",
       description:
-        "Meet the leadership team at RECURSION LABS — engineers, strategists, and designers building a premium technology consultancy.",
+        "Meet the leadership team at RECURSIVE LAB — engineers, strategists, and designers building a premium technology consultancy.",
       path: "/team",
     }),
   component: TeamPage,

@@ -40,7 +40,7 @@ export const team: TeamMember[] = [
     specializationBg:
       "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80",
     bio: [
-      "Siddhi leads strategy and client relationships at RECURSION LABS, translating complex engineering capability into commercial outcomes for the organisations we serve.",
+      "Siddhi leads strategy and client relationships at RECURSIVE LAB, translating complex engineering capability into commercial outcomes for the organisations we serve.",
       "She works closely with founders, functional leaders, and boards to shape long-term digital roadmaps that are opinionated, defensible, and measurable.",
     ],
     quote: "Strategy is not a slide. It is the decisions you refuse to defer.",
@@ -54,7 +54,7 @@ export const team: TeamMember[] = [
       { name: "AI Advisory Retainer", summary: "Built a recurring advisory model helping mid-market leaders adopt AI responsibly, from policy to production." },
     ],
     timeline: [
-      { year: "2026", label: "Co-founded RECURSION LABS" },
+      { year: "2026", label: "Co-founded RECURSIVE LAB" },
       { year: "2026", label: "Scaled advisory practice across three verticals" },
     ],
     email: "siddhisharma3x@gmail.com",
@@ -72,7 +72,7 @@ export const team: TeamMember[] = [
     specializationBg:
       "https://images.unsplash.com/photo-1454165804603-c011af8be939?auto=format&fit=crop&w=1600&q=80",
     bio: [
-      "Pragalbh runs the operating rhythm of RECURSION LABS. Delivery, hiring, finance, and the internal systems that let a small firm move like a much larger one.",
+      "Pragalbh runs the operating rhythm of RECURSIVE LAB. Delivery, hiring, finance, and the internal systems that let a small firm move like a much larger one.",
       "He is obsessive about clarity: unambiguous ownership, honest status, and the shortest path between a client's problem and a shipped result.",
     ],
     quote: "Operational rigour is what makes ambition believable.",
@@ -82,11 +82,11 @@ export const team: TeamMember[] = [
     expertise: ["Delivery operations", "Financial planning", "Team building", "Process design"],
     skills: ["Project governance", "Resource planning", "Vendor management", "Data-driven ops", "Stakeholder alignment"],
     projects: [
-      { name: "Delivery Operating Model", summary: "Designed the internal delivery framework that governs every RECURSION LABS engagement from kickoff to closeout." },
+      { name: "Delivery Operating Model", summary: "Designed the internal delivery framework that governs every RECURSIVE LAB engagement from kickoff to closeout." },
       { name: "Growth Instrumentation", summary: "Instrumented commercial and delivery metrics into a single weekly review used across the firm." },
     ],
     timeline: [
-      { year: "2026", label: "Co-founded RECURSION LABS" },
+      { year: "2026", label: "Co-founded RECURSIVE LAB" },
       { year: "2026", label: "Firm-wide OKR system live" },
     ],
     email: "pragalbhaditya@gmail.com",
@@ -104,7 +104,7 @@ export const team: TeamMember[] = [
     specializationBg:
       "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1600&q=80",
     bio: [
-      "Arnav leads the AI and product engineering practice at RECURSION LABS, pairing applied research with the discipline of shipping software that enterprises can actually operate.",
+      "Arnav leads the AI and product engineering practice at RECURSIVE LAB, pairing applied research with the discipline of shipping software that enterprises can actually operate.",
       "His work spans model evaluation, retrieval systems, agentic workflows, and the pragmatic integration of AI into existing products and processes.",
     ],
     quote: "The interesting question is never can it work. It is will it hold under load.",
@@ -118,7 +118,7 @@ export const team: TeamMember[] = [
       { name: "Analyst Workbench", summary: "Built an internal tool that compresses hours of research into a reviewable, cited draft." },
     ],
     timeline: [
-      { year: "2026", label: "Co-founded RECURSION LABS as Chief Technology Officer" },
+      { year: "2026", label: "Co-founded RECURSIVE LAB as Chief Technology Officer" },
       { year: "2026", label: "Launched applied-AI practice" },
     ],
     email: "arnavaditya@gmail.com",
@@ -136,7 +136,7 @@ export const team: TeamMember[] = [
     specializationBg:
       "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80",
     bio: [
-      "Aditya is the founding engineer of RECURSION LABS. He owns the technical spine of our work, from cloud architecture and platform engineering to the front-end craft that clients feel every day.",
+      "Aditya is the founding engineer of RECURSIVE LAB. He owns the technical spine of our work, from cloud architecture and platform engineering to the front-end craft that clients feel every day.",
       "He is the person we trust with the hardest calls: how a system will scale, what it will cost, and how it will fail gracefully when it does.",
     ],
     quote: "Good engineering is boring on purpose. Boring means it will still be running next year.",
@@ -150,7 +150,7 @@ export const team: TeamMember[] = [
       { name: "Zero-downtime Migration", summary: "Led a live migration of a production data plane with no user-visible disruption." },
     ],
     timeline: [
-      { year: "2026", label: "Founding engineer, RECURSION LABS" },
+      { year: "2026", label: "Founding engineer, RECURSIVE LAB" },
       { year: "2026", label: "Platform practice lead" },
     ],
     email: "kumaraditya9926@gmail.com",
@@ -168,7 +168,7 @@ export const team: TeamMember[] = [
     specializationBg:
       "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1600&q=80",
     bio: [
-      "Sanskriti leads product and design at RECURSION LABS. Her work sits at the intersection of user research, service design, and the disciplined craft of interface systems.",
+      "Sanskriti leads product and design at RECURSIVE LAB. Her work sits at the intersection of user research, service design, and the disciplined craft of interface systems.",
       "She is a champion of clarity, restraint, and the small details that separate software people tolerate from software they trust.",
     ],
     quote: "Design is decisions made visible. Everything else is decoration.",
@@ -182,7 +182,7 @@ export const team: TeamMember[] = [
       { name: "Field Research Programme", summary: "Ran a multi-city research programme informing a client's next generation of on-the-ground tooling." },
     ],
     timeline: [
-      { year: "2026", label: "Founding consultant, RECURSION LABS" },
+      { year: "2026", label: "Founding consultant, RECURSIVE LAB" },
       { year: "2026", label: "Established the research practice" },
     ],
     email: "",

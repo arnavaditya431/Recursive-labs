@@ -10,7 +10,7 @@ export const Route = createFileRoute("/services")({
     defaultMeta({
       title: "Services",
       description:
-        "Software engineering, artificial intelligence, machine learning, cloud solutions, business automation, and product design from RECURSION LABS.",
+        "Software engineering, artificial intelligence, machine learning, cloud solutions, business automation, and product design from RECURSIVE LAB.",
       path: "/services",
     }),
   component: ServicesPage,

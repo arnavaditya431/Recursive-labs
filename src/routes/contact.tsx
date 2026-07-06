@@ -25,7 +25,7 @@ export const Route = createFileRoute("/contact")({
     defaultMeta({
       title: "Contact",
       description:
-        "Start a conversation with RECURSION LABS. We work with founders, functional leaders, and enterprise teams on the systems that matter.",
+        "Start a conversation with RECURSIVE LAB. We work with founders, functional leaders, and enterprise teams on the systems that matter.",
       path: "/contact",
     }),
   component: ContactPage,
@@ -89,13 +89,13 @@ function ContactPage() {
         company: validation.data.company || "Not Specified",
         message: validation.data.message,
         submitted_at: new Date().toLocaleString("en-US", { timeZoneName: "short" }),
-        website: "Recursion Labs",
+        website: "Recursive Lab",
         
         // Mapped to your actual dashboard template (shown in the screenshot) for instant compatibility
         name: validation.data.name,
         email: validation.data.email,
         time: new Date().toLocaleString("en-US", { timeZoneName: "short" }),
-        title: "New Contact Form Submission - Recursion Labs",
+        title: "New Contact Form Submission - Recursive Lab",
       };
 
       await emailjs.send(serviceId, templateId, templateParams, publicKey);

@@ -1,9 +1,9 @@
 export const BRAND = {
-  name: "RECURSION LABS",
-  shortName: "Recursion Labs",
+  name: "RECURSIVE LAB",
+  shortName: "Recursive Lab",
   tagline: "Engineering Ideas. Building Tomorrow.",
   description:
-    "RECURSION LABS is a premium boutique technology consultancy delivering software engineering, artificial intelligence, machine learning, product engineering, cloud solutions, and digital consulting for enterprise organisations.",
+    "RECURSIVE LAB is a premium boutique technology consultancy delivering software engineering, artificial intelligence, machine learning, product engineering, cloud solutions, and digital consulting for enterprise organisations.",
   email: "recursionlabs1@gmail.com",
   phone: "+91 8252123642",
   locations: ["Patna", "Delhi", "Bhubaneswar", "Chennai", "Jaipur"],
