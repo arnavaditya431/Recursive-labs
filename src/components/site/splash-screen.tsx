@@ -45,11 +45,13 @@ function useSplashParticles(canvasRef: React.RefObject<HTMLCanvasElement | null>
     particlesRef.current = Array.from({ length: count }, () => {
       const angle = Math.random() * Math.PI * 2;
       const radius = Math.random() * Math.max(canvas.width, canvas.height) * (isMobile ? 0.7 : 0.5);
+      const txAngle = Math.random() * Math.PI * 2;
+      const txRadius = Math.random() * (isMobile ? 40 : 80);
       return {
         x: cx + Math.cos(angle) * radius,
         y: cy + Math.sin(angle) * radius,
-        tx: cx + (Math.random() - 0.5) * (isMobile ? 30 : 50),
-        ty: cy + (Math.random() - 0.5) * (isMobile ? 30 : 50),
+        tx: cx + Math.cos(txAngle) * txRadius,
+        ty: cy + Math.sin(txAngle) * txRadius,
         size: Math.random() * (isMobile ? 2.0 : 1.6) + 0.4,
         alpha: Math.random() * 0.5 + 0.1,
       };
@@ -59,8 +61,8 @@ function useSplashParticles(canvasRef: React.RefObject<HTMLCanvasElement | null>
 
     const draw = (now: number) => {
       const elapsed = now - startRef.current;
-      // Fade out particles as logo appears
-      const globalAlpha = Math.max(0, 1 - (elapsed / 2500));
+      // Fade out particles entirely as logo appears
+      const globalAlpha = Math.max(0, 1 - (elapsed / 1800));
       
       const progress = Math.min(elapsed / 1500, 1);
       const ease = 1 - Math.pow(1 - progress, 3);
@@ -151,17 +153,8 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="relative z-10 flex flex-col items-center px-6 text-center"
           >
-            <div className="relative">
-              {/* Premium Blue Glow beneath the logo */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 1.2 }}
-                className="absolute inset-0 scale-125 bg-primary/25 blur-3xl rounded-full"
-              />
-              
               <div className="relative overflow-hidden p-2">
-                <LogoIcon className="h-[64px] sm:h-[80px] md:h-[96px] lg:h-[112px] invert" />
+                <LogoIcon className="h-[96px] sm:h-[120px] md:h-[144px] lg:h-[160px] invert drop-shadow-2xl" />
                 {/* Subtle metallic light sweep */}
                 <motion.div
                   className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-20deg]"
