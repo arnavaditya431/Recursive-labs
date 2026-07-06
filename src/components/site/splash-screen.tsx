@@ -1,198 +1,130 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { LogoIcon } from "@/components/brand/logo";
 import { BRAND } from "@/lib/brand";
-import { useIsMobile } from "@/hooks/use-mobile";
 
-const SPLASH_KEY = "recursion-labs-splash-seen";
-
-type Particle = {
-  x: number;
-  y: number;
-  tx: number;
-  ty: number;
-  size: number;
-  alpha: number;
-};
-
-function useSplashParticles(canvasRef: React.RefObject<HTMLCanvasElement | null>, active: boolean) {
-  const frameRef = useRef<number>(0);
-  const particlesRef = useRef<Particle[]>([]);
-  const startRef = useRef(0);
-  const isMobile = useIsMobile();
-
-  useEffect(() => {
-    if (!active) return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const cx = canvas.width / 2;
-    const cy = canvas.height / 2;
-    
-    // Reduce particle count on mobile
-    const baseCount = Math.floor((canvas.width * canvas.height) / 900);
-    const count = isMobile ? Math.min(400, baseCount) : Math.min(1200, baseCount);
-    
-    particlesRef.current = Array.from({ length: count }, () => {
-      const angle = Math.random() * Math.PI * 2;
-      const radius = Math.random() * Math.max(canvas.width, canvas.height) * (isMobile ? 0.7 : 0.5);
-      const txAngle = Math.random() * Math.PI * 2;
-      const txRadius = Math.random() * (isMobile ? 40 : 80);
-      return {
-        x: cx + Math.cos(angle) * radius,
-        y: cy + Math.sin(angle) * radius,
-        tx: cx + Math.cos(txAngle) * txRadius,
-        ty: cy + Math.sin(txAngle) * txRadius,
-        size: Math.random() * (isMobile ? 2.0 : 1.6) + 0.4,
-        alpha: Math.random() * 0.5 + 0.1,
-      };
-    });
-
-    startRef.current = performance.now();
-
-    const draw = (now: number) => {
-      const elapsed = now - startRef.current;
-      // Fade out particles entirely as logo appears
-      const globalAlpha = Math.max(0, 1 - (elapsed / 1800));
-      
-      const progress = Math.min(elapsed / 1500, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      for (const p of particlesRef.current) {
-        // Converge towards the center
-        p.x += (p.tx - p.x) * (0.05 + ease * 0.1);
-        p.y += (p.ty - p.y) * (0.05 + ease * 0.1);
-        
-        ctx.beginPath();
-        // Use the new primary blue for particles
-        ctx.fillStyle = `rgba(100, 140, 255, ${p.alpha * globalAlpha})`;
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      if (globalAlpha > 0) {
-        frameRef.current = requestAnimationFrame(draw);
-      }
-    };
-
-    frameRef.current = requestAnimationFrame(draw);
-
-    return () => {
-      window.removeEventListener("resize", resize);
-      cancelAnimationFrame(frameRef.current);
-    };
-  }, [active, canvasRef, isMobile]);
-}
+const SPLASH_KEY = "recursive-lab-splash-seen-v2";
 
 export function SplashScreen({ onComplete }: { onComplete: () => void }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [phase, setPhase] = useState<"ambient" | "particles" | "logo" | "name" | "tagline" | "exit">("ambient");
-  const isMobile = useIsMobile();
-  
-  useSplashParticles(canvasRef, phase === "ambient" || phase === "particles" || phase === "logo");
+  const [phase, setPhase] = useState<"void" | "pulse" | "etching" | "impact" | "dive">("void");
 
   useEffect(() => {
-    const speedMultiplier = isMobile ? 0.8 : 1;
-    
-    // T1: particles begin converging intensely
-    const t1 = setTimeout(() => setPhase("particles"), 200 * speedMultiplier);
-    
-    // T2: Logo (Icon) fades in with scale and sweep
-    const t2 = setTimeout(() => setPhase("logo"), 1200 * speedMultiplier);
-    
-    // T3: Company name fades in
-    const t3 = setTimeout(() => setPhase("name"), 2000 * speedMultiplier);
-    
-    // T4: Tagline fades in
-    const t4 = setTimeout(() => setPhase("tagline"), 2800 * speedMultiplier);
-    
-    // T5: Exit transition begins
-    const t5 = setTimeout(() => setPhase("exit"), 4200 * speedMultiplier);
-    
-    // T6: Complete and unmount
-    const t6 = setTimeout(onComplete, 4800 * speedMultiplier);
-    
+    const t1 = setTimeout(() => setPhase("pulse"), 400);
+    const t2 = setTimeout(() => setPhase("etching"), 1200);
+    const t3 = setTimeout(() => setPhase("impact"), 2800);
+    const t4 = setTimeout(() => setPhase("dive"), 4200);
+    const t5 = setTimeout(onComplete, 5000);
+
     return () => {
-      clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); clearTimeout(t6);
+      clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5);
     };
-  }, [onComplete, isMobile]);
+  }, [onComplete]);
 
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#05060A]"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#030407] overflow-hidden"
       initial={{ opacity: 1 }}
-      animate={{ opacity: phase === "exit" ? 0 : 1 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      animate={{ opacity: phase === "dive" ? 0 : 1 }}
+      transition={{ duration: 0.8, ease: "easeInOut" }}
     >
-      {/* Soft blue ambient glow */}
+      {/* The Geometric Grid Background */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.5 }}
-        className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(50,100,255,0.06)_0%,transparent_60%)]"
-      />
+        className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center"
+        initial={{ opacity: 0, scale: 1.1 }}
+        animate={{ 
+          opacity: (phase === "pulse" || phase === "etching" || phase === "impact") ? 0.3 : 0,
+          scale: phase === "dive" ? 1.5 : 1 
+        }}
+        transition={{ duration: 3, ease: "easeOut" }}
+      >
+        <div 
+          className="absolute inset-[-100%] w-[300%] h-[300%]"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)
+            `,
+            backgroundSize: "4rem 4rem",
+            transform: "perspective(1000px) rotateX(60deg) translateY(-20vh)",
+            transformOrigin: "center center",
+          }}
+        />
+        {/* Horizon fade out */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#030407] via-transparent to-[#030407]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#030407] via-transparent to-[#030407]" />
+      </motion.div>
 
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />
-
+      {/* The Pulse (Shockwave) */}
       <AnimatePresence>
-        {(phase === "logo" || phase === "name" || phase === "tagline" || phase === "exit") && (
+        {phase === "pulse" && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative z-10 flex flex-col items-center px-6 text-center"
-          >
-              <div className="relative overflow-hidden p-2">
-                <LogoIcon className="h-[96px] sm:h-[120px] md:h-[144px] lg:h-[160px] invert drop-shadow-2xl" />
-                {/* Subtle metallic light sweep */}
-                <motion.div
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-20deg]"
-                  initial={{ x: "-150%" }}
-                  animate={{ x: "150%" }}
-                  transition={{ duration: 1.2, delay: 0.2, ease: "easeInOut" }}
-                />
-              </div>
-            </div>
-
-            <AnimatePresence>
-              {(phase === "name" || phase === "tagline" || phase === "exit") && (
-                <motion.h1
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  className="mt-6 sm:mt-8 font-display text-2xl sm:text-3xl md:text-4xl font-semibold text-ivory tracking-wide"
-                >
-                  Recursive Lab
-                </motion.h1>
-              )}
-            </AnimatePresence>
-
-            <AnimatePresence>
-              {(phase === "tagline" || phase === "exit") && (
-                <motion.p
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  className="mt-6 sm:mt-8 max-w-[280px] sm:max-w-md font-display text-base sm:text-lg italic text-ivory/80 md:text-xl drop-shadow-md"
-                >
-                  {BRAND.tagline}
-                </motion.p>
-              )}
-            </AnimatePresence>
-          </motion.div>
+            className="absolute z-10 rounded-full border border-primary/50"
+            initial={{ width: 0, height: 0, opacity: 1, borderWidth: "8px" }}
+            animate={{ width: "200vw", height: "200vw", opacity: 0, borderWidth: "1px" }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            exit={{ opacity: 0 }}
+          />
         )}
       </AnimatePresence>
+
+      {/* The Container for Dive */}
+      <motion.div
+        className="relative z-20 flex flex-col items-center"
+        initial={{ scale: 1 }}
+        animate={{ 
+          scale: phase === "dive" ? 4 : 1,
+          y: phase === "dive" ? "20vh" : 0 
+        }}
+        transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
+      >
+        <div className="relative flex flex-col items-center">
+          
+          {/* The Logo Etching */}
+          <motion.div
+            initial={{ opacity: 0, clipPath: "circle(0% at 50% 50%)", rotate: -45 }}
+            animate={{ 
+              opacity: phase !== "void" && phase !== "pulse" ? 1 : 0,
+              clipPath: phase !== "void" && phase !== "pulse" ? "circle(100% at 50% 50%)" : "circle(0% at 50% 50%)",
+              rotate: phase !== "void" && phase !== "pulse" ? 0 : -45
+            }}
+            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+            className="relative p-4"
+          >
+            <LogoIcon className="h-[96px] sm:h-[120px] md:h-[144px] lg:h-[160px] invert drop-shadow-2xl" />
+            
+            {/* The Metallic Impact Sweep */}
+            {(phase === "impact" || phase === "dive") && (
+              <motion.div
+                className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent skew-x-[-20deg]"
+                initial={{ x: "-150%" }}
+                animate={{ x: "150%" }}
+                transition={{ duration: 1, ease: "easeInOut" }}
+              />
+            )}
+          </motion.div>
+
+          {/* The Identity (Text Reveal) */}
+          <AnimatePresence>
+            {(phase === "impact" || phase === "dive") && (
+              <motion.div
+                initial={{ opacity: 0, y: 20, filter: "blur(10px)", scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
+                exit={{ opacity: 0, filter: "blur(10px)" }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-8 flex flex-col items-center text-center"
+              >
+                <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-semibold text-ivory tracking-wide">
+                  Recursive Lab
+                </h1>
+                <p className="mt-4 max-w-[280px] sm:max-w-md font-display text-sm sm:text-base italic text-ivory/60 tracking-wider drop-shadow-md">
+                  {BRAND.tagline}
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+        </div>
+      </motion.div>
     </motion.div>
   );
 }
@@ -211,7 +143,7 @@ export function SplashGate({ children }: { children: React.ReactNode }) {
   };
 
   if (state === "pending") {
-    return <div className="fixed inset-0 z-[100] bg-[#05060A]" aria-hidden="true" />;
+    return <div className="fixed inset-0 z-[100] bg-[#030407]" aria-hidden="true" />;
   }
 
   if (state === "splash") {
