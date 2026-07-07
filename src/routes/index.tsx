@@ -150,12 +150,12 @@ function Scene01_RecursiveReveal() {
   return (
     <section ref={containerRef} className="relative h-[85dvh] flex items-center justify-center overflow-hidden pt-20 bg-[var(--kagaz)]">
       
-      {/* 1. The Parallax Background Image */}
+      {/* 1. The Parallax Background Video */}
       <div className="absolute inset-0 pointer-events-none opacity-20 overflow-hidden">
-        <img 
-          src="/hero-bg.png" 
-          alt="Hero background"
-          className="absolute w-full h-[120%] -top-[10%] object-cover hero-bg-parallax"
+        <video 
+          src="/hero-bg.mp4" 
+          autoPlay loop muted playsInline
+          className="absolute w-full h-[120%] -top-[10%] object-cover hero-bg-parallax grayscale"
         />
       </div>
 
