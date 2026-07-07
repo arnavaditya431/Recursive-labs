@@ -633,11 +633,8 @@ function StrengthsSection({ isLight }: { isLight: boolean }) {
   );
 }
 
-/* ─── TEAM (light) — Magazine layout ────────────────────────── */
+/* ─── TEAM (light) — Uniform layout ─────────────────────────── */
 function TeamLight() {
-  const founders = team.slice(0, 2);
-  const others = team.slice(2);
-
   return (
     <section className="light-section-cool border-y border-border/30">
       <div className="container-editorial section-py">
@@ -654,35 +651,10 @@ function TeamLight() {
           </Link>
         </div>
 
-        {/* Founders — large editorial portraits */}
-        <div className="mt-12 grid gap-8 md:grid-cols-2">
-          {founders.map((m, i) => (
-            <Reveal key={m.slug} delay={i * 0.12}>
+        <div className="mt-10 sm:mt-16 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-5 lg:gap-6">
+          {team.map((m, i) => (
+            <Reveal key={m.slug} delay={i * 0.08}>
               <Link to="/team/$slug" params={{ slug: m.slug }} className="group block">
-                <div className="relative aspect-[3/4] overflow-hidden rounded-2xl shadow-theme-lg photo-warm">
-                  <Portrait
-                    src={m.photo}
-                    alt={`${m.name}, ${m.role}`}
-                    name={m.name}
-                    className="h-full w-full"
-                    imageClassName="transition-all duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                    <p className="font-display text-2xl sm:text-3xl text-white drop-shadow-lg">{m.name}</p>
-                    <p className="mt-1 text-sm text-white/80">{m.role} · {m.title}</p>
-                  </div>
-                </div>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-
-        {/* Other team — offset smaller portraits */}
-        <div className="mt-8 grid grid-cols-2 gap-6 sm:gap-8 lg:grid-cols-3">
-          {others.map((m, i) => (
-            <Reveal key={m.slug} delay={0.15 + i * 0.08}>
-              <Link to="/team/$slug" params={{ slug: m.slug }} className={`group block ${i === 1 ? 'sm:mt-8' : ''}`}>
                 <div className="relative aspect-[3/4] overflow-hidden rounded-xl shadow-theme-md photo-warm">
                   <Portrait
                     src={m.photo}
@@ -691,10 +663,10 @@ function TeamLight() {
                     className="h-full w-full"
                     imageClassName="transition-all duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                 </div>
-                <p className="mt-4 font-display text-lg leading-tight">{m.name}</p>
-                <p className="text-xs uppercase tracking-widest text-muted-foreground mt-1">{m.title}</p>
+                <p className="mt-4 font-display text-base sm:text-lg leading-tight group-hover:text-primary transition-colors">{m.name}</p>
+                <p className="text-[10px] sm:text-xs uppercase tracking-widest text-muted-foreground mt-1">{m.title}</p>
               </Link>
             </Reveal>
           ))}
