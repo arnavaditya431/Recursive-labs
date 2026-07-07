@@ -468,8 +468,15 @@ function Scene07_ConvictionSequence() {
       </section>
 
       {/* Statement 04: Centered Conclusion */}
-      <section className="h-[100dvh] flex items-center justify-center text-center bg-[var(--kagaz)] border-b border-[var(--rekha)] px-[var(--container-px)]">
-        <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-0.01em] text-[var(--syahi)] max-w-3xl">
+      <section className="relative h-[100dvh] flex items-center justify-center text-center overflow-hidden px-[var(--container-px)] bg-[var(--syahi)]">
+        <div className="absolute inset-0 pointer-events-none opacity-40">
+          <video 
+            src="/statement-bg.mp4" 
+            autoPlay loop muted playsInline 
+            className="w-full h-full object-cover grayscale mix-blend-screen"
+          />
+        </div>
+        <h2 className="relative z-10 font-display text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-[-0.01em] text-[var(--kagaz)] max-w-3xl">
           Fashions come and go.<br />Cost and reliability do not.
         </h2>
       </section>
