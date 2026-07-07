@@ -49,16 +49,15 @@ function ProjectsPage() {
           {/* Hero image / preview — full bleed */}
           <Reveal>
             <div className="relative aspect-[21/9] sm:aspect-[3/1] overflow-hidden group bg-slate-900">
-              {project.liveUrl ? (
-                <div className="absolute inset-0 w-full h-[150%] sm:h-[200%] pointer-events-none select-none overflow-hidden">
-                  <iframe
-                    src={project.liveUrl}
-                    className="w-full h-full border-0 origin-top"
-                    tabIndex={-1}
-                    title={project.title}
-                    scrolling="no"
-                  />
-                </div>
+              {project.previewVideo ? (
+                <video
+                  src={project.previewVideo}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover opacity-80"
+                />
               ) : (
                 <img
                   src={project.heroImage}
