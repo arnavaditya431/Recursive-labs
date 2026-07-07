@@ -4,6 +4,7 @@ import { StructuredData } from "@/components/site/structured-data";
 import { defaultMeta, breadcrumbSchema } from "@/lib/seo";
 import { services } from "@/lib/services";
 import { RecursiveFrame } from "@/components/ui/recursive-frame";
+import { RecursiveParticleField } from "@/components/ui/recursive-particle-field";
 
 export const Route = createFileRoute("/services")({
   head: () =>
@@ -17,12 +18,12 @@ export const Route = createFileRoute("/services")({
 });
 
 const SERVICE_IMAGES: Record<string, string> = {
-  "software-engineering": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80",
-  "ai-machine-learning": "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80",
-  "cloud-architecture": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
+  "software-development": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80",
+  "artificial-intelligence": "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80",
+  "cloud-solutions": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
   "business-automation": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
-  "web-applications": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
-  "ui-ux-design": "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80",
+  "web-development": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+  "ux-design": "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80",
 };
 
 function ServicesPage() {
@@ -35,11 +36,22 @@ function ServicesPage() {
         ])}
       />
 
-      {/* Opening */}
-      <section className="h-screen flex items-center justify-center container-editorial">
-        <h1 className="text-statement max-w-2xl text-center">
-          Everything we build is built to hold.
-        </h1>
+      {/* Opening - Distinct Dark Hero */}
+      <section className="relative h-[80vh] flex items-center bg-[var(--syahi)] text-[var(--kagaz)] overflow-hidden">
+        <div className="absolute inset-0 opacity-40">
+          <RecursiveParticleField />
+        </div>
+        <div className="container-editorial relative z-10 w-full">
+          <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--nila)] mb-8">
+            Our Practices
+          </p>
+          <h1 className="text-display max-w-4xl text-[var(--kagaz)]">
+            Everything we build is <span className="italic text-[var(--nila)]">built to hold.</span>
+          </h1>
+          <p className="mt-8 text-lg text-[var(--dhul)] max-w-xl">
+            We design and engineer production systems for organisations that treat their platforms as long-term assets.
+          </p>
+        </div>
       </section>
 
       {/* The Deep Dives */}
