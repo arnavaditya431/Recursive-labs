@@ -20,7 +20,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "disha-nucleus-digital-platform",
-    title: "Educational Portal & Digital Identity",
+    title: "Disha Nucleus",
     client: "Disha Nucleus School",
     industry: "Education",
     year: "2025",
