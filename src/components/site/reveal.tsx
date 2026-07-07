@@ -1,9 +1,14 @@
 import { motion, type Variants } from "motion/react";
 import type { ReactNode } from "react";
 
-const variants: Variants = {
+const fadeVariants: Variants = {
   hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const clipVariants: Variants = {
+  hidden: { clipPath: "inset(100% 0 0 0)", opacity: 0 },
+  show: { clipPath: "inset(0 0 0 0)", opacity: 1, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
 };
 
 export function Reveal({
@@ -11,11 +16,13 @@ export function Reveal({
   delay = 0,
   className,
   as: As = "div",
+  variant = "fade",
 }: {
   children: ReactNode;
   delay?: number;
   className?: string;
   as?: keyof typeof motion;
+  variant?: "fade" | "clip";
 }) {
   const Comp = motion[As] as typeof motion.div;
   return (
@@ -23,7 +30,7 @@ export function Reveal({
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-80px" }}
-      variants={variants}
+      variants={variant === "clip" ? clipVariants : fadeVariants}
       transition={{ delay }}
       className={className}
     >

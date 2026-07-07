@@ -86,15 +86,12 @@ function ContactPage() {
 
     try {
       const templateParams = {
-        // Required by the prompt instructions
         from_name: validation.data.name,
         from_email: validation.data.email,
         company: validation.data.company || "Not Specified",
         message: validation.data.message,
         submitted_at: new Date().toLocaleString("en-US", { timeZoneName: "short" }),
         website: "Recursive Lab",
-        
-        // Mapped to your actual dashboard template (shown in the screenshot) for instant compatibility
         name: validation.data.name,
         email: validation.data.email,
         time: new Date().toLocaleString("en-US", { timeZoneName: "short" }),
@@ -124,81 +121,97 @@ function ContactPage() {
         ]}
       />
 
-      <section className="container-editorial pt-16 sm:pt-24 pb-16 sm:pb-24">
-        <div className="grid gap-10 sm:gap-16 lg:grid-cols-12">
-          {/* Left info — on mobile, shows below form; on desktop, left side */}
-          <div className="order-2 lg:order-1 lg:col-span-6">
-            <p className="text-eyebrow">Contact</p>
-            <h1 className="mt-6 sm:mt-8 font-display fluid-h2">
-              Let's talk about what you're <span className={`italic ${isLight ? 'text-warm' : 'text-primary/90'}`}>building.</span>
-            </h1>
-            <p className="mt-6 sm:mt-10 max-w-md fluid-body-lg text-muted-foreground">
-              Tell us a little about the work. We reply to every serious enquiry within two
-              business days, personally.
-            </p>
+      <section className="container-editorial pt-24 sm:pt-32 pb-16 sm:pb-24">
+        {isLight && <div className="rl-vline" aria-hidden="true" />}
+        <div className="grid gap-12 lg:gap-20 lg:grid-cols-12 items-start">
+          {/* Left info */}
+          <div className="order-2 lg:order-1 lg:col-span-5 lg:sticky lg:top-32">
+            <Reveal>
+              <p className={isLight ? "font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--rl-electric)]" : "text-eyebrow"}>
+                Contact
+              </p>
+            </Reveal>
+            <div className="mt-6 sm:mt-8 overflow-hidden">
+              <Reveal delay={0.05}>
+                <h1 className={isLight ? "font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9] tracking-[-0.02em]" : "font-display fluid-h2"}>
+                  Let's talk about what you're{" "}
+                  <span className={`italic ${isLight ? 'text-[var(--rl-electric)]' : 'text-primary/90'}`}>building.</span>
+                </h1>
+              </Reveal>
+            </div>
+            <Reveal delay={0.1}>
+              <p className={`mt-6 sm:mt-8 max-w-md leading-relaxed ${isLight ? 'text-base sm:text-lg text-muted-foreground' : 'fluid-body-lg text-muted-foreground'}`}>
+                Tell us a little about the work. We reply to every serious enquiry within two
+                business days, personally.
+              </p>
+            </Reveal>
 
-            <div className="mt-10 sm:mt-14 space-y-5 sm:space-y-6 text-foreground/90">
-              <div className="flex items-start gap-4">
-                <Mail className={`mt-1 h-5 w-5 shrink-0 ${isLight ? 'text-warm' : 'text-primary'}`} aria-hidden="true" />
-                <div>
-                  <p className="text-eyebrow">Company Email</p>
-                  <a href={`mailto:${BRAND.email}`} className="mt-1 block hover:text-foreground transition">
-                    {BRAND.email}
-                  </a>
+            <Reveal delay={0.15}>
+              <div className="mt-12 sm:mt-16 space-y-6 sm:space-y-8 text-foreground/90">
+                <div className="flex items-start gap-5">
+                  <Mail className={`mt-0.5 h-5 w-5 shrink-0 ${isLight ? 'text-[var(--rl-electric)]' : 'text-primary'}`} aria-hidden="true" />
+                  <div>
+                    <p className={isLight ? "font-mono text-[9px] tracking-[0.2em] uppercase text-muted-foreground/80" : "text-eyebrow"}>Company Email</p>
+                    <a href={`mailto:${BRAND.email}`} className={`mt-1.5 block transition ${isLight ? 'text-base font-medium hover:text-[var(--rl-electric)]' : 'hover:text-foreground'}`}>
+                      {BRAND.email}
+                    </a>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <Phone className={`mt-1 h-5 w-5 shrink-0 ${isLight ? 'text-warm' : 'text-primary'}`} aria-hidden="true" />
-                <div>
-                  <p className="text-eyebrow">Phone</p>
-                  <a href={`tel:${BRAND.phone.replace(/\s+/g, "")}`} className="mt-1 block hover:text-foreground transition">
-                    {BRAND.phone}
-                  </a>
+                <div className="flex items-start gap-5">
+                  <Phone className={`mt-0.5 h-5 w-5 shrink-0 ${isLight ? 'text-[var(--rl-electric)]' : 'text-primary'}`} aria-hidden="true" />
+                  <div>
+                    <p className={isLight ? "font-mono text-[9px] tracking-[0.2em] uppercase text-muted-foreground/80" : "text-eyebrow"}>Phone</p>
+                    <a href={`tel:${BRAND.phone.replace(/\s+/g, "")}`} className={`mt-1.5 block transition ${isLight ? 'text-base font-medium hover:text-[var(--rl-electric)]' : 'hover:text-foreground'}`}>
+                      {BRAND.phone}
+                    </a>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <MapPin className={`mt-1 h-5 w-5 shrink-0 ${isLight ? 'text-warm' : 'text-primary'}`} aria-hidden="true" />
-                <div>
-                  <p className="text-eyebrow">Operational Presence</p>
-                  <div className="mt-2 space-y-1 text-sm text-foreground/80">
-                    {BRAND.locations.map((city) => (
-                      <p key={city}>{city}</p>
-                    ))}
+                <div className="flex items-start gap-5">
+                  <MapPin className={`mt-0.5 h-5 w-5 shrink-0 ${isLight ? 'text-[var(--rl-electric)]' : 'text-primary'}`} aria-hidden="true" />
+                  <div>
+                    <p className={isLight ? "font-mono text-[9px] tracking-[0.2em] uppercase text-muted-foreground/80" : "text-eyebrow"}>Operational Presence</p>
+                    <div className={`mt-1.5 space-y-1 ${isLight ? 'text-base text-foreground' : 'text-sm text-foreground/80'}`}>
+                      {BRAND.locations.map((city) => (
+                        <p key={city}>{city}</p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-5">
+                  <Clock className={`mt-0.5 h-5 w-5 shrink-0 ${isLight ? 'text-[var(--rl-electric)]' : 'text-primary'}`} aria-hidden="true" />
+                  <div>
+                    <p className={isLight ? "font-mono text-[9px] tracking-[0.2em] uppercase text-muted-foreground/80" : "text-eyebrow"}>Business Hours</p>
+                    <p className={`mt-1.5 ${isLight ? 'text-base text-foreground' : 'text-sm text-foreground/80'}`}>
+                      Monday – Friday
+                    </p>
+                    <p className={`mt-0.5 ${isLight ? 'text-sm text-muted-foreground' : 'text-xs text-muted-foreground'}`}>
+                      9:00 AM – 6:00 PM IST
+                    </p>
                   </div>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
-                <Clock className={`mt-1 h-5 w-5 shrink-0 ${isLight ? 'text-warm' : 'text-primary'}`} aria-hidden="true" />
-                <div>
-                  <p className="text-eyebrow">Business Hours</p>
-                  <p className="mt-1 text-sm text-foreground/80">
-                    Monday – Friday
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    9:00 AM – 6:00 PM IST
-                  </p>
-                </div>
-              </div>
-            </div>
+            </Reveal>
 
-            <div className="mt-10 sm:mt-14 flex flex-wrap gap-2">
-              {SOCIAL_LINKS.map((s) => (
-                <a key={s.label} href={s.href} className={`rounded-full border px-3 py-2 text-xs text-muted-foreground transition touch-target ${isLight ? 'border-border/50 hover:text-warm hover:border-warm' : 'hairline hover:text-foreground'}`}>
-                  {s.label}
-                </a>
-              ))}
-            </div>
+            <Reveal delay={0.2}>
+              <div className="mt-12 sm:mt-16 flex flex-wrap gap-2">
+                {SOCIAL_LINKS.map((s) => (
+                  <a key={s.label} href={s.href} className={`rounded-full border px-4 py-2 text-xs transition touch-target ${isLight ? 'border-border/50 text-muted-foreground hover:border-[var(--rl-electric)] hover:text-[var(--rl-electric)]' : 'hairline text-muted-foreground hover:text-foreground'}`}>
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            </Reveal>
           </div>
 
-          <div className="order-1 lg:order-2 lg:col-span-6">
-            <Reveal>
+          <div className="order-1 lg:order-2 lg:col-span-7">
+            <Reveal delay={0.25}>
               <form
                 onSubmit={handleSubmit}
                 className={cn(
-                  "rounded-2xl border p-6 sm:p-8 md:p-10 space-y-8",
+                  "relative space-y-8",
                   isLight
-                    ? "bg-card/60 border-border/40 shadow-theme-lg backdrop-blur-sm"
-                    : "hairline bg-card/40"
+                    ? "rounded-none border-l-2 border-border/30 pl-6 sm:pl-10 lg:pl-16 bg-transparent shadow-none"
+                    : "rounded-2xl border hairline bg-card/40 p-6 sm:p-8 md:p-10"
                 )}
                 aria-label="Contact enquiry form"
               >
@@ -206,21 +219,21 @@ function ContactPage() {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="py-12 sm:py-16 text-center space-y-4"
+                    className="py-12 sm:py-24 text-center space-y-4"
                   >
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                      className={`mx-auto flex h-14 w-14 items-center justify-center rounded-full ${isLight ? 'bg-warm/10 text-warm' : 'bg-primary/10 text-primary'}`}
+                      className={`mx-auto flex h-16 w-16 items-center justify-center rounded-full ${isLight ? 'bg-[var(--rl-electric)]/10 text-[var(--rl-electric)]' : 'bg-primary/10 text-primary'}`}
                     >
-                      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
                     </motion.div>
-                    <p className="text-eyebrow">Received</p>
-                    <p className="mt-4 font-display fluid-h3 text-foreground">✓ Thank you.</p>
-                    <p className="mt-2 text-muted-foreground text-sm max-w-sm mx-auto">
+                    <p className={isLight ? "font-mono text-xs uppercase tracking-widest text-muted-foreground mt-6" : "text-eyebrow mt-6"}>Received</p>
+                    <p className="font-display text-2xl sm:text-3xl text-foreground">Thank you.</p>
+                    <p className="text-muted-foreground text-sm sm:text-base max-w-sm mx-auto leading-relaxed">
                       Your message has been received.<br />
                       Our team will get back to you as soon as possible.
                     </p>
@@ -279,17 +292,17 @@ function ContactPage() {
                     />
 
                     <div>
-                      <span className="text-eyebrow">Nature of enquiry</span>
-                      <div className="mt-3 flex flex-wrap gap-2">
+                      <span className={isLight ? "font-mono text-[9px] tracking-[0.2em] uppercase text-muted-foreground/80" : "text-eyebrow"}>Nature of enquiry</span>
+                      <div className="mt-4 flex flex-wrap gap-2 sm:gap-3">
                         {["New project", "Advisory", "Partnership", "Careers", "Press"].map(
                           (t) => (
                             <label
                               key={t}
                               className={cn(
-                                "cursor-pointer rounded-full border px-3.5 py-2 text-xs text-muted-foreground transition touch-target",
+                                "cursor-pointer rounded-full border px-4 py-2.5 text-xs transition touch-target select-none",
                                 isLight
-                                  ? "border-border/50 has-[:checked]:bg-warm has-[:checked]:text-warm-foreground has-[:checked]:border-warm"
-                                  : "hairline has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary"
+                                  ? "border-border/40 text-muted-foreground hover:border-[var(--rl-electric)] hover:text-[var(--rl-electric)] has-[:checked]:bg-[var(--rl-electric)] has-[:checked]:text-white has-[:checked]:border-[var(--rl-electric)]"
+                                  : "hairline text-muted-foreground hover:text-foreground has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary"
                               )}
                             >
                               <input 
@@ -320,14 +333,14 @@ function ContactPage() {
                       type="submit"
                       disabled={formState === "loading"}
                       className={cn(
-                        "group inline-flex w-full items-center justify-between rounded-full px-6 py-4 text-sm transition-all touch-target disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.01] active:scale-[0.99]",
+                        "group inline-flex w-full items-center justify-between px-6 py-4 text-sm transition-all touch-target disabled:opacity-50 disabled:cursor-not-allowed",
                         isLight
-                          ? "btn-warm shadow-theme-md"
-                          : "bg-foreground text-background hover:bg-primary hover:text-primary-foreground"
+                          ? "rl-btn-primary"
+                          : "rounded-full bg-foreground text-background hover:bg-primary hover:text-primary-foreground hover:scale-[1.01] active:scale-[0.99]"
                       )}
                     >
                       {formState === "loading" ? (
-                        <span className="flex items-center gap-2">
+                        <span className="flex items-center gap-3">
                           <Loader2 className="h-4 w-4 animate-spin" />
                           Sending...
                         </span>
@@ -378,7 +391,7 @@ function FloatingField({
           placeholder=" "
           className={cn(
             "peer w-full resize-none border-b bg-transparent pt-6 pb-2 text-base text-foreground placeholder-transparent focus:outline-none transition-colors disabled:opacity-50",
-            isLight ? "border-border/40 focus:border-warm" : "hairline focus:border-primary",
+            isLight ? "border-border/30 focus:border-[var(--rl-electric)]" : "hairline focus:border-primary",
             error && "border-red-500/50 focus:border-red-500"
           )}
         />
@@ -392,7 +405,7 @@ function FloatingField({
           placeholder=" "
           className={cn(
             "peer w-full border-b bg-transparent pt-6 pb-2 text-base min-h-[48px] text-foreground placeholder-transparent focus:outline-none transition-colors disabled:opacity-50",
-            isLight ? "border-border/40 focus:border-warm" : "hairline focus:border-primary",
+            isLight ? "border-border/30 focus:border-[var(--rl-electric)]" : "hairline focus:border-primary",
             error && "border-red-500/50 focus:border-red-500"
           )}
         />
@@ -402,7 +415,7 @@ function FloatingField({
         className={cn(
           "pointer-events-none absolute left-0 top-1 text-xs uppercase tracking-widest text-muted-foreground transition-all peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal",
           isLight
-            ? "peer-focus:top-1 peer-focus:text-xs peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-warm"
+            ? "peer-focus:top-1 peer-focus:text-[9px] peer-focus:uppercase peer-focus:tracking-[0.2em] peer-focus:text-[var(--rl-electric)] font-mono"
             : "peer-focus:top-1 peer-focus:text-xs peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-primary",
           error && "text-red-500/70 peer-focus:text-red-500"
         )}

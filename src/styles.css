@@ -1,3 +1,11 @@
+/* ============================================================
+   GOOGLE FONTS — DM Serif Display + DM Sans + Fira Code
+   Scoped to the alternate theme only via CSS custom property
+   override in [data-theme="light"]. Dark theme retains its
+   original Instrument Serif / Inter Tight / JetBrains Mono.
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fira+Code:wght@300;400;500&display=swap');
+
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -33,69 +41,99 @@
   --color-hairline: var(--hairline);
   --color-warm: var(--warm);
   --color-warm-foreground: var(--warm-foreground);
+  /* Base fonts — used by dark theme */
   --font-display: "Instrument Serif", ui-serif, Georgia, serif;
   --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
 /* ============================================================
-   LIGHT THEME (DEFAULT) — Warm Editorial
+   THEME 2 — Digital India, Engineered Precision
+   NOT a "light theme." A completely separate design language.
+   v3.0 Creative Reset.
    ============================================================ */
 :root,
 [data-theme="light"] {
-  --radius: 0.3rem;
-  --background: oklch(0.975 0.006 75);
-  --foreground: oklch(0.12 0.025 260);
-  --ink: oklch(0.10 0.02 260);
-  --ivory: oklch(0.975 0.006 75);
-  --card: oklch(0.99 0.004 75);
-  --card-foreground: oklch(0.12 0.025 260);
-  --popover: oklch(0.99 0.004 75);
-  --popover-foreground: oklch(0.12 0.025 260);
-  --primary: oklch(0.42 0.14 265);
-  --primary-foreground: oklch(0.99 0.002 90);
-  --secondary: oklch(0.95 0.006 75);
-  --secondary-foreground: oklch(0.18 0.02 260);
-  --muted: oklch(0.95 0.005 75);
-  --muted-foreground: oklch(0.44 0.02 260);
-  --accent: oklch(0.58 0.15 35);
-  --accent-foreground: oklch(0.99 0.002 90);
-  --warm: oklch(0.58 0.15 35);
-  --warm-foreground: oklch(0.99 0.002 90);
+  /* ── Font override: DM family replaces defaults in this theme ── */
+  --font-display: "DM Serif Display", ui-serif, Georgia, serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Fira Code", ui-monospace, monospace;
+
+  --radius: 0.1rem; /* Near-zero — architectural sharpness */
+
+  /* ── Core Semantic Tokens ── */
+  --background: oklch(0.98 0.003 50);        /* void: warm scientific paper */
+  --foreground: oklch(0.08 0.015 245);        /* ink: steel-dark */
+  --ink: oklch(0.06 0.012 245);
+  --ivory: oklch(0.98 0.003 50);
+  --card: oklch(0.96 0.004 52);
+  --card-foreground: oklch(0.08 0.015 245);
+  --popover: oklch(0.98 0.003 50);
+  --popover-foreground: oklch(0.08 0.015 245);
+  --primary: oklch(0.58 0.22 262);            /* electric indigo */
+  --primary-foreground: oklch(0.98 0.002 90);
+  --secondary: oklch(0.94 0.008 58);
+  --secondary-foreground: oklch(0.08 0.015 245);
+  --muted: oklch(0.93 0.006 55);
+  --muted-foreground: oklch(0.48 0.022 245);
+  --accent: oklch(0.64 0.20 42);              /* ember amber */
+  --accent-foreground: oklch(0.98 0.002 90);
+  --warm: oklch(0.64 0.20 42);
+  --warm-foreground: oklch(0.98 0.002 90);
   --destructive: oklch(0.55 0.22 27);
-  --destructive-foreground: oklch(0.99 0.002 90);
-  --border: oklch(0.90 0.006 75);
-  --input: oklch(0.92 0.005 75);
-  --ring: oklch(0.42 0.14 265);
-  --hairline: oklch(0 0 0 / 0.06);
+  --destructive-foreground: oklch(0.98 0.002 90);
+  --border: oklch(0.87 0.007 55);
+  --input: oklch(0.91 0.005 55);
+  --ring: oklch(0.58 0.22 262);
+  --hairline: oklch(0 0 0 / 0.07);
 
-  /* Fluid typography tokens */
-  --text-h1: clamp(2.25rem, 7vw + 1rem, 5.5rem);
-  --text-h2: clamp(1.75rem, 5vw + 0.75rem, 4.5rem);
-  --text-h3: clamp(1.5rem, 3vw + 0.5rem, 3rem);
-  --text-h4: clamp(1.25rem, 2vw + 0.5rem, 2rem);
-  --text-body-lg: clamp(1.0625rem, 1vw + 0.875rem, 1.25rem);
+  /* ── Extended Design System — v3.0 Palette ── */
+  --rl-void: oklch(0.98 0.003 50);
+  --rl-ink: oklch(0.08 0.015 245);
+  --rl-electric: oklch(0.58 0.22 262);
+  --rl-ember: oklch(0.64 0.20 42);
+  --rl-slate: oklch(0.55 0.04 240);
+  --rl-breath: oklch(0.945 0.008 58);
+  --rl-smoke: oklch(0.92 0.005 240);
+  --rl-char: oklch(0.10 0.018 245);
 
-  /* Responsive spacing tokens */
-  --section-py: clamp(4rem, 8vw, 8rem);
-  --section-py-lg: clamp(5rem, 10vw, 10rem);
+  /* ── Backward-compat aliases ── */
+  --saffron: oklch(0.64 0.20 42);
+  --saffron-deep: oklch(0.50 0.18 38);
+  --indigo-deep: oklch(0.10 0.018 245);
+  --cream: oklch(0.945 0.008 58);
+  --clay: oklch(0.48 0.022 245);
+
+  /* ── Typography Scale — Architectural ── */
+  --text-h1: clamp(2.5rem, 9vw, 9rem);
+  --text-h2: clamp(2rem, 6vw, 6rem);
+  --text-h3: clamp(1.6rem, 3.5vw, 3.5rem);
+  --text-h4: clamp(1.25rem, 2.2vw, 2.2rem);
+  --text-body-lg: clamp(1.0625rem, 1.1vw, 1.25rem);
+  --text-massive: clamp(4.5rem, 18vw, 16rem);
+  --text-display: clamp(3rem, 12vw, 10rem);
+
+  /* ── Spacing ── */
+  --section-py: clamp(4.5rem, 9vw, 9rem);
+  --section-py-lg: clamp(5.5rem, 11vw, 11rem);
   --container-px: clamp(1.25rem, 5vw, 3rem);
 
-  /* Hero overlay vars for light theme */
-  --hero-overlay-start: oklch(0.97 0.005 75 / 0.88);
-  --hero-overlay-mid: oklch(0.97 0.005 75 / 0.72);
-  --hero-overlay-end: oklch(0.97 0.005 75 / 0.50);
-  --hero-overlay-bottom: oklch(0.975 0.006 75 / 0.92);
+  /* ── Hero Overlay ── */
+  --hero-overlay-start: oklch(0.98 0.003 50 / 0.92);
+  --hero-overlay-mid: oklch(0.98 0.003 50 / 0.72);
+  --hero-overlay-end: oklch(0.98 0.003 50 / 0.42);
+  --hero-overlay-bottom: oklch(0.98 0.003 50 / 0.96);
 
-  /* Shadow system — warm-tinted for light mode */
-  --shadow-sm: 0 1px 3px oklch(0.30 0.02 60 / 0.06);
-  --shadow-md: 0 4px 12px oklch(0.30 0.02 60 / 0.08), 0 1px 3px oklch(0.30 0.02 60 / 0.04);
-  --shadow-lg: 0 8px 24px oklch(0.30 0.02 60 / 0.10), 0 2px 6px oklch(0.30 0.02 60 / 0.04);
-  --shadow-xl: 0 16px 48px oklch(0.30 0.02 60 / 0.12), 0 4px 12px oklch(0.30 0.02 60 / 0.04);
+  /* ── Shadows — Precision-tinted ── */
+  --shadow-sm: 0 1px 3px oklch(0.08 0.02 245 / 0.05);
+  --shadow-md: 0 4px 16px oklch(0.08 0.02 245 / 0.07), 0 1px 3px oklch(0.08 0.02 245 / 0.04);
+  --shadow-lg: 0 8px 32px oklch(0.08 0.02 245 / 0.09), 0 2px 8px oklch(0.08 0.02 245 / 0.04);
+  --shadow-xl: 0 16px 64px oklch(0.08 0.02 245 / 0.11), 0 4px 16px oklch(0.08 0.02 245 / 0.04);
+  --shadow-dramatic: 0 24px 80px oklch(0.08 0.02 245 / 0.13), 0 8px 24px oklch(0.08 0.02 245 / 0.06);
 }
 
 /* ============================================================
-   DARK THEME — Refined Cinematic
+   DARK THEME — Refined Cinematic (LOCKED — DO NOT MODIFY)
    ============================================================ */
 [data-theme="dark"] {
   --background: oklch(0.13 0.02 260);
@@ -137,10 +175,10 @@
 /* ============================================================
    GLOBAL BASE STYLES
    ============================================================ */
+
 @layer base {
   * {
     border-color: var(--color-border);
-    /* Smooth theme transitions on every element */
     transition-property: background-color, color, border-color, box-shadow, opacity;
     transition-duration: 0.35s;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -154,20 +192,17 @@
     overflow-x: hidden;
     -webkit-text-size-adjust: 100%;
   }
-  html {
-    scroll-behavior: smooth;
-  }
+  html { scroll-behavior: smooth; }
 
-  /* Light mode: warm layered ambient gradients */
+  /* Theme 2: electric indigo + ember ambient — precise, technical */
   [data-theme="light"] body {
     background-image:
-      radial-gradient(1400px 700px at 85% -15%, oklch(0.90 0.04 265 / 0.07), transparent 65%),
-      radial-gradient(1000px 600px at -5% 35%, oklch(0.88 0.04 35 / 0.05), transparent 60%),
-      radial-gradient(800px 400px at 50% 80%, oklch(0.92 0.03 265 / 0.04), transparent 60%);
+      radial-gradient(900px 600px at 80% -15%, oklch(0.58 0.22 262 / 0.04), transparent 65%),
+      radial-gradient(700px 500px at -5% 45%, oklch(0.64 0.20 42 / 0.03), transparent 60%);
     background-attachment: fixed;
   }
 
-  /* Dark mode: richer blue ambient gradients */
+  /* Dark mode: unchanged */
   [data-theme="dark"] body {
     background-image:
       radial-gradient(1200px 600px at 80% -10%, oklch(0.35 0.09 245 / 0.35), transparent 60%),
@@ -175,12 +210,10 @@
     background-attachment: fixed;
   }
 
-  /* Mobile-optimised background gradients */
   @media (max-width: 767px) {
     [data-theme="light"] body {
       background-image:
-        radial-gradient(400px 300px at 80% -10%, oklch(0.90 0.04 265 / 0.05), transparent 60%),
-        radial-gradient(350px 250px at -10% 30%, oklch(0.88 0.04 35 / 0.04), transparent 60%);
+        radial-gradient(400px 300px at 80% -10%, oklch(0.58 0.22 262 / 0.03), transparent 60%);
       background-attachment: scroll;
     }
     [data-theme="dark"] body {
@@ -192,14 +225,13 @@
   }
 
   h1,h2,h3,h4 { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; }
-  /* Light mode headings get slightly bolder for warmth */
-  [data-theme="light"] h1, [data-theme="light"] h2 { font-weight: 500; }
+  [data-theme="light"] h1, [data-theme="light"] h2 { font-weight: 400; }
+
   ::selection { background: var(--color-primary); color: var(--color-primary-foreground); }
-  /* Light mode selection uses warm accent */
-  [data-theme="light"] ::selection { background: var(--color-warm); color: var(--color-warm-foreground); }
+  [data-theme="light"] ::selection { background: var(--rl-electric); color: oklch(0.98 0.002 90); }
 }
 
-/* Reduced motion: disable all transitions and animations */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -210,8 +242,9 @@
 }
 
 /* ============================================================
-   UTILITIES
+   SHARED UTILITIES
    ============================================================ */
+
 @utility container-editorial {
   width: 100%;
   max-width: 1360px;
@@ -219,9 +252,7 @@
   padding-inline: var(--container-px);
 }
 
-@utility hairline {
-  border-color: var(--hairline);
-}
+@utility hairline { border-color: var(--hairline); }
 
 @utility text-eyebrow {
   font-family: var(--font-mono);
@@ -230,41 +261,73 @@
   text-transform: uppercase;
   color: var(--color-muted-foreground);
 }
-/* Light mode eyebrow gets warm terracotta tint */
 [data-theme="light"] .text-eyebrow {
-  color: var(--color-warm);
+  color: var(--rl-electric);
+  letter-spacing: 0.28em;
+  font-size: 0.68rem;
 }
 
-@utility grain {
-  position: relative;
-}
+@utility grain { position: relative; }
 
-@utility marquee {
-  animation: marquee 40s linear infinite;
-}
-@media (max-width: 767px) {
-  .marquee {
-    animation-duration: 25s;
-  }
-}
-
+@utility marquee { animation: marquee 40s linear infinite; }
+@media (max-width: 767px) { .marquee { animation-duration: 25s; } }
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+[data-theme="light"] .marquee {
+  animation: marqueeScroll 35s linear infinite;
+  width: max-content;
+}
+[data-theme="light"] .marquee:hover { animation-play-state: paused; }
+@keyframes marqueeScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
 @keyframes floaty {
   0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  50%      { transform: translateY(-12px); }
+}
+@utility floaty { animation: floaty 8s ease-in-out infinite; }
+
+@keyframes floatLayer {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33%      { transform: translateY(-8px) rotate(0.5deg); }
+  66%      { transform: translateY(-4px) rotate(-0.3deg); }
+}
+@keyframes scrollIndicatorBounce {
+  0%, 100% { transform: scaleY(0); opacity: 0; }
+  30%      { transform: scaleY(1); opacity: 1; }
+  70%      { transform: scaleY(1); opacity: 1; }
+}
+@keyframes scrollIndicator {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50%      { transform: translateY(8px); opacity: 1; }
+}
+@keyframes clipRevealUp {
+  from { clip-path: inset(100% 0 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+@keyframes clipRevealLeft {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+@keyframes pulseElectric {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.15); }
+}
+@keyframes lineGrow {
+  0%   { transform: scaleY(0); opacity: 0; }
+  30%  { opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0.4; }
 }
 
-/* Hero overlay — now uses CSS variables for theme support */
 @utility hero-overlay {
   background:
     linear-gradient(105deg, var(--hero-overlay-start) 0%, var(--hero-overlay-mid) 45%, var(--hero-overlay-end) 100%),
     linear-gradient(to top, var(--hero-overlay-bottom), transparent 40%);
 }
-/* Denser overlay on mobile so text remains legible */
 @media (max-width: 767px) {
   .hero-overlay {
     background:
@@ -273,158 +336,340 @@
   }
 }
 
-@utility floaty { animation: floaty 8s ease-in-out infinite; }
+/* Fluid headings */
+@utility fluid-h1 { font-size: var(--text-h1); line-height: 0.95; letter-spacing: -0.02em; }
+@utility fluid-h2 { font-size: var(--text-h2); line-height: 1.05; letter-spacing: -0.01em; }
+@utility fluid-h3 { font-size: var(--text-h3); line-height: 1.15; }
+@utility fluid-h4 { font-size: var(--text-h4); line-height: 1.25; }
+@utility fluid-body-lg { font-size: var(--text-body-lg); line-height: 1.70; }
 
-/* Fluid heading utilities */
-@utility fluid-h1 {
-  font-size: var(--text-h1);
-  line-height: 0.95;
-  letter-spacing: -0.02em;
-}
+@utility section-py { padding-block: var(--section-py); }
+@utility section-py-lg { padding-block: var(--section-py-lg); }
 
-@utility fluid-h2 {
-  font-size: var(--text-h2);
-  line-height: 1.05;
-  letter-spacing: -0.01em;
-}
+@utility touch-target { min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; }
 
-@utility fluid-h3 {
-  font-size: var(--text-h3);
-  line-height: 1.15;
-}
-
-@utility fluid-h4 {
-  font-size: var(--text-h4);
-  line-height: 1.25;
-}
-
-@utility fluid-body-lg {
-  font-size: var(--text-body-lg);
-  line-height: 1.70;
-}
-
-/* Responsive section padding */
-@utility section-py {
-  padding-block: var(--section-py);
-}
-
-@utility section-py-lg {
-  padding-block: var(--section-py-lg);
-}
-
-/* Touch target minimum — Enforced for mobile accessibility */
-@utility touch-target {
-  min-height: 44px;
-  min-width: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Shadow utilities */
 @utility shadow-theme-sm { box-shadow: var(--shadow-sm); }
 @utility shadow-theme-md { box-shadow: var(--shadow-md); }
 @utility shadow-theme-lg { box-shadow: var(--shadow-lg); }
 @utility shadow-theme-xl { box-shadow: var(--shadow-xl); }
+@utility shadow-dramatic { box-shadow: var(--shadow-dramatic); }
+
+/* Backward-compat colour utilities */
+@utility text-saffron { color: var(--saffron); }
+@utility text-clay { color: var(--clay); }
+@utility bg-cream { background-color: var(--cream); }
+@utility bg-indigo-deep { background-color: var(--indigo-deep); }
+@utility border-saffron { border-color: var(--saffron); }
+
+/* Massive display text */
+@utility light-text-massive {
+  font-size: var(--text-massive);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  font-weight: 400;
+}
+@utility light-text-display {
+  font-size: var(--text-display);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+/* Body scroll lock */
+.body-scroll-locked { overflow: hidden; position: fixed; inset: 0; width: 100%; }
+
+/* Scrollbar */
+[data-theme="light"] ::-webkit-scrollbar { width: 5px; }
+[data-theme="light"] ::-webkit-scrollbar-track { background: transparent; }
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: oklch(0.80 0.005 55); border-radius: 3px; }
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: oklch(0.58 0.22 262 / 0.5); }
 
 /* ============================================================
-   LIGHT-ONLY EDITORIAL UTILITIES
+   LEGACY UTILITIES — Preserved for dark-mode components
    ============================================================ */
 
-/* Warm section contrast — alternating warm/cool tints */
-@utility light-section-warm {
-  background-color: transparent;
-}
-[data-theme="light"] .light-section-warm {
-  background-color: oklch(0.96 0.01 60 / 0.4);
-}
-
-@utility light-section-cool {
-  background-color: transparent;
-}
-[data-theme="light"] .light-section-cool {
-  background-color: oklch(0.96 0.01 265 / 0.25);
-}
-
-/* Warm card elevation */
 @utility light-card {
   border: 1px solid var(--hairline);
 }
 [data-theme="light"] .light-card {
-  background: oklch(0.99 0.004 75);
-  border: 1px solid oklch(0.90 0.008 60 / 0.5);
+  background: oklch(0.97 0.003 50);
+  border: 1px solid oklch(0.87 0.007 55 / 0.6);
   box-shadow: var(--shadow-md);
 }
 
-/* Editorial divider — thicker warm rule for section breaks */
-@utility editorial-rule {
-  height: 2px;
-  background: var(--hairline);
+@utility light-section-cinematic {
+  background: var(--indigo-deep);
+  color: oklch(0.95 0.007 90);
 }
-[data-theme="light"] .editorial-rule {
-  height: 3px;
-  background: linear-gradient(90deg, var(--color-warm), oklch(0.42 0.14 265 / 0.3), transparent);
-}
+[data-theme="light"] .light-section-cinematic .text-eyebrow { color: var(--rl-ember); }
 
-/* Warm CTA button (terracotta) — light mode only */
 @utility btn-warm {
   background: var(--color-foreground);
   color: var(--color-background);
 }
 [data-theme="light"] .btn-warm {
-  background: var(--color-warm);
-  color: var(--color-warm-foreground);
+  background: var(--rl-ink);
+  color: var(--rl-void);
 }
-[data-theme="light"] .btn-warm:hover {
-  background: oklch(0.52 0.16 35);
+[data-theme="light"] .btn-warm:hover { background: var(--rl-electric); }
+
+@utility btn-glass {
+  background: oklch(1 0 0 / 0.5);
+  backdrop-filter: blur(16px);
+  border: 1px solid oklch(1 0 0 / 0.2);
+  color: var(--color-foreground);
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="light"] .btn-glass:hover {
+  background: oklch(1 0 0 / 0.75);
+  border-color: var(--rl-electric);
 }
 
-/* Large display number — watermark-style for cards */
-@utility display-number {
-  font-family: var(--font-display);
-  font-size: clamp(4rem, 12vw, 8rem);
-  line-height: 0.85;
-  font-weight: 400;
-  color: var(--hairline);
-}
-[data-theme="light"] .display-number {
-  color: oklch(0.55 0.12 35 / 0.10);
-}
-
-/* Warm photo overlay for editorial duotone effect */
-@utility photo-warm {
+@utility btn-editorial {
   position: relative;
+  color: var(--color-foreground);
+  font-weight: 500;
+  padding-bottom: 4px;
 }
-[data-theme="light"] .photo-warm::after {
+[data-theme="light"] .btn-editorial::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background: oklch(0.58 0.08 35 / 0.08);
+  bottom: 0; left: 0;
+  width: 100%; height: 1.5px;
+  background: var(--rl-electric);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="light"] .btn-editorial:hover::after { transform: scaleX(1); }
+[data-theme="light"] .btn-editorial:hover { color: var(--rl-electric); }
+
+@utility light-section-warm { background-color: transparent; }
+[data-theme="light"] .light-section-warm { background-color: var(--rl-breath); }
+
+@utility light-section-cool { background-color: transparent; }
+[data-theme="light"] .light-section-cool { background-color: var(--rl-smoke); }
+
+@utility light-section-magazine { background: var(--cream); }
+
+@utility photo-warm { position: relative; }
+[data-theme="light"] .photo-warm::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: oklch(0.58 0.22 262 / 0.06);
   mix-blend-mode: multiply;
   pointer-events: none;
 }
 
-/* Body scroll lock for mobile menu */
-.body-scroll-locked {
-  overflow: hidden;
-  position: fixed;
-  inset: 0;
-  width: 100%;
+@utility light-card-editorial {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--hairline);
+  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
+[data-theme="light"] .light-card-editorial {
+  background: oklch(0.97 0.003 50);
+  border: 1px solid oklch(0.87 0.007 55 / 0.5);
+}
+[data-theme="light"] .light-card-editorial:hover { border-color: var(--rl-electric); }
+[data-theme="light"] .light-card-editorial .card-bg-image {
+  position: absolute; inset: 0; opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1); z-index: 0;
+}
+[data-theme="light"] .light-card-editorial:hover .card-bg-image { opacity: 0.10; }
+[data-theme="light"] .light-card-editorial .card-content { position: relative; z-index: 1; }
+[data-theme="light"] .light-card-editorial::after {
+  content: "";
+  position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, var(--rl-electric), var(--rl-ember));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="light"] .light-card-editorial:hover::after { transform: scaleX(1); }
+
+[data-theme="light"] .light-float { animation: floatLayer 12s ease-in-out infinite; }
+[data-theme="light"] .light-scroll-indicator { animation: scrollIndicator 2s ease-in-out infinite; }
 
 /* ============================================================
-   SCROLLBAR (light mode refinement)
+   v3.0 NEW DESIGN SYSTEM — Theme 2 Exclusive
    ============================================================ */
-[data-theme="light"] ::-webkit-scrollbar {
-  width: 6px;
+
+/* Section backgrounds */
+@utility rl-section-breath { background-color: transparent; }
+[data-theme="light"] .rl-section-breath { background-color: var(--rl-breath); }
+
+@utility rl-section-char { background-color: transparent; color: inherit; }
+[data-theme="light"] .rl-section-char {
+  background-color: var(--rl-char);
+  color: oklch(0.95 0.007 90);
 }
-[data-theme="light"] ::-webkit-scrollbar-track {
-  background: transparent;
+
+/* Colour utilities */
+@utility text-electric { color: var(--rl-electric); }
+@utility text-ember { color: var(--rl-ember); }
+@utility bg-rl-char { background-color: var(--rl-char); }
+@utility border-electric { border-color: var(--rl-electric); }
+
+/* Primary CTA button — ink bg → electric on hover */
+@utility rl-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.875rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  min-height: 44px;
+  letter-spacing: 0.01em;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  background: var(--foreground);
+  color: var(--background);
 }
-[data-theme="light"] ::-webkit-scrollbar-thumb {
-  background: oklch(0.75 0.02 75);
-  border-radius: 3px;
+[data-theme="light"] .rl-btn-primary {
+  background: var(--rl-ink);
+  color: var(--rl-void);
 }
-[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.60 0.03 75);
+[data-theme="light"] .rl-btn-primary:hover {
+  background: var(--rl-electric);
+  transform: translateY(-1px);
+}
+[data-theme="light"] .rl-btn-primary:active { transform: scale(0.98); }
+
+/* Ghost button */
+@utility rl-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.875rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  min-height: 44px;
+  border: 1px solid var(--hairline);
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="light"] .rl-btn-ghost {
+  border-color: oklch(0.08 0.015 245 / 0.22);
+  color: var(--rl-ink);
+}
+[data-theme="light"] .rl-btn-ghost:hover {
+  border-color: var(--rl-electric);
+  color: var(--rl-electric);
+}
+
+/* Text link button with animated underline */
+@utility rl-btn-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  font-weight: 500;
+  color: var(--foreground);
+  padding-bottom: 3px;
+  min-height: 44px;
+  transition: color 0.3s ease;
+}
+[data-theme="light"] .rl-btn-text::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 1.5px;
+  background: var(--rl-electric);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="light"] .rl-btn-text:hover::after { transform: scaleX(1); }
+[data-theme="light"] .rl-btn-text:hover { color: var(--rl-electric); }
+
+/* Electric photo tint overlay */
+@utility rl-photo-electric { position: relative; }
+[data-theme="light"] .rl-photo-electric::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: oklch(0.58 0.22 262 / 0.06);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* Service accordion hover row */
+[data-theme="light"] .rl-service-row:hover { background-color: oklch(0.96 0.004 52); }
+
+/* Accordion expanded image */
+@utility rl-accordion-img {
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* ── Manifesto section (dark within Theme 2) ── */
+@utility rl-manifesto {
+  background-color: transparent;
+}
+[data-theme="light"] .rl-manifesto {
+  background-color: var(--rl-char);
+}
+
+/* ── Thin vertical rule — hero decoration ── */
+@utility rl-vline {
+  display: none;
+}
+@media (min-width: 1024px) {
+  [data-theme="light"] .rl-vline {
+    display: block;
+    position: absolute;
+    right: 10%;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: oklch(0.08 0.015 245 / 0.06);
+  }
+}
+
+/* ── Pulse animation for electric dot ── */
+[data-theme="light"] .rl-pulse-dot {
+  animation: pulseElectric 3s ease-in-out infinite;
+}
+
+/* ── Footer dark variant (Theme 2 only) ── */
+@utility rl-footer-dark {
+  background-color: transparent;
+}
+[data-theme="light"] .rl-footer-dark {
+  background-color: var(--rl-char);
+  color: oklch(0.88 0.007 90);
+  border-color: oklch(1 0 0 / 0.06);
+}
+[data-theme="light"] .rl-footer-dark a {
+  color: oklch(0.70 0.015 90);
+}
+[data-theme="light"] .rl-footer-dark a:hover {
+  color: oklch(0.58 0.22 262);
+}
+[data-theme="light"] .rl-footer-dark .text-eyebrow {
+  color: oklch(0.58 0.22 262);
+}
+
+/* ── Stat counter display ── */
+@utility rl-stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+}
+
+/* ── People strip photo reveal ── */
+[data-theme="light"] .rl-person-card:hover .rl-person-overlay {
+  opacity: 0.55;
+}
+[data-theme="light"] .rl-person-bar {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="light"] .rl-person-card:hover .rl-person-bar {
+  transform: scaleX(1);
+}
+
+/* ── Image scale on hover ── */
+[data-theme="light"] .rl-img-scale {
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="light"] .rl-person-card:hover .rl-img-scale {
+  transform: scale(1.04);
 }
