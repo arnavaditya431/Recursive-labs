@@ -10,6 +10,7 @@ import { motion } from "motion/react";
 import { Loader2 } from "lucide-react";
 import { z } from "zod";
 import emailjs from "@emailjs/browser";
+import { useTheme } from "@/components/site/theme-provider";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100, "Name must be under 100 characters"),
@@ -32,6 +33,8 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  const { theme } = useTheme();
+  const isLight = theme === "light";
   const [formState, setFormState] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -127,7 +130,7 @@ function ContactPage() {
           <div className="order-2 lg:order-1 lg:col-span-6">
             <p className="text-eyebrow">Contact</p>
             <h1 className="mt-6 sm:mt-8 font-display fluid-h2">
-              Let's talk about what you're <span className="italic text-primary/90">building.</span>
+              Let's talk about what you're <span className={`italic ${isLight ? 'text-warm' : 'text-primary/90'}`}>building.</span>
             </h1>
             <p className="mt-6 sm:mt-10 max-w-md fluid-body-lg text-muted-foreground">
               Tell us a little about the work. We reply to every serious enquiry within two
@@ -136,25 +139,25 @@ function ContactPage() {
 
             <div className="mt-10 sm:mt-14 space-y-5 sm:space-y-6 text-foreground/90">
               <div className="flex items-start gap-4">
-                <Mail className="mt-1 h-5 w-5 text-primary shrink-0" aria-hidden="true" />
+                <Mail className={`mt-1 h-5 w-5 shrink-0 ${isLight ? 'text-warm' : 'text-primary'}`} aria-hidden="true" />
                 <div>
                   <p className="text-eyebrow">Company Email</p>
-                  <a href={`mailto:${BRAND.email}`} className="mt-1 block hover:text-primary transition">
+                  <a href={`mailto:${BRAND.email}`} className="mt-1 block hover:text-foreground transition">
                     {BRAND.email}
                   </a>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <Phone className="mt-1 h-5 w-5 text-primary shrink-0" aria-hidden="true" />
+                <Phone className={`mt-1 h-5 w-5 shrink-0 ${isLight ? 'text-warm' : 'text-primary'}`} aria-hidden="true" />
                 <div>
                   <p className="text-eyebrow">Phone</p>
-                  <a href={`tel:${BRAND.phone.replace(/\s+/g, "")}`} className="mt-1 block hover:text-primary transition">
+                  <a href={`tel:${BRAND.phone.replace(/\s+/g, "")}`} className="mt-1 block hover:text-foreground transition">
                     {BRAND.phone}
                   </a>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <MapPin className="mt-1 h-5 w-5 text-primary shrink-0" aria-hidden="true" />
+                <MapPin className={`mt-1 h-5 w-5 shrink-0 ${isLight ? 'text-warm' : 'text-primary'}`} aria-hidden="true" />
                 <div>
                   <p className="text-eyebrow">Operational Presence</p>
                   <div className="mt-2 space-y-1 text-sm text-foreground/80">
@@ -165,7 +168,7 @@ function ContactPage() {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <Clock className="mt-1 h-5 w-5 text-primary shrink-0" aria-hidden="true" />
+                <Clock className={`mt-1 h-5 w-5 shrink-0 ${isLight ? 'text-warm' : 'text-primary'}`} aria-hidden="true" />
                 <div>
                   <p className="text-eyebrow">Business Hours</p>
                   <p className="mt-1 text-sm text-foreground/80">
@@ -180,7 +183,7 @@ function ContactPage() {
 
             <div className="mt-10 sm:mt-14 flex flex-wrap gap-2">
               {SOCIAL_LINKS.map((s) => (
-                <a key={s.label} href={s.href} className="rounded-full border hairline px-3 py-2 text-xs hover:text-foreground text-muted-foreground transition touch-target">
+                <a key={s.label} href={s.href} className={`rounded-full border px-3 py-2 text-xs text-muted-foreground transition touch-target ${isLight ? 'border-border/50 hover:text-warm hover:border-warm' : 'hairline hover:text-foreground'}`}>
                   {s.label}
                 </a>
               ))}
@@ -191,7 +194,12 @@ function ContactPage() {
             <Reveal>
               <form
                 onSubmit={handleSubmit}
-                className="rounded-lg border hairline bg-card/40 p-6 sm:p-8 md:p-10 space-y-8"
+                className={cn(
+                  "rounded-2xl border p-6 sm:p-8 md:p-10 space-y-8",
+                  isLight
+                    ? "bg-card/60 border-border/40 shadow-theme-lg backdrop-blur-sm"
+                    : "hairline bg-card/40"
+                )}
                 aria-label="Contact enquiry form"
               >
                 {formState === "success" ? (
@@ -204,7 +212,7 @@ function ContactPage() {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                      className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary"
+                      className={`mx-auto flex h-14 w-14 items-center justify-center rounded-full ${isLight ? 'bg-warm/10 text-warm' : 'bg-primary/10 text-primary'}`}
                     >
                       <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -240,7 +248,8 @@ function ContactPage() {
                       name="name" 
                       required 
                       disabled={formState === "loading"} 
-                      error={errors.name} 
+                      error={errors.name}
+                      isLight={isLight}
                     />
                     
                     <FloatingField 
@@ -249,21 +258,24 @@ function ContactPage() {
                       type="email" 
                       required 
                       disabled={formState === "loading"} 
-                      error={errors.email} 
+                      error={errors.email}
+                      isLight={isLight}
                     />
                     
                     <FloatingField 
                       label="Company" 
                       name="company" 
                       disabled={formState === "loading"} 
-                      error={errors.company} 
+                      error={errors.company}
+                      isLight={isLight}
                     />
                     
                     <FloatingField 
                       label="Role" 
                       name="role" 
                       disabled={formState === "loading"} 
-                      error={errors.role} 
+                      error={errors.role}
+                      isLight={isLight}
                     />
 
                     <div>
@@ -273,7 +285,12 @@ function ContactPage() {
                           (t) => (
                             <label
                               key={t}
-                              className="cursor-pointer rounded-full border hairline px-3.5 py-2 text-xs text-muted-foreground has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary transition touch-target"
+                              className={cn(
+                                "cursor-pointer rounded-full border px-3.5 py-2 text-xs text-muted-foreground transition touch-target",
+                                isLight
+                                  ? "border-border/50 has-[:checked]:bg-warm has-[:checked]:text-warm-foreground has-[:checked]:border-warm"
+                                  : "hairline has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary"
+                              )}
                             >
                               <input 
                                 type="radio" 
@@ -295,13 +312,19 @@ function ContactPage() {
                       textarea 
                       required 
                       disabled={formState === "loading"} 
-                      error={errors.message} 
+                      error={errors.message}
+                      isLight={isLight}
                     />
 
                     <button
                       type="submit"
                       disabled={formState === "loading"}
-                      className="group inline-flex w-full items-center justify-between rounded-full bg-foreground px-6 py-4 text-sm text-background hover:bg-primary hover:text-primary-foreground transition touch-target disabled:opacity-50 disabled:cursor-not-allowed"
+                      className={cn(
+                        "group inline-flex w-full items-center justify-between rounded-full px-6 py-4 text-sm transition-all touch-target disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.01] active:scale-[0.99]",
+                        isLight
+                          ? "btn-warm shadow-theme-md"
+                          : "bg-foreground text-background hover:bg-primary hover:text-primary-foreground"
+                      )}
                     >
                       {formState === "loading" ? (
                         <span className="flex items-center gap-2">
@@ -332,6 +355,7 @@ function FloatingField({
   textarea,
   disabled,
   error,
+  isLight,
 }: {
   label: string;
   name: string;
@@ -340,6 +364,7 @@ function FloatingField({
   textarea?: boolean;
   disabled?: boolean;
   error?: string;
+  isLight?: boolean;
 }) {
   return (
     <div className="relative">
@@ -352,7 +377,8 @@ function FloatingField({
           rows={5}
           placeholder=" "
           className={cn(
-            "peer w-full resize-none border-b hairline bg-transparent pt-6 pb-2 text-base text-foreground placeholder-transparent focus:border-primary focus:outline-none transition-colors disabled:opacity-50",
+            "peer w-full resize-none border-b bg-transparent pt-6 pb-2 text-base text-foreground placeholder-transparent focus:outline-none transition-colors disabled:opacity-50",
+            isLight ? "border-border/40 focus:border-warm" : "hairline focus:border-primary",
             error && "border-red-500/50 focus:border-red-500"
           )}
         />
@@ -365,7 +391,8 @@ function FloatingField({
           disabled={disabled}
           placeholder=" "
           className={cn(
-            "peer w-full border-b hairline bg-transparent pt-6 pb-2 text-base min-h-[48px] text-foreground placeholder-transparent focus:border-primary focus:outline-none transition-colors disabled:opacity-50",
+            "peer w-full border-b bg-transparent pt-6 pb-2 text-base min-h-[48px] text-foreground placeholder-transparent focus:outline-none transition-colors disabled:opacity-50",
+            isLight ? "border-border/40 focus:border-warm" : "hairline focus:border-primary",
             error && "border-red-500/50 focus:border-red-500"
           )}
         />
@@ -373,7 +400,10 @@ function FloatingField({
       <label
         htmlFor={name}
         className={cn(
-          "pointer-events-none absolute left-0 top-1 text-xs uppercase tracking-widest text-muted-foreground transition-all peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:top-1 peer-focus:text-xs peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-primary",
+          "pointer-events-none absolute left-0 top-1 text-xs uppercase tracking-widest text-muted-foreground transition-all peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal",
+          isLight
+            ? "peer-focus:top-1 peer-focus:text-xs peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-warm"
+            : "peer-focus:top-1 peer-focus:text-xs peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-primary",
           error && "text-red-500/70 peer-focus:text-red-500"
         )}
       >

@@ -3,10 +3,14 @@ import { ArrowUpRight, ArrowUp } from "lucide-react";
 import { LogoFull } from "@/components/brand/logo";
 import { BRAND, SOCIAL_LINKS } from "@/lib/brand";
 import { services } from "@/lib/services";
+import { useTheme } from "@/components/site/theme-provider";
 
 export function SiteFooter() {
+  const { theme } = useTheme();
+  const isLight = theme === "light";
+
   return (
-    <footer className="mt-16 sm:mt-32 border-t hairline">
+    <footer className={`mt-16 sm:mt-32 border-t ${isLight ? 'border-border/30 light-section-warm' : 'hairline'}`}>
       <div className="container-editorial py-16 sm:py-20">
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 sm:gap-16 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div className="col-span-1 flex flex-col items-center text-center sm:col-span-2 lg:col-span-1 lg:items-start lg:text-left">
@@ -19,7 +23,7 @@ export function SiteFooter() {
                 <a
                   key={s.label}
                   href={s.href}
-                  className="inline-flex items-center gap-1 rounded-full border hairline px-3 py-2 sm:px-3 sm:py-1.5 text-xs text-muted-foreground hover:text-foreground hover:border-foreground/50 transition touch-target"
+                  className={`inline-flex items-center gap-1 rounded-full border px-3 py-2 sm:px-3 sm:py-1.5 text-xs text-muted-foreground hover:text-foreground transition touch-target ${isLight ? 'border-border/50 hover:border-warm hover:text-warm' : 'hairline hover:border-foreground/50'}`}
                 >
                   {s.label}
                   <ArrowUpRight className="h-3 w-3 shrink-0" />
@@ -35,6 +39,7 @@ export function SiteFooter() {
                 { to: "/about", label: "About" },
                 { to: "/team", label: "Leadership" },
                 { to: "/services", label: "Services" },
+                { to: "/projects", label: "Projects" },
                 { to: "/contact", label: "Contact" },
               ].map((l) => (
                 <li key={l.to}>
@@ -98,9 +103,11 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-center justify-center gap-4 border-t hairline pt-8 text-center text-xs text-muted-foreground md:flex-row md:justify-between md:text-left">
+        <div className={`mt-16 flex flex-col items-center justify-center gap-4 border-t pt-8 text-center text-xs text-muted-foreground md:flex-row md:justify-between md:text-left ${isLight ? 'border-border/30' : 'hairline'}`}>
           <p>© {new Date().getFullYear()} {BRAND.name}. All rights reserved.</p>
-          <p className="font-mono">v1.0 · {BRAND.tagline}</p>
+          <p className={`font-mono ${isLight ? 'text-warm/60' : ''}`}>
+            Designed & Engineered in India 🇮🇳
+          </p>
         </div>
       </div>
     </footer>

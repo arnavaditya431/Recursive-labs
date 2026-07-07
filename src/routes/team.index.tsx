@@ -3,12 +3,13 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { Portrait } from "@/components/site/portrait";
-import { Reveal, SplitWords } from "@/components/site/reveal";
+import { Reveal } from "@/components/site/reveal";
 import { StructuredData } from "@/components/site/structured-data";
 import { BRAND } from "@/lib/brand";
 import { defaultMeta, breadcrumbSchema } from "@/lib/seo";
 import { team, type TeamMember } from "@/lib/team";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useTheme } from "@/components/site/theme-provider";
 
 export const Route = createFileRoute("/team/")({
   head: () =>
@@ -22,6 +23,9 @@ export const Route = createFileRoute("/team/")({
 });
 
 function TeamPage() {
+  const { theme } = useTheme();
+  const isLight = theme === "light";
+
   return (
     <div>
       <StructuredData
@@ -34,24 +38,24 @@ function TeamPage() {
       <section className="container-editorial pt-16 sm:pt-24 pb-10 sm:pb-16">
         <p className="text-eyebrow">Leadership</p>
         <h1 className="mt-6 sm:mt-8 font-display fluid-h1 max-w-5xl">
-          The people <span className="italic text-primary/90">behind the work.</span>
+          The people <span className={`italic ${isLight ? 'text-warm' : 'text-primary/90'}`}>behind the work.</span>
         </h1>
         <p className="mt-6 sm:mt-10 max-w-2xl fluid-body-lg text-muted-foreground">
-          {BRAND.name} is built by a close-knit team of engineers, strategists, and designers.
+          {BRAND.shortName} is built by a close-knit team of engineers, strategists, and designers.
           Each leader occupies a discipline; all of us stay close to the work.
         </p>
       </section>
 
       <div>
         {team.map((m, i) => (
-          <MemberPanel key={m.slug} member={m} index={i} />
+          <MemberPanel key={m.slug} member={m} index={i} isLight={isLight} />
         ))}
       </div>
     </div>
   );
 }
 
-function MemberPanel({ member, index }: { member: TeamMember; index: number }) {
+function MemberPanel({ member, index, isLight }: { member: TeamMember; index: number; isLight: boolean }) {
   const ref = useRef<HTMLElement>(null);
   const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({
@@ -68,11 +72,11 @@ function MemberPanel({ member, index }: { member: TeamMember; index: number }) {
   return (
     <section
       ref={ref}
-      className="relative min-h-0 lg:min-h-screen overflow-hidden border-t hairline"
+      className={`relative min-h-0 lg:min-h-screen overflow-hidden border-t ${isLight ? 'border-border/30' : 'hairline'}`}
     >
       {/* Background specialization image */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-10 sm:opacity-20"
+        className={`pointer-events-none absolute inset-0 ${isLight ? 'opacity-5' : 'opacity-10 sm:opacity-20'}`}
         style={{
           backgroundImage: `url(${member.specializationBg})`,
           backgroundSize: "cover",
@@ -89,7 +93,7 @@ function MemberPanel({ member, index }: { member: TeamMember; index: number }) {
             {isMobile ? (
               /* Mobile: simple reveal, no scroll-driven filter */
               <Reveal>
-                <div className="relative aspect-square w-full sm:aspect-[4/5] max-w-sm sm:max-w-md mx-auto overflow-hidden border hairline rounded-2xl shadow-xl shadow-background/50">
+                <div className={`relative aspect-square w-full sm:aspect-[4/5] max-w-sm sm:max-w-md mx-auto overflow-hidden rounded-2xl ${isLight ? 'shadow-theme-xl photo-warm' : 'border hairline shadow-xl shadow-background/50'}`}>
                   <Portrait
                     src={member.photo}
                     alt={`${member.name}, ${member.role}`}
@@ -97,14 +101,14 @@ function MemberPanel({ member, index }: { member: TeamMember; index: number }) {
                     className="h-full w-full"
                   />
                   <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background/60 via-transparent to-transparent" />
-                  <div className="absolute left-3 top-3 sm:left-4 sm:top-4 rounded-full bg-background/70 backdrop-blur px-3 py-1 text-xs font-mono text-muted-foreground">
+                  <div className={`absolute left-3 top-3 sm:left-4 sm:top-4 rounded-full bg-background/70 backdrop-blur px-3 py-1 text-xs font-mono ${isLight ? 'text-warm' : 'text-muted-foreground'}`}>
                     0{index + 1} / 0{team.length}
                   </div>
                 </div>
               </Reveal>
             ) : (
               /* Desktop: scroll-driven grayscale transition */
-              <motion.div style={{ filter }} className="relative aspect-[3/4] w-full max-w-lg overflow-hidden border hairline">
+              <motion.div style={{ filter }} className={`relative aspect-[3/4] w-full max-w-lg overflow-hidden ${isLight ? 'rounded-2xl shadow-theme-xl photo-warm' : 'border hairline'}`}>
                 <Portrait
                   src={member.photo}
                   alt={`${member.name}, ${member.role}`}
@@ -112,7 +116,7 @@ function MemberPanel({ member, index }: { member: TeamMember; index: number }) {
                   className="h-full w-full"
                 />
                 <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background/60 via-transparent to-transparent" />
-                <div className="absolute left-4 top-4 rounded-full bg-background/70 backdrop-blur px-3 py-1 text-xs font-mono text-muted-foreground">
+                <div className={`absolute left-4 top-4 rounded-full bg-background/70 backdrop-blur px-3 py-1 text-xs font-mono ${isLight ? 'text-warm' : 'text-muted-foreground'}`}>
                   0{index + 1} / 0{team.length}
                 </div>
               </motion.div>
@@ -133,7 +137,7 @@ function MemberPanel({ member, index }: { member: TeamMember; index: number }) {
                 <p className="mt-4 font-display italic text-xl sm:text-2xl text-muted-foreground">
                   {member.role}
                 </p>
-                <p className="mt-1 text-sm uppercase tracking-widest text-primary/80">
+                <p className={`mt-1 text-sm uppercase tracking-widest ${isLight ? 'text-warm/80' : 'text-primary/80'}`}>
                   {member.title}
                 </p>
                 <p className="mt-1 text-xs font-mono text-muted-foreground uppercase">
@@ -146,7 +150,7 @@ function MemberPanel({ member, index }: { member: TeamMember; index: number }) {
                   <Link
                     to="/team/$slug"
                     params={{ slug: member.slug }}
-                    className="group inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm text-background hover:bg-primary hover:text-primary-foreground transition touch-target"
+                    className={`group inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full px-5 py-3 text-sm transition touch-target ${isLight ? 'btn-warm shadow-theme-md' : 'bg-foreground text-background hover:bg-primary hover:text-primary-foreground'}`}
                   >
                     View profile
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -164,7 +168,7 @@ function MemberPanel({ member, index }: { member: TeamMember; index: number }) {
                 </motion.p>
                 <motion.p
                   style={{ opacity: textOpacity }}
-                  className="mt-2 text-sm uppercase tracking-widest text-primary/80"
+                  className={`mt-2 text-sm uppercase tracking-widest ${isLight ? 'text-warm/80' : 'text-primary/80'}`}
                 >
                   {member.title}
                 </motion.p>
@@ -184,7 +188,7 @@ function MemberPanel({ member, index }: { member: TeamMember; index: number }) {
                   <Link
                     to="/team/$slug"
                     params={{ slug: member.slug }}
-                    className="group inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm text-background hover:bg-primary hover:text-primary-foreground transition"
+                    className={`group inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm transition ${isLight ? 'btn-warm shadow-theme-md hover:scale-[1.02] active:scale-[0.98]' : 'bg-foreground text-background hover:bg-primary hover:text-primary-foreground'}`}
                   >
                     View profile
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
