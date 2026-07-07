@@ -1,175 +1,60 @@
 /* ============================================================
-   GOOGLE FONTS — DM Serif Display + DM Sans + Fira Code
-   Scoped to the alternate theme only via CSS custom property
-   override in [data-theme="light"]. Dark theme retains its
-   original Instrument Serif / Inter Tight / JetBrains Mono.
+   RECURSIVE LAB V3.0 — DESIGN SYSTEM
+   The Design Bible is Law.
    ============================================================ */
+
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fira+Code:wght@300;400;500&display=swap');
 
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is([data-theme="dark"] *));
+:root {
+  /* ── THE PROPRIETARY COLOUR SYSTEM ── */
+  --kagaz: oklch(0.965 0.008 70);       /* Paper. Warm, handmade, Indian. Primary bg. */
+  --syahi: oklch(0.10 0.018 255);       /* Ink. Deep, authoritative. Primary text. */
+  --nila: oklch(0.40 0.12 260);         /* Rich Indigo. Accent, interactive, CTA. */
+  --dhul: oklch(0.58 0.012 255);        /* Dust. Warm grey. Secondary text, metadata. */
+  --rekha: oklch(0.86 0.006 70);        /* Line. Almost invisible. Structural borders. */
 
-@theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-ink: var(--ink);
-  --color-ivory: var(--ivory);
-  --color-hairline: var(--hairline);
-  --color-warm: var(--warm);
-  --color-warm-foreground: var(--warm-foreground);
-  /* Base fonts — used by dark theme */
-  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
-  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
-}
-
-/* ============================================================
-   THEME 2 — Digital India, Engineered Precision
-   NOT a "light theme." A completely separate design language.
-   v3.0 Creative Reset.
-   ============================================================ */
-:root,
-[data-theme="light"] {
-  /* ── Font override: DM family replaces defaults in this theme ── */
+  /* Semantic Mappings for UI/Tailwind */
+  --background: var(--kagaz);
+  --foreground: var(--syahi);
+  --muted: var(--kagaz);
+  --muted-foreground: var(--dhul);
+  --border: var(--rekha);
+  --primary: var(--nila);
+  --primary-foreground: var(--kagaz);
+  
+  /* ── TYPOGRAPHY SCALE ── */
   --font-display: "DM Serif Display", ui-serif, Georgia, serif;
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Fira Code", ui-monospace, monospace;
 
-  --radius: 0.1rem; /* Near-zero — architectural sharpness */
+  /* Display / Hero */
+  --text-display: clamp(4.5rem, 14vw, 15rem);
+  --track-display: -0.045em;
+  
+  /* Section Title */
+  --text-title: clamp(2.2rem, 6vw, 6rem);
+  --track-title: -0.025em;
 
-  /* ── Core Semantic Tokens ── */
-  --background: oklch(0.98 0.003 50);        /* void: warm scientific paper */
-  --foreground: oklch(0.08 0.015 245);        /* ink: steel-dark */
-  --ink: oklch(0.06 0.012 245);
-  --ivory: oklch(0.98 0.003 50);
-  --card: oklch(0.96 0.004 52);
-  --card-foreground: oklch(0.08 0.015 245);
-  --popover: oklch(0.98 0.003 50);
-  --popover-foreground: oklch(0.08 0.015 245);
-  --primary: oklch(0.58 0.22 262);            /* electric indigo */
-  --primary-foreground: oklch(0.98 0.002 90);
-  --secondary: oklch(0.94 0.008 58);
-  --secondary-foreground: oklch(0.08 0.015 245);
-  --muted: oklch(0.93 0.006 55);
-  --muted-foreground: oklch(0.48 0.022 245);
-  --accent: oklch(0.64 0.20 42);              /* ember amber */
-  --accent-foreground: oklch(0.98 0.002 90);
-  --warm: oklch(0.64 0.20 42);
-  --warm-foreground: oklch(0.98 0.002 90);
-  --destructive: oklch(0.55 0.22 27);
-  --destructive-foreground: oklch(0.98 0.002 90);
-  --border: oklch(0.87 0.007 55);
-  --input: oklch(0.91 0.005 55);
-  --ring: oklch(0.58 0.22 262);
-  --hairline: oklch(0 0 0 / 0.07);
+  /* Statement */
+  --text-statement: clamp(1.5rem, 2.8vw, 2.5rem);
+  --track-statement: -0.01em;
 
-  /* ── Extended Design System — v3.0 Palette ── */
-  --rl-void: oklch(0.98 0.003 50);
-  --rl-ink: oklch(0.08 0.015 245);
-  --rl-electric: oklch(0.58 0.22 262);
-  --rl-ember: oklch(0.64 0.20 42);
-  --rl-slate: oklch(0.55 0.04 240);
-  --rl-breath: oklch(0.945 0.008 58);
-  --rl-smoke: oklch(0.92 0.005 240);
-  --rl-char: oklch(0.10 0.018 245);
+  /* Body */
+  --text-body: clamp(0.95rem, 1.05vw, 1.1rem);
 
-  /* ── Backward-compat aliases ── */
-  --saffron: oklch(0.64 0.20 42);
-  --saffron-deep: oklch(0.50 0.18 38);
-  --indigo-deep: oklch(0.10 0.018 245);
-  --cream: oklch(0.945 0.008 58);
-  --clay: oklch(0.48 0.022 245);
-
-  /* ── Typography Scale — Architectural ── */
-  --text-h1: clamp(2.5rem, 9vw, 9rem);
-  --text-h2: clamp(2rem, 6vw, 6rem);
-  --text-h3: clamp(1.6rem, 3.5vw, 3.5rem);
-  --text-h4: clamp(1.25rem, 2.2vw, 2.2rem);
-  --text-body-lg: clamp(1.0625rem, 1.1vw, 1.25rem);
-  --text-massive: clamp(4.5rem, 18vw, 16rem);
-  --text-display: clamp(3rem, 12vw, 10rem);
-
-  /* ── Spacing ── */
-  --section-py: clamp(4.5rem, 9vw, 9rem);
-  --section-py-lg: clamp(5.5rem, 11vw, 11rem);
+  /* Data / Number */
+  --text-data: clamp(3rem, 8vw, 9rem);
+  --track-data: -0.03em;
+  
+  /* ── GRID SYSTEM (Powers of 2) ── */
   --container-px: clamp(1.25rem, 5vw, 3rem);
-
-  /* ── Hero Overlay ── */
-  --hero-overlay-start: oklch(0.98 0.003 50 / 0.92);
-  --hero-overlay-mid: oklch(0.98 0.003 50 / 0.72);
-  --hero-overlay-end: oklch(0.98 0.003 50 / 0.42);
-  --hero-overlay-bottom: oklch(0.98 0.003 50 / 0.96);
-
-  /* ── Shadows — Precision-tinted ── */
-  --shadow-sm: 0 1px 3px oklch(0.08 0.02 245 / 0.05);
-  --shadow-md: 0 4px 16px oklch(0.08 0.02 245 / 0.07), 0 1px 3px oklch(0.08 0.02 245 / 0.04);
-  --shadow-lg: 0 8px 32px oklch(0.08 0.02 245 / 0.09), 0 2px 8px oklch(0.08 0.02 245 / 0.04);
-  --shadow-xl: 0 16px 64px oklch(0.08 0.02 245 / 0.11), 0 4px 16px oklch(0.08 0.02 245 / 0.04);
-  --shadow-dramatic: 0 24px 80px oklch(0.08 0.02 245 / 0.13), 0 8px 24px oklch(0.08 0.02 245 / 0.06);
-}
-
-/* ============================================================
-   DARK THEME — Refined Cinematic (LOCKED — DO NOT MODIFY)
-   ============================================================ */
-[data-theme="dark"] {
-  --background: oklch(0.13 0.02 260);
-  --foreground: oklch(0.95 0.007 90);
-  --ink: oklch(0.09 0.015 260);
-  --ivory: oklch(0.95 0.007 90);
-  --card: oklch(0.17 0.022 260);
-  --card-foreground: oklch(0.95 0.007 90);
-  --popover: oklch(0.15 0.02 260);
-  --popover-foreground: oklch(0.95 0.007 90);
-  --primary: oklch(0.60 0.19 252);
-  --primary-foreground: oklch(0.10 0.015 260);
-  --secondary: oklch(0.20 0.02 260);
-  --secondary-foreground: oklch(0.95 0.007 90);
-  --muted: oklch(0.18 0.018 260);
-  --muted-foreground: oklch(0.60 0.018 260);
-  --accent: oklch(0.70 0.14 78);
-  --accent-foreground: oklch(0.10 0.015 260);
-  --warm: oklch(0.70 0.14 78);
-  --warm-foreground: oklch(0.10 0.015 260);
-  --destructive: oklch(0.63 0.22 27);
-  --destructive-foreground: oklch(0.98 0.005 90);
-  --border: oklch(0.25 0.02 260);
-  --input: oklch(0.22 0.02 260);
-  --ring: oklch(0.60 0.19 252);
-  --hairline: oklch(1 0 0 / 0.07);
-
-  --hero-overlay-start: oklch(0.11 0.02 260 / 0.92);
-  --hero-overlay-mid: oklch(0.11 0.02 260 / 0.78);
-  --hero-overlay-end: oklch(0.11 0.02 260 / 0.55);
-  --hero-overlay-bottom: oklch(0.11 0.02 260 / 0.85);
-
-  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.20);
-  --shadow-md: 0 2px 8px oklch(0 0 0 / 0.25), 0 1px 2px oklch(0 0 0 / 0.15);
-  --shadow-lg: 0 4px 16px oklch(0 0 0 / 0.30), 0 2px 4px oklch(0 0 0 / 0.15);
-  --shadow-xl: 0 8px 32px oklch(0 0 0 / 0.35), 0 4px 8px oklch(0 0 0 / 0.15);
+  
+  /* Architectural Sharpness */
+  --radius: 0px; 
 }
 
 /* ============================================================
@@ -178,60 +63,79 @@
 
 @layer base {
   * {
-    border-color: var(--color-border);
-    transition-property: background-color, color, border-color, box-shadow, opacity;
-    transition-duration: 0.35s;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    border-color: var(--border);
+    /* No default transitions for everything to prevent lag, only specific properties on elements */
   }
+
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
+
   html, body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--background);
+    color: var(--foreground);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
     -webkit-text-size-adjust: 100%;
-  }
-  html { scroll-behavior: smooth; }
-
-  /* Theme 2: electric indigo + ember ambient — precise, technical */
-  [data-theme="light"] body {
-    background-image:
-      radial-gradient(900px 600px at 80% -15%, oklch(0.58 0.22 262 / 0.04), transparent 65%),
-      radial-gradient(700px 500px at -5% 45%, oklch(0.64 0.20 42 / 0.03), transparent 60%);
-    background-attachment: fixed;
+    /* Hide default cursor on desktop when custom cursor is active */
+    cursor: none;
   }
 
-  /* Dark mode: unchanged */
-  [data-theme="dark"] body {
-    background-image:
-      radial-gradient(1200px 600px at 80% -10%, oklch(0.35 0.09 245 / 0.35), transparent 60%),
-      radial-gradient(900px 500px at -10% 30%, oklch(0.32 0.08 260 / 0.35), transparent 60%);
-    background-attachment: fixed;
-  }
-
-  @media (max-width: 767px) {
-    [data-theme="light"] body {
-      background-image:
-        radial-gradient(400px 300px at 80% -10%, oklch(0.58 0.22 262 / 0.03), transparent 60%);
-      background-attachment: scroll;
-    }
-    [data-theme="dark"] body {
-      background-image:
-        radial-gradient(400px 300px at 80% -10%, oklch(0.35 0.09 245 / 0.25), transparent 60%),
-        radial-gradient(350px 250px at -10% 30%, oklch(0.32 0.08 260 / 0.25), transparent 60%);
-      background-attachment: scroll;
+  /* Expose cursor if touched or on mobile */
+  @media (hover: none) and (pointer: coarse) {
+    html, body {
+      cursor: auto;
     }
   }
 
-  h1,h2,h3,h4 { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; }
-  [data-theme="light"] h1, [data-theme="light"] h2 { font-weight: 400; }
+  /* The Recursive Pattern Background (Moment 11) */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: 
+      linear-gradient(var(--rekha) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rekha) 1px, transparent 1px);
+    background-size: 100px 100px;
+    opacity: 0.03;
+    transform: rotate(2deg) scale(1.5);
+  }
 
-  ::selection { background: var(--color-primary); color: var(--color-primary-foreground); }
-  [data-theme="light"] ::selection { background: var(--rl-electric); color: oklch(0.98 0.002 90); }
+  h1, h2, h3, h4, .font-display { 
+    font-family: var(--font-display); 
+    font-weight: 400; 
+  }
+  
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  ::selection { 
+    background: var(--nila); 
+    color: var(--kagaz); 
+  }
 }
 
-/* Reduced motion */
+/* Reduced motion fallback */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -242,434 +146,250 @@
 }
 
 /* ============================================================
-   SHARED UTILITIES
+   TYPOGRAPHY SYSTEM
    ============================================================ */
 
-@utility container-editorial {
-  width: 100%;
-  max-width: 1360px;
-  margin-inline: auto;
-  padding-inline: var(--container-px);
+/* The Ghost Echo (Moment 06/Proprietary Element 06) */
+.ghost-echo {
+  position: relative;
+  z-index: 1;
 }
 
-@utility hairline { border-color: var(--hairline); }
+.ghost-echo::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  color: var(--syahi);
+  opacity: 0.04;
+  z-index: -1;
+  pointer-events: none;
+}
+
+@utility text-display {
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  letter-spacing: var(--track-display);
+  line-height: 0.9;
+}
+
+@utility text-title {
+  font-family: var(--font-display);
+  font-size: var(--text-title);
+  letter-spacing: var(--track-title);
+  line-height: 1;
+}
+
+@utility text-statement {
+  font-family: var(--font-display);
+  font-size: var(--text-statement);
+  letter-spacing: var(--track-statement);
+  line-height: 1.1;
+}
+
+@utility text-data {
+  font-family: var(--font-display);
+  font-size: var(--text-data);
+  letter-spacing: var(--track-data);
+  line-height: 1;
+}
+
+@utility text-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.6;
+}
 
 @utility text-eyebrow {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.22em;
+  font-size: 11px;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--color-muted-foreground);
-}
-[data-theme="light"] .text-eyebrow {
-  color: var(--rl-electric);
-  letter-spacing: 0.28em;
-  font-size: 0.68rem;
 }
 
-@utility grain { position: relative; }
-
-@utility marquee { animation: marquee 40s linear infinite; }
-@media (max-width: 767px) { .marquee { animation-duration: 25s; } }
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+/* The Italic Rule */
+@utility text-italic-accent {
+  font-style: italic;
+  color: var(--nila);
 }
-[data-theme="light"] .marquee {
-  animation: marqueeScroll 35s linear infinite;
-  width: max-content;
-}
-[data-theme="light"] .marquee:hover { animation-play-state: paused; }
-@keyframes marqueeScroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes floaty {
-  0%,100% { transform: translateY(0); }
-  50%      { transform: translateY(-12px); }
-}
-@utility floaty { animation: floaty 8s ease-in-out infinite; }
-
-@keyframes floatLayer {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  33%      { transform: translateY(-8px) rotate(0.5deg); }
-  66%      { transform: translateY(-4px) rotate(-0.3deg); }
-}
-@keyframes scrollIndicatorBounce {
-  0%, 100% { transform: scaleY(0); opacity: 0; }
-  30%      { transform: scaleY(1); opacity: 1; }
-  70%      { transform: scaleY(1); opacity: 1; }
-}
-@keyframes scrollIndicator {
-  0%, 100% { transform: translateY(0); opacity: 0.5; }
-  50%      { transform: translateY(8px); opacity: 1; }
-}
-@keyframes clipRevealUp {
-  from { clip-path: inset(100% 0 0 0); }
-  to   { clip-path: inset(0 0 0 0); }
-}
-@keyframes clipRevealLeft {
-  from { clip-path: inset(0 100% 0 0); }
-  to   { clip-path: inset(0 0 0 0); }
-}
-@keyframes pulseElectric {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50%      { opacity: 1; transform: scale(1.15); }
-}
-@keyframes lineGrow {
-  0%   { transform: scaleY(0); opacity: 0; }
-  30%  { opacity: 1; }
-  100% { transform: scaleY(1); opacity: 0.4; }
-}
-
-@utility hero-overlay {
-  background:
-    linear-gradient(105deg, var(--hero-overlay-start) 0%, var(--hero-overlay-mid) 45%, var(--hero-overlay-end) 100%),
-    linear-gradient(to top, var(--hero-overlay-bottom), transparent 40%);
-}
-@media (max-width: 767px) {
-  .hero-overlay {
-    background:
-      linear-gradient(180deg, var(--hero-overlay-start) 0%, var(--hero-overlay-mid) 50%, var(--hero-overlay-end) 100%),
-      linear-gradient(to top, var(--hero-overlay-bottom), transparent 50%);
-  }
-}
-
-/* Fluid headings */
-@utility fluid-h1 { font-size: var(--text-h1); line-height: 0.95; letter-spacing: -0.02em; }
-@utility fluid-h2 { font-size: var(--text-h2); line-height: 1.05; letter-spacing: -0.01em; }
-@utility fluid-h3 { font-size: var(--text-h3); line-height: 1.15; }
-@utility fluid-h4 { font-size: var(--text-h4); line-height: 1.25; }
-@utility fluid-body-lg { font-size: var(--text-body-lg); line-height: 1.70; }
-
-@utility section-py { padding-block: var(--section-py); }
-@utility section-py-lg { padding-block: var(--section-py-lg); }
-
-@utility touch-target { min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; }
-
-@utility shadow-theme-sm { box-shadow: var(--shadow-sm); }
-@utility shadow-theme-md { box-shadow: var(--shadow-md); }
-@utility shadow-theme-lg { box-shadow: var(--shadow-lg); }
-@utility shadow-theme-xl { box-shadow: var(--shadow-xl); }
-@utility shadow-dramatic { box-shadow: var(--shadow-dramatic); }
-
-/* Backward-compat colour utilities */
-@utility text-saffron { color: var(--saffron); }
-@utility text-clay { color: var(--clay); }
-@utility bg-cream { background-color: var(--cream); }
-@utility bg-indigo-deep { background-color: var(--indigo-deep); }
-@utility border-saffron { border-color: var(--saffron); }
-
-/* Massive display text */
-@utility light-text-massive {
-  font-size: var(--text-massive);
-  line-height: 0.85;
-  letter-spacing: -0.04em;
-  font-weight: 400;
-}
-@utility light-text-display {
-  font-size: var(--text-display);
-  line-height: 0.9;
-  letter-spacing: -0.03em;
-}
-
-/* Body scroll lock */
-.body-scroll-locked { overflow: hidden; position: fixed; inset: 0; width: 100%; }
-
-/* Scrollbar */
-[data-theme="light"] ::-webkit-scrollbar { width: 5px; }
-[data-theme="light"] ::-webkit-scrollbar-track { background: transparent; }
-[data-theme="light"] ::-webkit-scrollbar-thumb { background: oklch(0.80 0.005 55); border-radius: 3px; }
-[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: oklch(0.58 0.22 262 / 0.5); }
 
 /* ============================================================
-   LEGACY UTILITIES — Preserved for dark-mode components
+   RECURSIVE FRAME SYSTEM
    ============================================================ */
 
-@utility light-card {
-  border: 1px solid var(--hairline);
-}
-[data-theme="light"] .light-card {
-  background: oklch(0.97 0.003 50);
-  border: 1px solid oklch(0.87 0.007 55 / 0.6);
-  box-shadow: var(--shadow-md);
-}
+/* Handled via React component <RecursiveFrame /> for complex SVG drawing,
+   but CSS fallbacks for simple hover states where pure CSS makes sense. */
 
-@utility light-section-cinematic {
-  background: var(--indigo-deep);
-  color: oklch(0.95 0.007 90);
-}
-[data-theme="light"] .light-section-cinematic .text-eyebrow { color: var(--rl-ember); }
-
-@utility btn-warm {
-  background: var(--color-foreground);
-  color: var(--color-background);
-}
-[data-theme="light"] .btn-warm {
-  background: var(--rl-ink);
-  color: var(--rl-void);
-}
-[data-theme="light"] .btn-warm:hover { background: var(--rl-electric); }
-
-@utility btn-glass {
-  background: oklch(1 0 0 / 0.5);
-  backdrop-filter: blur(16px);
-  border: 1px solid oklch(1 0 0 / 0.2);
-  color: var(--color-foreground);
-  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-[data-theme="light"] .btn-glass:hover {
-  background: oklch(1 0 0 / 0.75);
-  border-color: var(--rl-electric);
-}
-
-@utility btn-editorial {
+@utility recursive-frame-container {
   position: relative;
-  color: var(--color-foreground);
-  font-weight: 500;
-  padding-bottom: 4px;
+  padding: 8px; /* The 8px offset */
 }
-[data-theme="light"] .btn-editorial::after {
+
+/* ============================================================
+   INTERACTION TOKENS
+   ============================================================ */
+
+/* Button System */
+.btn-recursive {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--syahi);
+  background: transparent;
+  transition: color 0.4s ease;
+  /* Frame */
+  border: 1px solid var(--rekha);
+}
+
+.btn-recursive::before {
   content: "";
   position: absolute;
-  bottom: 0; left: 0;
-  width: 100%; height: 1.5px;
-  background: var(--rl-electric);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-[data-theme="light"] .btn-editorial:hover::after { transform: scaleX(1); }
-[data-theme="light"] .btn-editorial:hover { color: var(--rl-electric); }
-
-@utility light-section-warm { background-color: transparent; }
-[data-theme="light"] .light-section-warm { background-color: var(--rl-breath); }
-
-@utility light-section-cool { background-color: transparent; }
-[data-theme="light"] .light-section-cool { background-color: var(--rl-smoke); }
-
-@utility light-section-magazine { background: var(--cream); }
-
-@utility photo-warm { position: relative; }
-[data-theme="light"] .photo-warm::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: oklch(0.58 0.22 262 / 0.06);
-  mix-blend-mode: multiply;
-  pointer-events: none;
+  top: 6px; left: 6px; right: 6px; bottom: 6px;
+  border: 1px solid var(--rekha);
+  transition: all 0.4s ease;
+  z-index: -1;
 }
 
-@utility light-card-editorial {
-  position: relative; overflow: hidden;
-  border: 1px solid var(--hairline);
-  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-[data-theme="light"] .light-card-editorial {
-  background: oklch(0.97 0.003 50);
-  border: 1px solid oklch(0.87 0.007 55 / 0.5);
-}
-[data-theme="light"] .light-card-editorial:hover { border-color: var(--rl-electric); }
-[data-theme="light"] .light-card-editorial .card-bg-image {
-  position: absolute; inset: 0; opacity: 0;
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1); z-index: 0;
-}
-[data-theme="light"] .light-card-editorial:hover .card-bg-image { opacity: 0.10; }
-[data-theme="light"] .light-card-editorial .card-content { position: relative; z-index: 1; }
-[data-theme="light"] .light-card-editorial::after {
-  content: "";
-  position: absolute; bottom: 0; left: 0;
-  width: 100%; height: 2px;
-  background: linear-gradient(90deg, var(--rl-electric), var(--rl-ember));
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-[data-theme="light"] .light-card-editorial:hover::after { transform: scaleX(1); }
-
-[data-theme="light"] .light-float { animation: floatLayer 12s ease-in-out infinite; }
-[data-theme="light"] .light-scroll-indicator { animation: scrollIndicator 2s ease-in-out infinite; }
-
-/* ============================================================
-   v3.0 NEW DESIGN SYSTEM — Theme 2 Exclusive
-   ============================================================ */
-
-/* Section backgrounds */
-@utility rl-section-breath { background-color: transparent; }
-[data-theme="light"] .rl-section-breath { background-color: var(--rl-breath); }
-
-@utility rl-section-char { background-color: transparent; color: inherit; }
-[data-theme="light"] .rl-section-char {
-  background-color: var(--rl-char);
-  color: oklch(0.95 0.007 90);
+.btn-recursive:hover::before {
+  background: var(--nila);
+  border-color: var(--nila);
+  top: 0; left: 0; right: 0; bottom: 0;
 }
 
-/* Colour utilities */
-@utility text-electric { color: var(--rl-electric); }
-@utility text-ember { color: var(--rl-ember); }
-@utility bg-rl-char { background-color: var(--rl-char); }
-@utility border-electric { border-color: var(--rl-electric); }
-
-/* Primary CTA button — ink bg → electric on hover */
-@utility rl-btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.625rem;
-  padding: 0.875rem 1.75rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  min-height: 44px;
-  letter-spacing: 0.01em;
-  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  background: var(--foreground);
-  color: var(--background);
-}
-[data-theme="light"] .rl-btn-primary {
-  background: var(--rl-ink);
-  color: var(--rl-void);
-}
-[data-theme="light"] .rl-btn-primary:hover {
-  background: var(--rl-electric);
-  transform: translateY(-1px);
-}
-[data-theme="light"] .rl-btn-primary:active { transform: scale(0.98); }
-
-/* Ghost button */
-@utility rl-btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.625rem;
-  padding: 0.875rem 1.75rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  min-height: 44px;
-  border: 1px solid var(--hairline);
-  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-[data-theme="light"] .rl-btn-ghost {
-  border-color: oklch(0.08 0.015 245 / 0.22);
-  color: var(--rl-ink);
-}
-[data-theme="light"] .rl-btn-ghost:hover {
-  border-color: var(--rl-electric);
-  color: var(--rl-electric);
+.btn-recursive:hover {
+  color: var(--kagaz);
 }
 
-/* Text link button with animated underline */
-@utility rl-btn-text {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+/* Text link with animated underline */
+.link-animated {
   position: relative;
-  font-weight: 500;
-  color: var(--foreground);
-  padding-bottom: 3px;
-  min-height: 44px;
+  display: inline-flex;
+  color: var(--syahi);
+  padding-bottom: 2px;
   transition: color 0.3s ease;
 }
-[data-theme="light"] .rl-btn-text::after {
+
+.link-animated::after {
   content: "";
   position: absolute;
-  bottom: 0; left: 0;
-  width: 100%; height: 1.5px;
-  background: var(--rl-electric);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-[data-theme="light"] .rl-btn-text:hover::after { transform: scaleX(1); }
-[data-theme="light"] .rl-btn-text:hover { color: var(--rl-electric); }
-
-/* Electric photo tint overlay */
-@utility rl-photo-electric { position: relative; }
-[data-theme="light"] .rl-photo-electric::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: oklch(0.58 0.22 262 / 0.06);
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-
-/* Service accordion hover row */
-[data-theme="light"] .rl-service-row:hover { background-color: oklch(0.96 0.004 52); }
-
-/* Accordion expanded image */
-@utility rl-accordion-img {
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-/* ── Manifesto section (dark within Theme 2) ── */
-@utility rl-manifesto {
-  background-color: transparent;
-}
-[data-theme="light"] .rl-manifesto {
-  background-color: var(--rl-char);
-}
-
-/* ── Thin vertical rule — hero decoration ── */
-@utility rl-vline {
-  display: none;
-}
-@media (min-width: 1024px) {
-  [data-theme="light"] .rl-vline {
-    display: block;
-    position: absolute;
-    right: 10%;
-    top: 0; bottom: 0;
-    width: 1px;
-    background: oklch(0.08 0.015 245 / 0.06);
-  }
-}
-
-/* ── Pulse animation for electric dot ── */
-[data-theme="light"] .rl-pulse-dot {
-  animation: pulseElectric 3s ease-in-out infinite;
-}
-
-/* ── Footer dark variant (Theme 2 only) ── */
-@utility rl-footer-dark {
-  background-color: transparent;
-}
-[data-theme="light"] .rl-footer-dark {
-  background-color: var(--rl-char);
-  color: oklch(0.88 0.007 90);
-  border-color: oklch(1 0 0 / 0.06);
-}
-[data-theme="light"] .rl-footer-dark a {
-  color: oklch(0.70 0.015 90);
-}
-[data-theme="light"] .rl-footer-dark a:hover {
-  color: oklch(0.58 0.22 262);
-}
-[data-theme="light"] .rl-footer-dark .text-eyebrow {
-  color: oklch(0.58 0.22 262);
-}
-
-/* ── Stat counter display ── */
-@utility rl-stat-num {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  line-height: 1;
-  letter-spacing: -0.03em;
-  font-weight: 400;
-}
-
-/* ── People strip photo reveal ── */
-[data-theme="light"] .rl-person-card:hover .rl-person-overlay {
-  opacity: 0.55;
-}
-[data-theme="light"] .rl-person-bar {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: var(--nila);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
-[data-theme="light"] .rl-person-card:hover .rl-person-bar {
+
+.link-animated:hover::after {
   transform: scaleX(1);
 }
 
-/* ── Image scale on hover ── */
-[data-theme="light"] .rl-img-scale {
-  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+.link-animated:hover {
+  color: var(--nila);
 }
-[data-theme="light"] .rl-person-card:hover .rl-img-scale {
-  transform: scale(1.04);
+
+/* Input Fields */
+.input-recursive {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--rekha);
+  padding: 12px 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: var(--syahi);
+  transition: border-color 0.3s ease;
+  position: relative;
+}
+
+.input-recursive:focus {
+  outline: none;
+  border-bottom-color: transparent;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--nila);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.input-wrapper::before {
+  content: "";
+  position: absolute;
+  bottom: -9px; /* 8px gap + 1px border */
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--nila);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.input-wrapper:focus-within::after,
+.input-wrapper:focus-within::before {
+  transform: scaleX(1);
+}
+
+/* Layout Utilities */
+@utility container-grid {
+  width: 100%;
+  padding-inline: var(--container-px);
+  margin-inline: auto;
+}
+
+@utility container-editorial {
+  width: 100%;
+  padding-inline: var(--container-px);
+  margin-inline: auto;
+  max-width: 1600px; /* To prevent infinite stretching on ultra-wide monitors */
+}
+
+/* Engineering Identity */
+.circuit-divider {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background: var(--rekha);
+}
+.circuit-divider::before,
+.circuit-divider::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--rekha);
+}
+.circuit-divider::before { left: 0; }
+.circuit-divider::after { right: 0; }
+
+@utility circuit-progress {
+  position: fixed;
+  top: 0;
+  right: 12px;
+  width: 1px;
+  height: 100vh;
+  background: var(--rekha);
+  z-index: 50;
+  transform-origin: top;
 }

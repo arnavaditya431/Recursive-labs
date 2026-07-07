@@ -24,7 +24,7 @@ export function ChatbotTrigger() {
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 260, damping: 20, delay: 1 }}
-        className="fixed bottom-6 right-6 z-[90] flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-2xl shadow-primary/20 hover:scale-105 transition-transform cursor-pointer touch-target focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+        className="fixed bottom-6 right-6 z-[90] flex h-14 w-14 items-center justify-center rounded-full bg-[var(--kagaz)] text-[var(--syahi)] border border-[var(--syahi)] shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:scale-105 transition-transform cursor-pointer touch-target focus:outline-none"
         aria-label={isOpen ? "Close technology consultant" : "Open technology consultant"}
       >
         <AnimatePresence mode="wait">

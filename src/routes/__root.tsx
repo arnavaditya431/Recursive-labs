@@ -14,23 +14,26 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteNav } from "@/components/site/nav";
 import { SiteFooter } from "@/components/site/footer";
 import { SplashGate } from "@/components/site/splash-screen";
-import { ThemeProvider } from "@/components/site/theme-provider";
 import { StructuredData } from "@/components/site/structured-data";
 import { defaultMeta, organizationSchema, websiteSchema } from "@/lib/seo";
+import { CustomCursor } from "@/components/ui/custom-cursor";
+import { SmoothScrollProvider } from "@/components/ui/smooth-scroll";
+import { PageTransition } from "@/components/site/page-transition";
+import { NoiseOverlay } from "@/components/ui/noise-overlay";
 import { ChatbotTrigger } from "@/components/site/chatbot-trigger";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--kagaz)] px-4">
       <div className="max-w-md text-center">
         <p className="text-eyebrow">Error 404</p>
-        <h1 className="mt-4 font-display text-6xl">Off the map.</h1>
-        <p className="mt-4 text-muted-foreground">
+        <h1 className="mt-4 text-display">Off the map.</h1>
+        <p className="mt-4 text-body text-[var(--dhul)]">
           The page you were looking for is not here. It may have moved, or never existed.
         </p>
         <Link
           to="/"
-          className="mt-8 inline-flex items-center gap-2 rounded-full border hairline px-5 py-2 text-sm hover:bg-foreground hover:text-background transition"
+          className="mt-8 btn-recursive inline-flex"
         >
           Return to home
         </Link>
@@ -46,25 +49,25 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--kagaz)] px-4">
       <div className="max-w-md text-center">
-        <h1 className="font-display text-3xl">Something interrupted this page.</h1>
-        <p className="mt-3 text-sm text-muted-foreground">
+        <h1 className="text-title">Something interrupted this page.</h1>
+        <p className="mt-3 text-body text-[var(--dhul)]">
           Try again, or head back home.
         </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
+        <div className="mt-6 flex flex-wrap justify-center gap-4">
           <button
             onClick={() => {
               router.invalidate();
               reset();
             }}
-            className="rounded-full bg-foreground px-5 py-2 text-sm text-background"
+            className="btn-recursive bg-[var(--syahi)] text-[var(--kagaz)] hover:bg-[var(--nila)] hover:border-[var(--nila)]"
           >
             Try again
           </button>
           <a
             href="/"
-            className="rounded-full border hairline px-5 py-2 text-sm hover:bg-foreground hover:text-background transition"
+            className="btn-recursive"
           >
             Go home
           </a>
@@ -90,7 +93,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fira+Code:wght@300;400;500&display=swap",
       },
       ...rootMeta.links,
     ],
@@ -103,7 +106,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" data-theme="light">
+    <html lang="en">
       <head>
         <HeadContent />
         <StructuredData data={[organizationSchema(), websiteSchema()]} />
@@ -121,16 +124,19 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
+      <SmoothScrollProvider>
         <SplashGate>
+          <PageTransition />
+          <NoiseOverlay />
+          <CustomCursor />
           <SiteNav />
           <main className="min-h-screen pt-14 md:pt-16 lg:pt-20">
             <Outlet />
           </main>
-          <SiteFooter />
           <ChatbotTrigger />
+          <SiteFooter />
         </SplashGate>
-      </ThemeProvider>
+      </SmoothScrollProvider>
     </QueryClientProvider>
   );
 }

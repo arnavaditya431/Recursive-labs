@@ -24,36 +24,18 @@ function resolveTheme(mode: ThemeMode): ThemeId {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [mode, setModeState] = useState<ThemeMode>(() => {
-    if (typeof window === "undefined") return "system";
-    const stored = localStorage.getItem(THEME_MODE_KEY) as ThemeMode | null;
-    if (stored && (stored === "light" || stored === "dark" || stored === "system")) return stored;
-    return "system";
-  });
+  const mode: ThemeMode = "light";
+  const theme: ThemeId = "light";
 
-  const theme = useMemo(() => resolveTheme(mode), [mode]);
-
-  // Apply theme to DOM
+  // Apply theme to DOM globally
   useEffect(() => {
-    const resolved = resolveTheme(mode);
-    document.documentElement.dataset.theme = themes[resolved].dataTheme;
-    localStorage.setItem(THEME_MODE_KEY, mode);
-    localStorage.setItem(THEME_STORAGE_KEY, resolved);
-  }, [mode]);
+    document.documentElement.dataset.theme = themes[theme].dataTheme;
+    localStorage.setItem(THEME_MODE_KEY, "light");
+    localStorage.setItem(THEME_STORAGE_KEY, "light");
+  }, [theme]);
 
-  // Listen for OS preference changes when in "system" mode
-  useEffect(() => {
-    if (mode !== "system") return;
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const handler = () => {
-      const resolved = getSystemTheme();
-      document.documentElement.dataset.theme = themes[resolved].dataTheme;
-    };
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, [mode]);
-
-  const setMode = (next: ThemeMode) => setModeState(next);
+  // Mock setMode to prevent runtime errors if used
+  const setMode = () => {};
 
   return (
     <ThemeContext.Provider value={{ theme, mode, setMode, themes }}>
@@ -64,6 +46,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
 export function useTheme() {
   const ctx = useContext(ThemeContext);
-  if (!ctx) throw new Error("useTheme must be used within ThemeProvider");
+  if (!ctx) return { mode: "system", setMode: () => {}, theme: "light" };
   return ctx;
 }

@@ -165,20 +165,17 @@ export function Chatbot({ onClose }: { onClose: () => void }) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 30, scale: 0.95 }}
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed bottom-24 right-6 z-[90] flex h-[620px] w-[420px] flex-col overflow-hidden rounded-2xl border hairline bg-background/95 shadow-2xl backdrop-blur-md max-sm:bottom-0 max-sm:right-0 max-sm:h-full max-sm:w-full max-sm:rounded-none max-sm:border-none"
+      className="fixed bottom-24 right-6 z-[90] flex h-[620px] w-[420px] flex-col overflow-hidden rounded-2xl border border-[var(--rekha)] bg-[var(--kagaz)] shadow-[0_20px_60px_rgba(0,0,0,0.15)] max-sm:bottom-0 max-sm:right-0 max-sm:h-full max-sm:w-full max-sm:rounded-none max-sm:border-none"
     >
-      {/* Glow highlight */}
-      <div className="absolute -left-16 -top-16 pointer-events-none h-48 w-48 rounded-full bg-primary/20 blur-3xl" />
-
       {/* Header */}
-      <div className="relative flex items-center justify-between border-b hairline bg-card/40 px-6 py-4">
+      <div className="relative flex items-center justify-between border-b border-[var(--rekha)] bg-[var(--kagaz)] px-6 py-4 z-10">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary border hairline">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--syahi)] text-[var(--kagaz)]">
             <Sparkles className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="font-display font-semibold text-base leading-none text-foreground">Recursive AI</h3>
-            <span className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1.5 block">Your AI Technology Consultant</span>
+            <h3 className="font-display font-semibold text-xl leading-none text-[var(--syahi)]">Recursive AI</h3>
+            <span className="text-[10px] text-[var(--dhul)] uppercase tracking-widest mt-1.5 block">Your AI Technology Consultant</span>
           </div>
         </div>
 
@@ -187,17 +184,17 @@ export function Chatbot({ onClose }: { onClose: () => void }) {
             <button
               onClick={handleClearHistory}
               title="Clear Conversation"
-              className="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-white/5 text-muted-foreground hover:text-foreground transition cursor-pointer"
+              className="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-black/5 text-[var(--dhul)] hover:text-[var(--syahi)] transition cursor-pointer"
             >
               <Trash2 className="h-4 w-4" />
             </button>
           )}
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-white/5 text-muted-foreground hover:text-foreground transition cursor-pointer"
+            className="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-black/5 text-[var(--dhul)] hover:text-[var(--syahi)] transition cursor-pointer"
             aria-label="Close technology consultant"
           >
-            <X className="h-4 w-4" />
+            <X className="h-5 w-5" />
           </button>
         </div>
       </div>
@@ -205,26 +202,28 @@ export function Chatbot({ onClose }: { onClose: () => void }) {
       {/* Message History & Suggestions */}
       <div 
         ref={containerRef}
-        className="flex-1 overflow-y-auto px-6 py-6 space-y-6 scrollbar-thin"
+        data-lenis-prevent="true"
+        onWheel={(e) => e.stopPropagation()}
+        className="flex-1 overflow-y-auto px-6 py-6 space-y-6 scrollbar-thin bg-[var(--kagaz)] relative z-0 overscroll-contain"
       >
         {messages.length === 0 ? (
           <div className="space-y-6 py-4">
             <div className="space-y-3">
-              <h4 className="font-display text-2xl text-foreground">Hello! I'm Recursive AI.</h4>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                I can answer questions about Recursive Lab, our services, software engineering, AI, cloud solutions, digital transformation, startup technology and product development.
+              <h4 className="font-display text-3xl text-[var(--syahi)] leading-[1.1]">Hello!<br/>I'm Recursive AI.</h4>
+              <p className="text-sm leading-relaxed text-[var(--syahi)]">
+                I can answer questions about Recursive Lab, our services, software engineering, AI, cloud solutions, and digital transformation.
               </p>
-              <p className="text-xs text-primary/80">How can I help today?</p>
+              <p className="text-sm font-semibold text-[var(--nila)] mt-4 block">How can I help today?</p>
             </div>
 
-            <div className="space-y-2 border-t hairline pt-6">
-              <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-mono">Suggested Questions</span>
+            <div className="space-y-3 border-t border-[var(--rekha)] pt-6">
+              <span className="text-[10px] uppercase tracking-wider text-[var(--dhul)] font-mono block">Suggested Questions</span>
               <div className="flex flex-wrap gap-2 pt-2">
                 {SUGGESTED_PROMPTS.map((p) => (
                   <button
                     key={p}
                     onClick={() => handlePromptClick(p)}
-                    className="rounded-lg border hairline bg-card/30 px-3.5 py-2 text-xs text-foreground/80 text-left hover:border-primary/50 hover:bg-primary/5 transition touch-target cursor-pointer w-full"
+                    className="rounded-full border border-[var(--rekha)] bg-transparent px-4 py-2.5 text-xs text-[var(--syahi)] text-left hover:border-[var(--nila)] hover:bg-[var(--nila)] hover:text-white transition-all touch-target cursor-pointer shadow-sm"
                   >
                     {p}
                   </button>
@@ -238,17 +237,17 @@ export function Chatbot({ onClose }: { onClose: () => void }) {
               <div
                 key={idx}
                 className={cn(
-                  "flex gap-3 text-sm max-w-[85%]",
+                  "flex gap-3 text-sm max-w-[90%]",
                   m.role === "user" ? "ml-auto flex-row-reverse" : "mr-auto"
                 )}
               >
                 {/* Avatar */}
                 <div
                   className={cn(
-                    "flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-full border hairline text-xs",
+                    "flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-full border border-[var(--rekha)] text-xs shadow-sm",
                     m.role === "user" 
-                      ? "bg-foreground/5 text-foreground" 
-                      : "bg-primary/10 text-primary"
+                      ? "bg-[var(--kagaz)] text-[var(--syahi)]" 
+                      : "bg-[var(--syahi)] text-[var(--kagaz)]"
                   )}
                 >
                   {m.role === "user" ? <User className="h-4 w-4" /> : <Sparkles className="h-4 w-4" />}
@@ -257,10 +256,10 @@ export function Chatbot({ onClose }: { onClose: () => void }) {
                 {/* Bubble */}
                 <div
                   className={cn(
-                    "rounded-xl px-4 py-3 text-foreground/90 space-y-1 shadow-sm leading-relaxed",
+                    "rounded-2xl px-5 py-4 space-y-1 shadow-sm leading-relaxed text-[15px]",
                     m.role === "user" 
-                      ? "bg-primary/10 border border-primary/20" 
-                      : "bg-card/45 border hairline"
+                      ? "bg-[var(--nila)] text-white border-none shadow-md rounded-tr-none" 
+                      : "bg-white text-[var(--syahi)] border border-[var(--rekha)] rounded-tl-none"
                   )}
                 >
                   {formatResponseText(m.content)}
@@ -270,13 +269,13 @@ export function Chatbot({ onClose }: { onClose: () => void }) {
 
             {isTyping && (
               <div className="flex gap-3 text-sm mr-auto max-w-[85%]">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border hairline bg-primary/10 text-primary">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--rekha)] bg-[var(--syahi)] text-[var(--kagaz)] shadow-sm">
                   <Sparkles className="h-4 w-4" />
                 </div>
-                <div className="rounded-xl px-4 py-4 bg-card/45 border hairline flex items-center gap-1.5 shadow-sm">
-                  <span className="h-2 w-2 rounded-full bg-primary/80 animate-bounce" style={{ animationDelay: "0ms" }} />
-                  <span className="h-2 w-2 rounded-full bg-primary/80 animate-bounce" style={{ animationDelay: "150ms" }} />
-                  <span className="h-2 w-2 rounded-full bg-primary/80 animate-bounce" style={{ animationDelay: "300ms" }} />
+                <div className="rounded-2xl rounded-tl-none px-5 py-5 bg-white border border-[var(--rekha)] flex items-center gap-1.5 shadow-sm">
+                  <span className="h-2 w-2 rounded-full bg-[var(--nila)] animate-bounce" style={{ animationDelay: "0ms" }} />
+                  <span className="h-2 w-2 rounded-full bg-[var(--nila)] animate-bounce" style={{ animationDelay: "150ms" }} />
+                  <span className="h-2 w-2 rounded-full bg-[var(--nila)] animate-bounce" style={{ animationDelay: "300ms" }} />
                 </div>
               </div>
             )}
@@ -286,7 +285,7 @@ export function Chatbot({ onClose }: { onClose: () => void }) {
       </div>
 
       {/* Input Tray */}
-      <div className="border-t hairline bg-card/25 px-6 py-4">
+      <div className="border-t border-[var(--rekha)] bg-white px-6 py-5 z-10 shadow-[0_-10px_20px_rgba(0,0,0,0.02)]">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -298,16 +297,16 @@ export function Chatbot({ onClose }: { onClose: () => void }) {
             type="text"
             value={inputVal}
             onChange={(e) => setInputVal(e.target.value)}
-            placeholder="Ask anything..."
+            placeholder="Ask Recursive AI..."
             disabled={isLoading}
-            className="flex-1 rounded-full border hairline bg-background/50 px-5 py-3 pr-12 text-sm text-foreground placeholder-muted-foreground outline-none focus:border-primary transition-colors disabled:opacity-50 min-h-[44px]"
+            className="flex-1 rounded-full border border-[var(--rekha)] bg-gray-50 px-5 py-4 pr-14 text-[15px] text-[var(--syahi)] placeholder:text-[var(--dhul)] outline-none focus:border-[var(--nila)] focus:bg-white focus:ring-4 focus:ring-[var(--nila)]/10 transition-all disabled:opacity-50"
           />
           <button
             type="submit"
             disabled={!inputVal.trim() || isLoading}
-            className="absolute right-1.5 top-1/2 -translate-y-1/2 flex h-9.5 w-9.5 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform hover:scale-105 hover:bg-primary-hover disabled:opacity-30 disabled:scale-100 disabled:cursor-not-allowed cursor-pointer"
+            className="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--syahi)] text-[var(--kagaz)] transition-all hover:scale-105 hover:bg-[var(--nila)] disabled:opacity-30 disabled:scale-100 disabled:cursor-not-allowed cursor-pointer shadow-md"
           >
-            <Send className="h-4 w-4" />
+            <Send className="h-4 w-4 ml-0.5" />
           </button>
         </form>
       </div>
