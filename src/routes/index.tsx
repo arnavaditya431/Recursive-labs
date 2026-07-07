@@ -68,6 +68,8 @@ function Scene01_RecursiveReveal() {
   const frameRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
   
   // Custom split text helper for GSAP targeting
   const splitText = (text: string, className: string) => (
@@ -83,6 +85,7 @@ function Scene01_RecursiveReveal() {
   useEffect(() => {
     let ctx = gsap.context(() => {
       const tl = gsap.timeline();
+      timelineRef.current = tl;
       
       gsap.set(frameRef.current, { width: 300, height: 400, opacity: 0 });
       gsap.set(contentRef.current, { opacity: 0 });
@@ -143,6 +146,26 @@ function Scene01_RecursiveReveal() {
         ease: "power2.out"
       }, "-=0.4");
       
+      // Cinematic transition: Fade out the main text and reveal the background video
+      tl.to(contentRef.current, {
+        opacity: 0,
+        filter: "blur(10px)",
+        duration: 1.5,
+        ease: "power2.inOut"
+      }, "+=4.25");
+      
+      tl.to(".hero-video-container", {
+        opacity: 0.6, // Bring video up slightly so it's clearly visible but not overpowering
+        duration: 1.5,
+        ease: "power2.inOut"
+      }, "<");
+      
+      tl.to(".hero-bg-parallax", {
+        filter: "grayscale(0%)", // Optional: Bring color back to the video
+        duration: 1.5,
+        ease: "power2.inOut"
+      }, "<");
+      
     }, containerRef);
     return () => ctx.revert();
   }, []);
@@ -151,10 +174,21 @@ function Scene01_RecursiveReveal() {
     <section ref={containerRef} className="relative h-[85dvh] flex items-center justify-center overflow-hidden pt-20 bg-[var(--kagaz)]">
       
       {/* 1. The Parallax Background Video */}
-      <div className="absolute inset-0 pointer-events-none opacity-20 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none opacity-20 overflow-hidden hero-video-container">
         <video 
+          ref={videoRef}
           src="/hero-bg.mp4" 
-          autoPlay loop muted playsInline
+          autoPlay 
+          muted 
+          playsInline
+          onEnded={() => {
+            if (videoRef.current) {
+              videoRef.current.play();
+            }
+            if (timelineRef.current) {
+              timelineRef.current.restart();
+            }
+          }}
           className="absolute w-full h-[120%] -top-[10%] object-cover hero-bg-parallax grayscale"
         />
       </div>
@@ -438,8 +472,16 @@ function Scene07_ConvictionSequence() {
   return (
     <>
       {/* Statement 01: Text Only */}
-      <section className="h-[100dvh] flex items-center bg-[var(--kagaz)] border-b border-[var(--rekha)] px-[var(--container-px)]">
-        <h2 className="font-display text-[clamp(3rem,8vw,7.5rem)] leading-[0.9] tracking-[-0.02em] text-[var(--syahi)] max-w-5xl">
+      <section className="relative h-[100dvh] flex items-center bg-[var(--kagaz)] border-b border-[var(--rekha)] px-[var(--container-px)] overflow-hidden">
+        {/* Background Video */}
+        <div className="absolute inset-0 pointer-events-none opacity-40">
+          <video 
+            src="/mvp-bg.mp4" 
+            autoPlay loop muted playsInline 
+            className="w-full h-full object-cover grayscale"
+          />
+        </div>
+        <h2 className="relative z-10 font-display text-[clamp(3rem,8vw,7.5rem)] leading-[0.9] tracking-[-0.02em] text-[var(--syahi)] max-w-5xl">
           We don't build MVP's.<br />We build <em className="text-[var(--nila)]">foundations.</em>
         </h2>
       </section>
@@ -499,7 +541,7 @@ function Scene08_FounderReveal() {
         },
         clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",
         duration: 1.2,
-        stagger: 0.4,
+        stagger: 0.15,
         ease: "power3.inOut"
       });
       
@@ -511,7 +553,7 @@ function Scene08_FounderReveal() {
         opacity: 0,
         y: 10,
         duration: 0.5,
-        stagger: 0.4,
+        stagger: 0.15,
         delay: 0.6
       });
     }, triggerRef);
@@ -519,30 +561,98 @@ function Scene08_FounderReveal() {
   }, []);
 
   return (
-    <section ref={triggerRef} className="py-32 bg-[var(--kagaz)] border-b border-[var(--rekha)]">
-      <div className="container-editorial">
-        <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--dhul)] mb-16">
+    <section ref={triggerRef} className="relative pt-32 pb-16 bg-[var(--kagaz)] border-b border-[var(--rekha)] overflow-hidden">
+      {/* Background Texture */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.04] z-0 flex items-center justify-center">
+        <img src="/hero-bg.png" alt="Background Texture" className="w-full h-full object-cover" />
+      </div>
+
+      <div className="container-editorial relative z-10">
+        <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--dhul)] mb-24 md:mb-32 text-center md:text-left">
           03 — The Assembly
         </p>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 max-w-7xl mx-auto">
-          {team.map((member) => (
-            <div key={member.slug} className="flex flex-col">
-              <div className="relative aspect-[3/4] mb-6 p-2">
-                <RecursiveFrame activeColor={false} />
-                <div 
-                  className="founder-photo absolute inset-4 overflow-hidden" 
-                  style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
-                >
-                  <img src={member.photo} className="w-full h-full object-cover grayscale sepia-[0.2]" alt={member.name} />
+        <div className="relative max-w-[90rem] mx-auto flex flex-col md:flex-row items-center md:items-start justify-center gap-12 md:gap-8 lg:gap-12 pb-32">
+          
+          {/* Faint Connecting SVG Line (Desktop Only) */}
+          <svg className="absolute top-[30%] left-[10%] w-[80%] h-[40%] pointer-events-none hidden md:block opacity-20 -z-10" viewBox="0 0 1000 200" preserveAspectRatio="none">
+            <path d="M 0,100 Q 250,20 500,100 T 1000,100" fill="none" stroke="var(--syahi)" strokeWidth="0.5" strokeDasharray="4 4" />
+          </svg>
+
+          {team.map((member, i) => {
+            // Editorial layout variables
+            let wClass = "w-[70%] md:w-[22%]";
+            if (i === 0) wClass = "w-[70%] md:w-[20%]"; // Siddhi
+            if (i === 1) wClass = "w-[80%] md:w-[24%]"; // Pragalbh (Larger)
+            if (i === 2) wClass = "w-[80%] md:w-[24%]"; // Arnav (Matched to Pragalbh)
+            if (i === 3) wClass = "w-[70%] md:w-[20%]"; // Aditya
+            if (i === 4) wClass = "w-[65%] md:w-[22%]"; // Sanskriti (Taller)
+
+            let aspectClass = "aspect-[3/4]";
+            if (i === 1) aspectClass = "aspect-[4/5]"; // Pragalbh
+            if (i === 2) aspectClass = "aspect-[4/5]"; // Arnav (Matched to Pragalbh)
+            if (i === 3) aspectClass = "aspect-[3/4]"; // Aditya
+            if (i === 4) aspectClass = "aspect-[3/4]"; // Sanskriti
+
+            let mtClass = "mt-0";
+            if (i === 1) mtClass = "md:mt-[80px]";
+            if (i === 2) mtClass = "md:mt-[20px]";
+            if (i === 3) mtClass = "md:mt-[-40px]";
+            if (i === 4) mtClass = "md:mt-[100px]";
+
+            // Object position fixes for specific crops
+            let objectPos = "object-center";
+            if (i === 1) objectPos = "object-top"; // Don't crop Pragalbh's head
+            
+            // Scattered initial rotation (like photos tossed on a table)
+            let rotateClass = "rotate-0";
+            if (i === 0) rotateClass = "-rotate-2";
+            if (i === 1) rotateClass = "rotate-1";
+            if (i === 2) rotateClass = "-rotate-1";
+            if (i === 3) rotateClass = "rotate-2";
+            if (i === 4) rotateClass = "-rotate-2";
+
+            return (
+              <div key={member.slug} className={`flex flex-col group relative ${wClass} ${mtClass}`}>
+                
+                {/* The Photo Container with Polaroid aesthetic */}
+                <Link to={`/team#${member.slug}`} className="block">
+                  <div className={`relative ${aspectClass} mb-6 p-3 pb-8 bg-white shadow-sm border border-[var(--rekha)] ${rotateClass} transition-all duration-500 ease-out group-hover:scale-[1.05] group-hover:shadow-2xl group-hover:rotate-0 group-hover:-translate-y-3 cursor-pointer z-10`}>
+                    <div 
+                      className="founder-photo absolute inset-3 bottom-8 overflow-hidden bg-[var(--dhul)]" 
+                      style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
+                    >
+                      <img 
+                        src={member.photo} 
+                        className={`w-full h-full object-cover ${objectPos} grayscale contrast-125 sepia-[0.15] transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:contrast-100 group-hover:sepia-0`} 
+                        alt={member.name} 
+                      />
+                    </div>
+                  </div>
+                </Link>
+                
+                {/* Minimal Editorial Labels */}
+                <div className="founder-name text-center md:text-left md:pl-2">
+                  <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-[var(--syahi)] font-bold">
+                    {member.name}
+                  </p>
+                  <p className="font-mono text-[9px] tracking-widest uppercase text-[var(--syahi)]/60 mt-1.5">
+                    {member.role}
+                  </p>
                 </div>
               </div>
-              <p className="founder-name font-mono text-[11px] tracking-widest uppercase text-[var(--syahi)] text-center">
-                {member.name}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
+        
+        {/* Call to Action */}
+        <div className="flex justify-center mt-8 pb-12">
+          <Link to="/team" className="font-mono text-[11px] tracking-[0.2em] uppercase text-[var(--syahi)] hover:text-black transition-colors relative group overflow-hidden pb-1">
+            Discover the Team &rarr;
+            <span className="absolute bottom-0 left-0 w-full h-[1px] bg-black transform translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300"></span>
+          </Link>
+        </div>
+
       </div>
     </section>
   );
