@@ -5,6 +5,7 @@ export type Project = {
   industry: string;
   year: string;
   heroImage: string;
+  liveUrl?: string;
   challenge: string;
   approach: string;
   outcome: string;
@@ -23,6 +24,7 @@ export const projects: Project[] = [
     industry: "Education",
     year: "2025",
     heroImage: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=2400&q=80",
+    liveUrl: "https://dishanucleus.in/",
     challenge:
       "A premier educational institute with over 24 years of excellence and 10,000+ enrolled students needed a modern digital presence to reflect their legacy. Their existing systems lacked a unified portal for students, teachers, parents, and admins, and they needed a high-performance platform to showcase their board and competitive exam results (JEE, NEET, CA).",
     approach:

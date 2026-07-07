@@ -46,21 +46,43 @@ function ProjectsPage() {
           id={project.slug}
           className={`border-t border-border/40 ${index % 2 === 1 ? 'light-section-warm' : ''}`}
         >
-          {/* Hero image — full bleed */}
+          {/* Hero image / preview — full bleed */}
           <Reveal>
-            <div className="relative aspect-[21/9] sm:aspect-[3/1] overflow-hidden">
-              <img
-                src={project.heroImage}
-                alt={project.title}
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 container-editorial pb-8 sm:pb-12">
+            <div className="relative aspect-[21/9] sm:aspect-[3/1] overflow-hidden group bg-slate-900">
+              {project.liveUrl ? (
+                <div className="absolute inset-0 w-full h-[150%] sm:h-[200%] pointer-events-none select-none overflow-hidden">
+                  <iframe
+                    src={project.liveUrl}
+                    className="w-full h-full border-0 origin-top"
+                    tabIndex={-1}
+                    title={project.title}
+                    scrolling="no"
+                  />
+                </div>
+              ) : (
+                <img
+                  src={project.heroImage}
+                  alt={project.title}
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent pointer-events-none" />
+              <div className="absolute bottom-0 left-0 right-0 container-editorial pb-8 sm:pb-12 pointer-events-none">
                 <p className="font-mono text-xs text-warm">{project.year} · {project.industry}</p>
                 <h2 className="mt-3 font-display fluid-h2 text-foreground drop-shadow-lg max-w-3xl">
                   {project.title}
                 </h2>
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center gap-2 btn-warm px-6 py-3 rounded-full text-sm font-medium pointer-events-auto transition-transform hover:scale-[1.02] active:scale-[0.98] shadow-theme-lg"
+                  >
+                    Visit Live Site <ArrowUpRight className="h-4 w-4" />
+                  </a>
+                )}
               </div>
             </div>
           </Reveal>
