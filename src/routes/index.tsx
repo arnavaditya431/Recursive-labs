@@ -98,27 +98,37 @@ function Scene01_RecursiveReveal() {
         ease: "power1.inOut"
       });
 
-      tl.to({}, { duration: 0.8 });
-      tl.to(frameRef.current, { opacity: 1, duration: 0.4 });
-      tl.to({}, { duration: 1.6 });
+      // Background Image Parallax
+      gsap.to(".hero-bg-parallax", {
+        y: "20%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true
+        }
+      });
 
+      // Quick Frame Expansion
+      gsap.set(frameRef.current, { width: 40, height: 40, opacity: 1 });
       tl.to(frameRef.current, { 
         width: "calc(100vw - var(--container-px)*2)", 
         height: "calc(100vh - 120px)",
-        duration: 1.2, 
-        ease: "power4.inOut" 
+        duration: 0.8, 
+        ease: "power3.inOut" 
       });
 
-      tl.to(contentRef.current, { opacity: 1, duration: 0.4 }, "-=0.8");
+      tl.to(contentRef.current, { opacity: 1, duration: 0.4 }, "-=0.4");
       
-      // Complex Typography Reveal
+      // Fast Typography Reveal
       tl.to(".hero-char", {
         y: "0%",
         opacity: 1,
-        duration: 0.8,
-        stagger: 0.03,
+        duration: 0.6,
+        stagger: 0.015,
         ease: "back.out(1.2)"
-      }, "-=0.4");
+      }, "-=0.2");
       
       tl.fromTo(".tagline-anim", {
         opacity: 0,
@@ -128,57 +138,54 @@ function Scene01_RecursiveReveal() {
         opacity: 1,
         y: 0,
         filter: "blur(0px)",
-        duration: 1,
-        stagger: 0.2,
+        duration: 0.8,
+        stagger: 0.1,
         ease: "power2.out"
-      }, "-=0.6");
+      }, "-=0.4");
       
     }, containerRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={containerRef} className="relative h-[100dvh] flex items-center justify-center overflow-hidden pt-20 bg-black">
+    <section ref={containerRef} className="relative h-[85dvh] flex items-center justify-center overflow-hidden pt-20 bg-[var(--kagaz)]">
       
-      {/* 1. The Background Anchor: Recursive Particle Field */}
-      <RecursiveParticleField />
-
-      {/* 2. The Dark Video Base (For the text mask) */}
-      <div className="absolute inset-0 pointer-events-none opacity-40">
-        <video 
-          src="https://cdn.pixabay.com/video/2021/08/24/86131-592652171_large.mp4" 
-          autoPlay loop muted playsInline 
-          className="w-full h-full object-cover grayscale contrast-150"
+      {/* 1. The Parallax Background Image */}
+      <div className="absolute inset-0 pointer-events-none opacity-20 overflow-hidden">
+        <img 
+          src="/hero-bg.png" 
+          alt="Hero background"
+          className="absolute w-full h-[120%] -top-[10%] object-cover hero-bg-parallax"
         />
       </div>
 
       <div ref={frameRef} className="relative z-10 flex items-center justify-center">
-        <div className="absolute inset-0 opacity-50 mix-blend-overlay">
+        <div className="absolute inset-0 opacity-20">
           <RecursiveFrame activeColor={false} />
         </div>
         
-        {/* 3. The Lightening Overlay (Makes the background Kagaz, but punches holes where text is Black) */}
+        {/* 2. The Content Layer */}
         <div 
           ref={contentRef} 
-          className="absolute inset-0 flex flex-col items-center justify-center text-center bg-[var(--kagaz)] mix-blend-lighten"
+          className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
         >
           {/* Top Ticker Space */}
           <div className="absolute top-12 left-0 right-0 flex justify-between items-center px-12 opacity-0 tagline-anim w-full">
-            <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-black font-semibold">
+            <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--dhul)] font-semibold">
               Technology Consultancy · Est. {BRAND.founded}
             </p>
-            <div className="hidden md:flex gap-4 font-mono text-[9px] tracking-[0.2em] text-black/50">
+            <div className="hidden md:flex gap-4 font-mono text-[9px] tracking-[0.2em] text-[var(--dhul)]">
               <span>BENGALURU</span><span>•</span>
               <span>PATNA</span><span>•</span>
               <span>CHENNAI</span>
             </div>
           </div>
 
-          <div className="px-4 max-w-5xl mx-auto w-full">
-            <h1 className="font-display text-[clamp(3.5rem,10vw,9.5rem)] leading-[0.9] tracking-[-0.04em]">
-              <span className="text-black block overflow-hidden">{splitText("Engineering", "")}</span>
-              <span className="text-[var(--nila)] block -mt-2 overflow-hidden">{splitText("ideas.", "")}</span>
-              <span className="text-black block -mt-2 overflow-hidden">{splitText("Building tomorrow.", "")}</span>
+          <div className="px-4 max-w-4xl mx-auto w-full flex flex-col items-center justify-center">
+            <h1 className="font-display text-[clamp(2.5rem,7vw,7rem)] leading-[0.95] tracking-[-0.03em] flex flex-col items-center">
+              <span className="text-[var(--syahi)] overflow-hidden block">{splitText("Ideas,", "")}</span>
+              <span className="text-[var(--nila)] overflow-hidden block -mt-1">{splitText("Recursively", "")}</span>
+              <span className="text-[var(--syahi)] overflow-hidden block -mt-1">{splitText("Engineered.", "")}</span>
             </h1>
           </div>
         </div>
@@ -187,12 +194,12 @@ function Scene01_RecursiveReveal() {
       {/* 4. Interactive Scroll Indicator */}
       <div 
         ref={scrollRef} 
-        className="absolute bottom-8 left-[var(--container-px)] flex flex-col items-center gap-4 cursor-pointer group z-30"
+        className="absolute bottom-8 left-[var(--container-px)] flex flex-col items-center gap-4 cursor-pointer group z-30 tagline-anim opacity-0"
         onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
       >
-        <span className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--kagaz)] mix-blend-difference group-hover:text-[var(--nila)] transition-colors duration-300">scroll</span>
-        <div className="w-px h-12 bg-white/30 mix-blend-difference overflow-hidden">
-          <div className="w-full h-full bg-white scroll-line" />
+        <span className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--dhul)] group-hover:text-[var(--nila)] transition-colors duration-300">scroll</span>
+        <div className="w-px h-12 bg-[var(--dhul)]/30 overflow-hidden">
+          <div className="w-full h-full bg-[var(--nila)] scroll-line" />
         </div>
       </div>
     </section>
