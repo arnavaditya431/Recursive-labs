@@ -1,15 +1,11 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, ArrowRight } from "lucide-react";
-import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { RecursiveFrame } from "@/components/ui/recursive-frame";
-import { BRAND, PRACTICES } from "@/lib/brand";
-import { defaultMeta, breadcrumbSchema } from "@/lib/seo";
-import { services } from "@/lib/services";
-import { team } from "@/lib/team";
-import { RecursiveParticleField } from "@/components/ui/recursive-particle-field";
+const fs = require('fs');
+
+let content = fs.readFileSync('src/routes/index.tsx', 'utf8');
+
+// 1. Imports
+content = content.replace(
+/import \{ RecursiveParticleField \} from "@\/components\/ui\/recursive-particle-field";\r?\n\r?\nif \(typeof window !== "undefined"\) \{\r?\n  gsap\.registerPlugin\(ScrollTrigger\);\r?\n\}/,
+`import { RecursiveParticleField } from "@/components/ui/recursive-particle-field";
 import {
   getMotionTier,
   usePrefersReducedMotion,
@@ -28,234 +24,11 @@ import {
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
-}
+}`
+);
 
-export const Route = createFileRoute("/")({
-  head: () => defaultMeta(),
-  component: HomePage,
-});
-
-/* 
- * UNPLASH PLACEHOLDERS MATCHING THE 4 REGISTERS 
- */
-const REGISTERS = {
-  R1_FOUNDERS: [
-    "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80"
-  ],
-  R2_WORKSPACE: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80",
-  R3_CITY: "/patna-gate.jpg", // Sabhyata Dwar, Patna
-  R4_ABSTRACT: [
-    "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&w=800&q=80"
-  ]
-};
-
-function HomePage() {
-  return (
-    <div className="bg-[var(--kagaz)]">
-      <Scene01_RecursiveReveal />
-      <Scene02_Statement />
-      <Scene03_Thesis />
-      <Scene04_CinematicParallax />
-      <Scene05_PracticesStack />
-      <Scene06_Counter />
-      <Scene07_ConvictionSequence />
-      <Scene08_FounderReveal />
-      <Scene09_CityBreath />
-      <Scene10_ClosingFrame />
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────────
-   SCENE 01: THE RECURSIVE REVEAL (BRAND IDENTITY & MOTION)
-   ───────────────────────────────────────────────────────────── */
-function Scene01_RecursiveReveal() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const frameRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const timelineRef = useRef<gsap.core.Timeline | null>(null);
-  
-  // Custom split text helper for GSAP targeting
-  const splitText = (text: string, className: string) => (
-    <span className="inline-block overflow-hidden pb-2">
-      {text.split("").map((char, i) => (
-        <span key={i} className={`hero-char inline-block translate-y-[120%] opacity-0 ${className}`}>
-          {char === " " ? "\u00A0" : char}
-        </span>
-      ))}
-    </span>
-  );
-
-  useEffect(() => {
-    let ctx = gsap.context(() => {
-      const tl = gsap.timeline();
-      timelineRef.current = tl;
-      
-      gsap.set(frameRef.current, { width: 300, height: 400, opacity: 0 });
-      gsap.set(contentRef.current, { opacity: 0 });
-      
-      // Interactive scroll indicator continuous animation
-      gsap.to(".scroll-line", {
-        scaleY: 1.5,
-        opacity: 0.5,
-        transformOrigin: "top",
-        duration: 1.5,
-        repeat: -1,
-        yoyo: true,
-        ease: "power1.inOut"
-      });
-
-      // Background Image Parallax
-      gsap.to(".hero-bg-parallax", {
-        y: "20%",
-        ease: "none",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true
-        }
-      });
-
-      // Quick Frame Expansion
-      gsap.set(frameRef.current, { width: 40, height: 40, opacity: 1 });
-      tl.to(frameRef.current, { 
-        width: "calc(100vw - var(--container-px)*2)", 
-        height: "calc(100vh - 120px)",
-        duration: 0.8, 
-        ease: "power3.inOut" 
-      });
-
-      tl.to(contentRef.current, { opacity: 1, duration: 0.4 }, "-=0.4");
-      
-      // Fast Typography Reveal
-      tl.to(".hero-char", {
-        y: "0%",
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.015,
-        ease: "back.out(1.2)"
-      }, "-=0.2");
-      
-      tl.fromTo(".tagline-anim", {
-        opacity: 0,
-        y: 10,
-        filter: "blur(4px)"
-      }, {
-        opacity: 1,
-        y: 0,
-        filter: "blur(0px)",
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power2.out"
-      }, "-=0.4");
-      
-      // Cinematic transition: Fade out the main text and reveal the background video
-      tl.to(contentRef.current, {
-        opacity: 0,
-        filter: "blur(10px)",
-        duration: 1.5,
-        ease: "power2.inOut"
-      }, "+=4.25");
-      
-      tl.to(".hero-video-container", {
-        opacity: 0.6, // Bring video up slightly so it's clearly visible but not overpowering
-        duration: 1.5,
-        ease: "power2.inOut"
-      }, "<");
-      
-      tl.to(".hero-bg-parallax", {
-        filter: "grayscale(0%)", // Optional: Bring color back to the video
-        duration: 1.5,
-        ease: "power2.inOut"
-      }, "<");
-      
-    }, containerRef);
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <section ref={containerRef} className="relative h-[85dvh] flex items-center justify-center overflow-hidden pt-20 bg-[var(--kagaz)]">
-      
-      {/* 1. The Parallax Background Video */}
-      <div className="absolute inset-0 pointer-events-none opacity-20 overflow-hidden hero-video-container">
-        <video 
-          ref={videoRef}
-          src="/hero-bg.mp4" 
-          autoPlay 
-          muted 
-          playsInline
-          onEnded={() => {
-            if (videoRef.current) {
-              videoRef.current.play();
-            }
-            if (timelineRef.current) {
-              timelineRef.current.restart();
-            }
-          }}
-          className="absolute w-full h-[120%] -top-[10%] object-cover hero-bg-parallax grayscale"
-        />
-      </div>
-
-      <div ref={frameRef} className="relative z-10 flex items-center justify-center">
-        <div className="absolute inset-0 opacity-20">
-          <RecursiveFrame activeColor={false} />
-        </div>
-        
-        {/* 2. The Content Layer */}
-        <div 
-          ref={contentRef} 
-          className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
-        >
-          {/* Top Ticker Space */}
-          <div className="absolute top-12 left-0 right-0 flex justify-between items-center px-12 opacity-0 tagline-anim w-full">
-            <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--dhul)] font-semibold">
-              Technology Consultancy · Est. {BRAND.founded}
-            </p>
-            <div className="hidden md:flex gap-4 font-mono text-[9px] tracking-[0.2em] text-[var(--dhul)]">
-              <span>BENGALURU</span><span>•</span>
-              <span>PATNA</span><span>•</span>
-              <span>CHENNAI</span>
-            </div>
-          </div>
-
-          <div className="px-4 max-w-4xl mx-auto w-full flex flex-col items-center justify-center">
-            <h1 className="font-display text-[clamp(2.5rem,7vw,7rem)] leading-[0.95] tracking-[-0.03em] flex flex-col items-center">
-              <span className="text-[var(--syahi)] overflow-hidden block">{splitText("Ideas,", "")}</span>
-              <span className="text-[var(--nila)] overflow-hidden block -mt-1">{splitText("Recursively", "")}</span>
-              <span className="text-[var(--syahi)] overflow-hidden block -mt-1">{splitText("Engineered.", "")}</span>
-            </h1>
-          </div>
-        </div>
-      </div>
-      
-      {/* 4. Interactive Scroll Indicator */}
-      <div 
-        ref={scrollRef} 
-        className="absolute bottom-8 left-[var(--container-px)] flex flex-col items-center gap-4 cursor-pointer group z-30 tagline-anim opacity-0"
-        onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-      >
-        <span className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--dhul)] group-hover:text-[var(--nila)] transition-colors duration-300">scroll</span>
-        <div className="w-px h-12 bg-[var(--dhul)]/30 overflow-hidden">
-          <div className="w-full h-full bg-[var(--nila)] scroll-line" />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────────
+// 2. Scene 02 to 04
+const scene2to4 = `/* ─────────────────────────────────────────────────────────────
    SCENE 02: THE STATEMENT (Motion Updated)
    ───────────────────────────────────────────────────────────── */
 function Scene02_Statement() {
@@ -347,176 +120,16 @@ function Scene04_CinematicParallax() {
       <div className="film-grain-overlay" />
     </section>
   );
-}
+}`;
 
-/* ─────────────────────────────────────────────────────────────
-   SCENE 05: PRACTICES (Stacked Cards)
-   ───────────────────────────────────────────────────────────── */
-function Scene05_PracticesStack() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const tier = getMotionTier();
-  const reduced = usePrefersReducedMotion();
+content = content.replace(
+  /\/\* ─────────────────────────────────────────────────────────────\r?\n   SCENE 02: THE STATEMENT[\s\S]*?\/\* ─────────────────────────────────────────────────────────────\r?\n   SCENE 05: THE HORIZONTAL DRIFT/,
+  scene2to4 + '\n\n/* ─────────────────────────────────────────────────────────────\n   SCENE 05: THE HORIZONTAL DRIFT'
+);
 
-  const practices = [
-    {
-      id: "software",
-      title: "Software\nDevelopment",
-      hero: "Code & Architecture",
-      bgImg: "https://images.unsplash.com/photo-1544256718-3bcf237f3974?auto=format&fit=crop&q=80&w=2000",
-      bgColor: "bg-[#EBE9E1]",
-      textColor: "text-[var(--syahi)]",
-      description: "Building robust, scalable foundations."
-    },
-    {
-      id: "ai",
-      title: "AI & Machine\nLearning",
-      hero: "Data & Intelligence",
-      bgImg: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=2000",
-      bgColor: "bg-[#DCD9D1]",
-      textColor: "text-[var(--syahi)]",
-      description: "Infusing systems with predictive logic."
-    },
-    {
-      id: "uiux",
-      title: "UI / UX\nDesign",
-      hero: "Craft & Experience",
-      bgImg: "https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&q=80&w=2000",
-      bgColor: "bg-[#F4F1ED]",
-      textColor: "text-[var(--syahi)]",
-      description: "Sculpting intuitive digital environments."
-    },
-    {
-      id: "cloud",
-      title: "Cloud\nSolutions",
-      hero: "Infrastructure & Scale",
-      bgImg: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=2000",
-      bgColor: "bg-[#2A2825]",
-      textColor: "text-[var(--kagaz)]",
-      description: "Architecting infinite digital space."
-    },
-    {
-      id: "automation",
-      title: "Business\nAutomation",
-      hero: "Systems & Efficiency",
-      bgImg: "https://images.unsplash.com/photo-1507901747481-84a4f64fda6d?auto=format&fit=crop&q=80&w=2000",
-      bgColor: "bg-[#EBE9E1]",
-      textColor: "text-[var(--syahi)]",
-      description: "Streamlining the machinery of business."
-    },
-    {
-      id: "web",
-      title: "Web\nDevelopment",
-      hero: "Digital Presence",
-      bgImg: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=2000",
-      bgColor: "bg-[#0F0F0F]",
-      textColor: "text-[var(--kagaz)]",
-      description: "Engineering beautiful online experiences."
-    }
-  ];
 
-  useEffect(() => {
-    if (reduced) return;
-    
-    let ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray<HTMLElement>(".stack-card-wrapper");
-      
-      cards.forEach((card, index) => {
-        if (index === cards.length - 1) return; // Don't scale the last card
-        
-        const innerCard = card.querySelector('.stack-card-inner');
-        const overlay = card.querySelector('.stack-card-overlay');
-        
-        // As the NEXT card scrolls up to hit the top, animate THIS card
-        const nextCard = cards[index + 1];
-        
-        gsap.to(innerCard, {
-          scale: 0.9,
-          ease: "none",
-          scrollTrigger: {
-            trigger: nextCard,
-            start: "top bottom",
-            end: "top top",
-            scrub: true,
-          }
-        });
-        
-        gsap.to(overlay, {
-          opacity: 0.7,
-          ease: "none",
-          scrollTrigger: {
-            trigger: nextCard,
-            start: "top bottom",
-            end: "top top",
-            scrub: true,
-          }
-        });
-      });
-    }, containerRef);
-    return () => ctx.revert();
-  }, [tier, reduced]);
-
-  return (
-    <section ref={containerRef} className="relative bg-[var(--syahi)] pb-[10vh]">
-      {/* Background grain to keep it premium */}
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay pointer-events-none" />
-      
-      <div className="container-editorial pt-32 pb-8 relative z-10">
-        <h2 className="font-display text-[clamp(2.5rem,5vw,5rem)] text-[var(--kagaz)] leading-none">
-          Our Practices
-        </h2>
-        <p className="font-mono text-sm tracking-[0.2em] text-[var(--dhul)] mt-4 uppercase">
-          Craftsmanship in 6 disciplines
-        </p>
-      </div>
-
-      <div className="relative w-full max-w-7xl mx-auto px-4 md:px-8 pb-32">
-        {practices.map((practice, index) => (
-          <div 
-            key={practice.id} 
-            className="stack-card-wrapper sticky top-0 pt-16 md:pt-24"
-            style={{ 
-              height: '100vh',
-              zIndex: index 
-            }}
-          >
-            <div className={`stack-card-inner relative w-full h-[75vh] md:h-[80vh] rounded-3xl overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.3)] ${practice.bgColor} origin-top flex flex-col justify-between p-8 md:p-12 lg:p-16 border border-white/10`}>
-              {/* Background Image */}
-              <img 
-                src={practice.bgImg} 
-                alt={practice.title} 
-                className="absolute inset-0 w-full h-full object-cover opacity-20 grayscale pointer-events-none"
-              />
-              
-              {/* Content */}
-              <div className="relative z-10 flex justify-between items-start">
-                <span className={`font-mono text-xs md:text-sm tracking-[0.2em] ${practice.textColor} opacity-60 uppercase`}>
-                  0{index + 1}
-                </span>
-                <span className={`font-mono text-xs md:text-sm tracking-[0.2em] ${practice.textColor} opacity-60 uppercase text-right max-w-[50%]`}>
-                  {practice.hero}
-                </span>
-              </div>
-              
-              <div className="relative z-10">
-                <p className={`font-mono text-sm md:text-base tracking-[0.1em] ${practice.textColor} opacity-80 mb-4`}>
-                  {practice.description}
-                </p>
-                <h3 className={`font-display text-[clamp(3rem,8vw,8rem)] leading-[0.9] tracking-tight whitespace-pre-line ${practice.textColor}`}>
-                  {practice.title}
-                </h3>
-              </div>
-
-              {/* The darkening overlay when covered */}
-              <div className="stack-card-overlay absolute inset-0 bg-[#0F0F0F] opacity-0 pointer-events-none rounded-3xl" />
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────────
+// 3. Scene 06
+const scene6 = `/* ─────────────────────────────────────────────────────────────
    SCENE 06: THE COUNTER (Motion Updated)
    ───────────────────────────────────────────────────────────── */
 function Scene06_Counter() {
@@ -560,9 +173,16 @@ function Scene06_Counter() {
       </div>
     </section>
   );
-}
+}`;
 
-/* ─────────────────────────────────────────────────────────────
+content = content.replace(
+  /\/\* ─────────────────────────────────────────────────────────────\r?\n   SCENE 06: THE COUNTER[\s\S]*?\/\* ─────────────────────────────────────────────────────────────\r?\n   SCENE 07: THE CONVICTION SEQUENCE/,
+  scene6 + '\n\n/* ─────────────────────────────────────────────────────────────\n   SCENE 07: THE CONVICTION SEQUENCE'
+);
+
+
+// 4. Scene 07 to 10
+const scene7to10 = `/* ─────────────────────────────────────────────────────────────
    SCENE 07: THE CONVICTION SEQUENCE (Motion Updated)
    ───────────────────────────────────────────────────────────── */
 function Scene07_ConvictionSequence() {
@@ -695,11 +315,11 @@ function Scene08_FounderReveal() {
             const hoverRotate = i % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1";
 
             return (
-              <div key={member.slug} className={`${wClass} ${mtClass} flex flex-col items-center md:items-start group`}>
-                <Link to={`/team#${member.slug}`} className="w-full relative block">
-                  <div className={`w-full ${aspectClass} ${rotateClass} ${hoverRotate} bg-[var(--syahi)] p-2 sm:p-3 border border-[var(--rekha)] shadow-lg transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.03] hover:shadow-xl hover:z-20 cursor-pointer`}>
+              <div key={member.slug} className={\`\${wClass} \${mtClass} flex flex-col items-center md:items-start group\`}>
+                <Link to={\`/team#\${member.slug}\`} className="w-full relative block">
+                  <div className={\`w-full \${aspectClass} \${rotateClass} \${hoverRotate} bg-[var(--syahi)] p-2 sm:p-3 border border-[var(--rekha)] shadow-lg transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.03] hover:shadow-xl hover:z-20 cursor-pointer\`}>
                     <div className="founder-photo w-full h-full relative overflow-hidden bg-[var(--dhul)]" style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}>
-                      <img src={member.photo} className={`w-full h-full object-cover ${objectPos} grayscale contrast-125 sepia-[0.15] transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:contrast-100 group-hover:sepia-0`} alt={member.name} />
+                      <img src={member.photo} className={\`w-full h-full object-cover \${objectPos} grayscale contrast-125 sepia-[0.15] transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:contrast-100 group-hover:sepia-0\`} alt={member.name} />
                     </div>
                   </div>
                 </Link>
@@ -787,4 +407,11 @@ function Scene10_ClosingFrame() {
       </div>
     </section>
   );
-}
+}`;
+
+content = content.replace(
+  /\/\* ─────────────────────────────────────────────────────────────\r?\n   SCENE 07: THE CONVICTION SEQUENCE[\s\S]*$/,
+  scene7to10 + "\n"
+);
+
+fs.writeFileSync('src/routes/index.tsx', content, 'utf8');
