@@ -143,6 +143,14 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  
+  /* Force visibility for elements that rely on GSAP from() animations */
+  [class*="opacity-0"], .vellum-panel, .founder-photo, .founder-name, .counter-digit {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+  }
 }
 
 /* ============================================================
