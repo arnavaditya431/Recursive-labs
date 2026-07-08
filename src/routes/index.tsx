@@ -67,7 +67,7 @@ function HomePage() {
       <Scene04_CinematicParallax />
       <Scene05_PracticesStack />
       <Scene06_Counter />
-      <Scene07_ConvictionSequence />
+      <Scene07_KineticGrid />
       <Scene08_FounderReveal />
       <Scene09_CityBreath />
       <Scene10_ClosingFrame />
@@ -570,69 +570,145 @@ function Scene06_Counter() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   SCENE 07: THE CONVICTION SEQUENCE (Motion Updated)
+   SCENE 07: THE KINETIC GRID (Conviction Sequence)
    ───────────────────────────────────────────────────────────── */
-function Scene07_ConvictionSequence() {
+function Scene07_KineticGrid() {
   const containerRef = useRef<HTMLDivElement>(null);
   const tier = getMotionTier();
   const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
+    if (reduced) return;
+    
     let ctx = gsap.context(() => {
-      PinEngine.stickyStack(
-        gsap.utils.toArray(".conviction-page"),
-        containerRef.current,
-        { tier, reducedMotion: reduced }
-      );
+      const masterTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "+=400%", // 4 panels
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1
+        }
+      });
+
+      // We have 4 panels
+      const panels = [
+        { id: ".panel-1", clipStart: "inset(0% 50% 50% 0%)", clipEnd: "inset(0% 0% 0% 0%)" },
+        { id: ".panel-2", clipStart: "inset(0% 0% 50% 50%)", clipEnd: "inset(0% 0% 0% 0%)" },
+        { id: ".panel-3", clipStart: "inset(50% 50% 0% 0%)", clipEnd: "inset(0% 0% 0% 0%)" },
+        { id: ".panel-4", clipStart: "inset(50% 0% 0% 50%)", clipEnd: "inset(0% 0% 0% 0%)" },
+      ];
+
+      // Initial Setup: ensure clipPaths are set
+      panels.forEach(p => gsap.set(p.id, { clipPath: p.clipStart }));
+
+      // Animation Loop
+      panels.forEach((p, i) => {
+        const startTime = i * 2;
+        
+        // 1. Expand the panel
+        masterTl
+          .to(p.id, { clipPath: p.clipEnd, zIndex: 10, duration: 1, ease: "power2.inOut" }, startTime)
+          .to(`${p.id} .short-text`, { opacity: 0, scale: 0.8, duration: 0.5 }, startTime)
+          .to(`${p.id} .full-text`, { opacity: 1, scale: 1, duration: 0.5 }, startTime + 0.5)
+          .to(`${p.id} .video-bg`, { opacity: 1, filter: "grayscale(0%)", duration: 1 }, startTime);
+
+        // 2. If it's not the last panel, shrink it back down
+        if (i < 3) {
+          const shrinkTime = startTime + 1.5; // Hold for 0.5s, then shrink
+          masterTl
+            .to(p.id, { clipPath: p.clipStart, zIndex: 1, duration: 0.5, ease: "power2.inOut" }, shrinkTime)
+            .to(`${p.id} .short-text`, { opacity: 1, scale: 1, duration: 0.3 }, shrinkTime)
+            .to(`${p.id} .full-text`, { opacity: 0, scale: 0.8, duration: 0.3 }, shrinkTime)
+            .to(`${p.id} .video-bg`, { opacity: 0, filter: "grayscale(100%)", duration: 0.5 }, shrinkTime);
+        }
+      });
+
     }, containerRef);
     return () => ctx.revert();
   }, [tier, reduced]);
 
   return (
-    <div ref={containerRef} className="relative h-[400vh]">
-      {/* Page 1 */}
-      <section className="conviction-page z-[4] h-screen sticky top-0 flex items-center justify-center bg-[var(--syahi)] overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none opacity-40">
-          <video src="/mvp-bg.mp4" autoPlay loop muted playsInline className="w-full h-full object-cover grayscale" />
-        </div>
-        <h2 className="relative z-10 font-display text-[clamp(3rem,8vw,7.5rem)] leading-[0.9] tracking-[-0.02em] text-[var(--kagaz)] text-center max-w-5xl">
-          We don't build MVP's.<br />We build <em className="text-[var(--nila)]">foundations.</em>
-        </h2>
-      </section>
+    <div ref={containerRef} className="relative h-screen bg-[#0F0F0F] overflow-hidden">
+      {/* Grid Lines Overlay (Optional, for aesthetics) */}
+      <div className="absolute inset-0 z-50 pointer-events-none">
+        <div className="absolute top-1/2 left-0 w-full h-[1px] bg-white/10" />
+        <div className="absolute top-0 left-1/2 w-[1px] h-full bg-white/10" />
+      </div>
 
-      {/* Page 2 */}
-      <section className="conviction-page z-[3] h-screen sticky top-0 grid lg:grid-cols-2 bg-[var(--kagaz)]">
-        <div className="flex items-center px-[var(--container-px)]">
-          <h2 className="font-display text-[clamp(2.5rem,5vw,5rem)] leading-[0.9] tracking-[-0.02em] text-[var(--syahi)] max-w-2xl">
+      {/* PANEL 1: Top Left */}
+      <div className="panel-1 absolute inset-0 bg-[#0a0a0a] z-[1]">
+        <video src="/mvp-bg.mp4" autoPlay loop muted playsInline className="video-bg absolute inset-0 w-full h-full object-cover opacity-0 grayscale pointer-events-none" />
+        <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+        
+        {/* Short Text - positioned in the center of the top-left quadrant */}
+        <div className="short-text absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2">
+          <h2 className="font-display text-2xl md:text-6xl text-[var(--kagaz)] tracking-widest uppercase opacity-50">Foundations</h2>
+        </div>
+        
+        {/* Full Text - positioned dead center of the screen */}
+        <div className="full-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-4 text-center opacity-0 scale-75 pointer-events-none">
+          <h2 className="font-display text-[clamp(3rem,8vw,7.5rem)] leading-[0.9] tracking-[-0.02em] text-[var(--kagaz)] max-w-5xl mx-auto">
+            We don't build MVP's.<br />We build <em className="text-[var(--nila)]">foundations.</em>
+          </h2>
+        </div>
+      </div>
+
+      {/* PANEL 2: Top Right */}
+      <div className="panel-2 absolute inset-0 bg-[#141414] z-[1]">
+        <video src="/posture-bg.mp4" autoPlay loop muted playsInline className="video-bg absolute inset-0 w-full h-full object-cover opacity-0 grayscale pointer-events-none" />
+        <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+        
+        {/* Short Text - top-right quadrant */}
+        <div className="short-text absolute top-1/4 left-3/4 -translate-x-1/2 -translate-y-1/2">
+          <h2 className="font-display text-2xl md:text-6xl text-[var(--kagaz)] tracking-widest uppercase opacity-50">Posture</h2>
+        </div>
+        
+        {/* Full Text */}
+        <div className="full-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-4 text-center opacity-0 scale-75 pointer-events-none">
+          <h2 className="font-display text-[clamp(2.5rem,5vw,5rem)] leading-[0.9] tracking-[-0.02em] text-[var(--kagaz)] max-w-4xl mx-auto">
             Engineering as posture.<br />Documentation as proof.
           </h2>
         </div>
-        <div className="relative h-full w-full hidden lg:block p-12 bg-[var(--syahi)]">
-          <div className="relative w-full h-full">
-            <RecursiveFrame activeColor={false} />
-            <video src="/posture-bg.mp4" autoPlay loop muted playsInline className="absolute inset-3 object-cover w-[calc(100%-24px)] h-[calc(100%-24px)] grayscale opacity-50" />
-          </div>
-        </div>
-      </section>
+      </div>
 
-      {/* Page 3 */}
-      <section className="conviction-page z-[2] h-screen sticky top-0 flex items-center px-[var(--container-px)] bg-[var(--syahi)]">
-        <video src="/patna-bg.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover grayscale brightness-50" />
-        <h2 className="relative z-10 font-display text-[clamp(3rem,8vw,7.5rem)] leading-[0.9] tracking-[-0.02em] text-[var(--kagaz)] max-w-5xl">
-          Designed in Patna.<br />Built for the world.
-        </h2>
-      </section>
-
-      {/* Page 4 */}
-      <section className="conviction-page z-[1] h-screen sticky top-0 flex items-center justify-center text-center px-[var(--container-px)] bg-[var(--syahi)]">
-        <div className="absolute inset-0 pointer-events-none opacity-40">
-          <video src="/statement-bg.mp4" autoPlay loop muted playsInline className="w-full h-full object-cover grayscale mix-blend-screen" />
+      {/* PANEL 3: Bottom Left */}
+      <div className="panel-3 absolute inset-0 bg-[#1a1a1a] z-[1]">
+        <video src="/patna-bg.mp4" autoPlay loop muted playsInline className="video-bg absolute inset-0 w-full h-full object-cover opacity-0 grayscale pointer-events-none" />
+        <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+        
+        {/* Short Text - bottom-left quadrant */}
+        <div className="short-text absolute top-3/4 left-1/4 -translate-x-1/2 -translate-y-1/2">
+          <h2 className="font-display text-2xl md:text-6xl text-[var(--kagaz)] tracking-widest uppercase opacity-50">World</h2>
         </div>
-        <h2 className="relative z-10 font-display text-[clamp(3.5rem,10vw,12rem)] leading-[0.85] tracking-[-0.03em] text-[var(--kagaz)] uppercase">
-          <em className="block text-sm tracking-[0.5em] font-mono text-[var(--dhul)] mb-8 uppercase not-italic">The End Game</em>
-          Long Term<br /><span className="text-[var(--nila)]">Value</span>
-        </h2>
-      </section>
+        
+        {/* Full Text */}
+        <div className="full-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-4 text-center opacity-0 scale-75 pointer-events-none">
+          <h2 className="font-display text-[clamp(3rem,8vw,7.5rem)] leading-[0.9] tracking-[-0.02em] text-[var(--kagaz)] max-w-5xl mx-auto">
+            Designed in Patna.<br />Built for the world.
+          </h2>
+        </div>
+      </div>
+
+      {/* PANEL 4: Bottom Right */}
+      <div className="panel-4 absolute inset-0 bg-[#0a0a0a] z-[1]">
+        <video src="/statement-bg.mp4" autoPlay loop muted playsInline className="video-bg absolute inset-0 w-full h-full object-cover opacity-0 grayscale pointer-events-none" />
+        <div className="absolute inset-0 bg-black/60 pointer-events-none" />
+        
+        {/* Short Text - bottom-right quadrant */}
+        <div className="short-text absolute top-3/4 left-3/4 -translate-x-1/2 -translate-y-1/2">
+          <h2 className="font-display text-2xl md:text-6xl text-[var(--kagaz)] tracking-widest uppercase opacity-50">Legacies</h2>
+        </div>
+        
+        {/* Full Text */}
+        <div className="full-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-4 text-center opacity-0 scale-75 pointer-events-none">
+          <h2 className="font-display text-[clamp(3.5rem,10vw,12rem)] leading-[0.85] tracking-[-0.03em] text-[var(--kagaz)] uppercase mx-auto">
+            <em className="block text-sm tracking-[0.5em] font-mono text-[var(--dhul)] mb-8 uppercase not-italic">The End Game</em>
+            Long Term<br /><span className="text-[var(--nila)]">Value</span>
+          </h2>
+        </div>
+      </div>
     </div>
   );
 }
