@@ -338,13 +338,20 @@ function Scene04_CinematicParallax() {
   }, [tier, reduced]);
 
   return (
-    <section ref={containerRef} className="h-[70vh] sm:h-[90vh] overflow-hidden relative bg-[var(--syahi)]">
+    <section ref={containerRef} className="h-[70vh] sm:h-[90vh] overflow-hidden relative bg-[var(--syahi)] flex items-center justify-center">
       <video 
         src="/parallax-bg.mp4" 
         autoPlay loop muted playsInline
         className="parallax-media absolute top-[-15%] left-0 w-full h-[130%] object-cover grayscale brightness-50 contrast-50 blur-sm" 
       />
-      <div className="film-grain-overlay" />
+      <div className="absolute inset-0 bg-black/40 z-10" />
+      <div className="film-grain-overlay z-10" />
+      
+      <div className="relative z-20 container-editorial text-center px-4">
+        <h2 className="font-display text-[clamp(3rem,6vw,6rem)] leading-[0.9] tracking-tight text-[var(--kagaz)] whitespace-pre-line drop-shadow-lg">
+          Recursive Lab.{"\n"}Built recursively.
+        </h2>
+      </div>
     </section>
   );
 }
