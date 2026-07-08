@@ -85,7 +85,7 @@ function Scene01_RecursiveReveal() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
-  
+
   // Custom split text helper for GSAP targeting
   const splitText = (text: string, className: string) => (
     <span className="inline-block overflow-hidden pb-2">
@@ -101,10 +101,10 @@ function Scene01_RecursiveReveal() {
     let ctx = gsap.context(() => {
       const tl = gsap.timeline();
       timelineRef.current = tl;
-      
+
       gsap.set(frameRef.current, { width: 300, height: 400, opacity: 0 });
       gsap.set(contentRef.current, { opacity: 0 });
-      
+
       // Interactive scroll indicator continuous animation
       gsap.to(".scroll-line", {
         scaleY: 1.5,
@@ -130,15 +130,15 @@ function Scene01_RecursiveReveal() {
 
       // Quick Frame Expansion
       gsap.set(frameRef.current, { width: 40, height: 40, opacity: 1 });
-      tl.to(frameRef.current, { 
-        width: "calc(100vw - var(--container-px)*2)", 
+      tl.to(frameRef.current, {
+        width: "calc(100vw - var(--container-px)*2)",
         height: "calc(100vh - 120px)",
-        duration: 0.8, 
-        ease: "power3.inOut" 
+        duration: 0.8,
+        ease: "power3.inOut"
       });
 
       tl.to(contentRef.current, { opacity: 1, duration: 0.4 }, "-=0.4");
-      
+
       // Fast Typography Reveal
       tl.to(".hero-char", {
         y: "0%",
@@ -147,7 +147,7 @@ function Scene01_RecursiveReveal() {
         stagger: 0.015,
         ease: "back.out(1.2)"
       }, "-=0.2");
-      
+
       tl.fromTo(".tagline-anim", {
         opacity: 0,
         y: 10,
@@ -160,7 +160,7 @@ function Scene01_RecursiveReveal() {
         stagger: 0.1,
         ease: "power2.out"
       }, "-=0.4");
-      
+
       // Cinematic transition: Fade out the main text and reveal the background video
       tl.to(contentRef.current, {
         opacity: 0,
@@ -168,33 +168,33 @@ function Scene01_RecursiveReveal() {
         duration: 1.5,
         ease: "power2.inOut"
       }, "+=4.25");
-      
+
       tl.to(".hero-video-container", {
         opacity: 0.6, // Bring video up slightly so it's clearly visible but not overpowering
         duration: 1.5,
         ease: "power2.inOut"
       }, "<");
-      
+
       tl.to(".hero-bg-parallax", {
         filter: "grayscale(0%)", // Optional: Bring color back to the video
         duration: 1.5,
         ease: "power2.inOut"
       }, "<");
-      
+
     }, containerRef);
     return () => ctx.revert();
   }, []);
 
   return (
     <section ref={containerRef} className="relative h-[85dvh] flex items-center justify-center overflow-hidden pt-20 bg-[var(--kagaz)]">
-      
+
       {/* 1. The Parallax Background Video */}
       <div className="absolute inset-0 pointer-events-none opacity-20 overflow-hidden hero-video-container">
-        <video 
+        <video
           ref={videoRef}
-          src="/hero-bg.mp4" 
-          autoPlay 
-          muted 
+          src="/hero-bg.mp4"
+          autoPlay
+          muted
           playsInline
           onEnded={() => {
             if (videoRef.current) {
@@ -212,10 +212,10 @@ function Scene01_RecursiveReveal() {
         <div className="absolute inset-0 opacity-20">
           <RecursiveFrame activeColor={false} />
         </div>
-        
+
         {/* 2. The Content Layer */}
-        <div 
-          ref={contentRef} 
+        <div
+          ref={contentRef}
           className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
         >
           {/* Top Ticker Space */}
@@ -239,10 +239,10 @@ function Scene01_RecursiveReveal() {
           </div>
         </div>
       </div>
-      
+
       {/* 4. Interactive Scroll Indicator */}
-      <div 
-        ref={scrollRef} 
+      <div
+        ref={scrollRef}
         className="absolute bottom-8 left-[var(--container-px)] flex flex-col items-center gap-4 cursor-pointer group z-30 tagline-anim opacity-0"
         onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
       >
@@ -275,10 +275,10 @@ function Scene02_Statement() {
 
   return (
     <section ref={containerRef} className="relative min-h-[80vh] flex items-center py-24 px-[var(--container-px)] bg-[var(--syahi)] overflow-hidden">
-      <video 
-        src="/approach-bg.mp4" 
+      <video
+        src="/approach-bg.mp4"
         autoPlay loop muted playsInline
-        className="statement-bg absolute inset-0 w-full h-full object-cover grayscale brightness-0 saturate-0" 
+        className="statement-bg absolute inset-0 w-full h-full object-cover grayscale brightness-0 saturate-0"
       />
       <div className="relative z-10 max-w-5xl">
         <p className="statement-label font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--kagaz)] opacity-70 mb-8">
@@ -328,7 +328,7 @@ function Scene04_CinematicParallax() {
   const containerRef = useRef<HTMLDivElement>(null);
   const tier = getMotionTier();
   const reduced = usePrefersReducedMotion();
-  
+
   useEffect(() => {
     let ctx = gsap.context(() => {
       ParallaxEngine.layer(".parallax-media", 25, { trigger: containerRef.current, tier, reducedMotion: reduced });
@@ -339,14 +339,14 @@ function Scene04_CinematicParallax() {
 
   return (
     <section ref={containerRef} className="h-[70vh] sm:h-[90vh] overflow-hidden relative bg-[var(--syahi)] flex items-center justify-center">
-      <video 
-        src="/parallax-bg.mp4" 
+      <video
+        src="/parallax-bg.mp4"
         autoPlay loop muted playsInline
-        className="parallax-media absolute top-[-15%] left-0 w-full h-[130%] object-cover grayscale brightness-50 contrast-50 blur-sm" 
+        className="parallax-media absolute top-[-15%] left-0 w-full h-[130%] object-cover grayscale brightness-50 contrast-50 blur-sm"
       />
       <div className="absolute inset-0 bg-black/40 z-10" />
       <div className="film-grain-overlay z-10" />
-      
+
       <div className="relative z-20 container-editorial text-center px-4">
         <h2 className="font-display text-[clamp(3rem,6vw,6rem)] leading-[0.9] tracking-tight text-[var(--kagaz)] whitespace-pre-line drop-shadow-lg">
           Recursive Lab.{"\n"}Built recursively.
@@ -423,19 +423,19 @@ function Scene05_PracticesStack() {
 
   useEffect(() => {
     if (reduced) return;
-    
+
     let ctx = gsap.context(() => {
       const cards = gsap.utils.toArray<HTMLElement>(".stack-card-wrapper");
-      
+
       cards.forEach((card, index) => {
         if (index === cards.length - 1) return; // Don't scale the last card
-        
+
         const innerCard = card.querySelector('.stack-card-inner');
         const overlay = card.querySelector('.stack-card-overlay');
-        
+
         // As the NEXT card scrolls up to hit the top, animate THIS card
         const nextCard = cards[index + 1];
-        
+
         gsap.to(innerCard, {
           scale: 0.9,
           ease: "none",
@@ -446,7 +446,7 @@ function Scene05_PracticesStack() {
             scrub: true,
           }
         });
-        
+
         gsap.to(overlay, {
           opacity: 0.7,
           ease: "none",
@@ -466,7 +466,7 @@ function Scene05_PracticesStack() {
     <section ref={containerRef} className="relative bg-[var(--syahi)] pb-[10vh]">
       {/* Background grain to keep it premium */}
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay pointer-events-none" />
-      
+
       <div className="container-editorial pt-32 pb-8 relative z-10">
         <h2 className="font-display text-[clamp(2.5rem,5vw,5rem)] text-[var(--kagaz)] leading-none">
           Our Practices
@@ -478,22 +478,22 @@ function Scene05_PracticesStack() {
 
       <div className="relative w-full max-w-7xl mx-auto px-4 md:px-8 pb-32">
         {practices.map((practice, index) => (
-          <div 
-            key={practice.id} 
+          <div
+            key={practice.id}
             className="stack-card-wrapper sticky top-0 pt-16 md:pt-24"
-            style={{ 
+            style={{
               height: '100vh',
-              zIndex: index 
+              zIndex: index
             }}
           >
             <div className={`stack-card-inner relative w-full h-[75vh] md:h-[80vh] rounded-3xl overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.3)] ${practice.bgColor} origin-top flex flex-col justify-between p-8 md:p-12 lg:p-16 border border-white/10`}>
               {/* Background Image */}
-              <img 
-                src={practice.bgImg} 
-                alt={practice.title} 
+              <img
+                src={practice.bgImg}
+                alt={practice.title}
                 className="absolute inset-0 w-full h-full object-cover opacity-20 grayscale pointer-events-none"
               />
-              
+
               {/* Content */}
               <div className="relative z-10 flex justify-between items-start">
                 <span className={`font-mono text-xs md:text-sm tracking-[0.2em] ${practice.textColor} opacity-60 uppercase`}>
@@ -503,7 +503,7 @@ function Scene05_PracticesStack() {
                   {practice.hero}
                 </span>
               </div>
-              
+
               <div className="relative z-10">
                 <p className={`font-mono text-sm md:text-base tracking-[0.1em] ${practice.textColor} opacity-80 mb-4`}>
                   {practice.description}
@@ -579,7 +579,7 @@ function Scene07_KineticGrid() {
 
   useEffect(() => {
     if (reduced) return;
-    
+
     let ctx = gsap.context(() => {
       const masterTl = gsap.timeline({
         scrollTrigger: {
@@ -606,7 +606,7 @@ function Scene07_KineticGrid() {
       // Animation Loop
       panels.forEach((p, i) => {
         const startTime = i * 2;
-        
+
         // 1. Expand the panel
         masterTl
           .to(p.id, { clipPath: p.clipEnd, zIndex: 10, duration: 1, ease: "power2.inOut" }, startTime)
@@ -641,12 +641,12 @@ function Scene07_KineticGrid() {
       <div className="panel-1 absolute inset-0 bg-[#0a0a0a] z-[1]">
         <video src="/mvp-bg.mp4" autoPlay loop muted playsInline className="video-bg absolute inset-0 w-full h-full object-cover opacity-0 grayscale pointer-events-none" />
         <div className="absolute inset-0 bg-black/40 pointer-events-none" />
-        
+
         {/* Short Text - positioned in the center of the top-left quadrant */}
         <div className="short-text absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2">
           <h2 className="font-display text-2xl md:text-6xl text-[var(--kagaz)] tracking-widest uppercase opacity-50">Foundations</h2>
         </div>
-        
+
         {/* Full Text - positioned dead center of the screen */}
         <div className="full-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-4 text-center opacity-0 scale-75 pointer-events-none">
           <h2 className="font-display text-[clamp(3rem,8vw,7.5rem)] leading-[0.9] tracking-[-0.02em] text-[var(--kagaz)] max-w-5xl mx-auto">
@@ -657,14 +657,14 @@ function Scene07_KineticGrid() {
 
       {/* PANEL 2: Top Right */}
       <div className="panel-2 absolute inset-0 bg-[#141414] z-[1]">
-        <video src="/posture-bg.mp4" autoPlay loop muted playsInline className="video-bg absolute inset-0 w-full h-full object-cover opacity-0 grayscale pointer-events-none" />
+        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=2000" alt="Architecture" className="video-bg absolute inset-0 w-full h-full object-cover opacity-0 grayscale pointer-events-none" />
         <div className="absolute inset-0 bg-black/40 pointer-events-none" />
-        
+
         {/* Short Text - top-right quadrant */}
         <div className="short-text absolute top-1/4 left-3/4 -translate-x-1/2 -translate-y-1/2">
           <h2 className="font-display text-2xl md:text-6xl text-[var(--kagaz)] tracking-widest uppercase opacity-50">Posture</h2>
         </div>
-        
+
         {/* Full Text */}
         <div className="full-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-4 text-center opacity-0 scale-75 pointer-events-none">
           <h2 className="font-display text-[clamp(2.5rem,5vw,5rem)] leading-[0.9] tracking-[-0.02em] text-[var(--kagaz)] max-w-4xl mx-auto">
@@ -677,12 +677,12 @@ function Scene07_KineticGrid() {
       <div className="panel-3 absolute inset-0 bg-[#1a1a1a] z-[1]">
         <video src="/patna-bg.mp4" autoPlay loop muted playsInline className="video-bg absolute inset-0 w-full h-full object-cover opacity-0 grayscale pointer-events-none" />
         <div className="absolute inset-0 bg-black/40 pointer-events-none" />
-        
+
         {/* Short Text - bottom-left quadrant */}
         <div className="short-text absolute top-3/4 left-1/4 -translate-x-1/2 -translate-y-1/2">
           <h2 className="font-display text-2xl md:text-6xl text-[var(--kagaz)] tracking-widest uppercase opacity-50">World</h2>
         </div>
-        
+
         {/* Full Text */}
         <div className="full-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-4 text-center opacity-0 scale-75 pointer-events-none">
           <h2 className="font-display text-[clamp(3rem,8vw,7.5rem)] leading-[0.9] tracking-[-0.02em] text-[var(--kagaz)] max-w-5xl mx-auto">
@@ -695,12 +695,12 @@ function Scene07_KineticGrid() {
       <div className="panel-4 absolute inset-0 bg-[#0a0a0a] z-[1]">
         <video src="/statement-bg.mp4" autoPlay loop muted playsInline className="video-bg absolute inset-0 w-full h-full object-cover opacity-0 grayscale pointer-events-none" />
         <div className="absolute inset-0 bg-black/60 pointer-events-none" />
-        
+
         {/* Short Text - bottom-right quadrant */}
         <div className="short-text absolute top-3/4 left-3/4 -translate-x-1/2 -translate-y-1/2">
           <h2 className="font-display text-2xl md:text-6xl text-[var(--kagaz)] tracking-widest uppercase opacity-50">Legacies</h2>
         </div>
-        
+
         {/* Full Text */}
         <div className="full-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-4 text-center opacity-0 scale-75 pointer-events-none">
           <h2 className="font-display text-[clamp(3.5rem,10vw,12rem)] leading-[0.85] tracking-[-0.03em] text-[var(--kagaz)] uppercase mx-auto">
@@ -740,7 +740,7 @@ function Scene08_FounderReveal() {
         <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--dhul)] mb-24 md:mb-32 text-center md:text-left">
           03 — The Assembly
         </p>
-        
+
         <div className="relative max-w-[90rem] mx-auto flex flex-col md:flex-row items-center md:items-start justify-center gap-12 md:gap-8 lg:gap-12 pb-32">
           {/* Faint Connecting SVG Line (Desktop Only) */}
           <svg className="absolute top-[30%] left-[10%] w-[80%] h-[40%] pointer-events-none hidden md:block opacity-20 -z-10" viewBox="0 0 1000 200" preserveAspectRatio="none">
@@ -767,14 +767,14 @@ function Scene08_FounderReveal() {
 
             let objectPos = "object-center";
             if (i === 1) objectPos = "object-top";
-            
+
             let rotateClass = "rotate-0";
             if (i === 0) rotateClass = "-rotate-2";
             if (i === 1) rotateClass = "rotate-1";
             if (i === 2) rotateClass = "-rotate-1";
             if (i === 3) rotateClass = "rotate-2";
             if (i === 4) rotateClass = "-rotate-2";
-            
+
             const hoverRotate = i % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1";
 
             return (
@@ -786,7 +786,7 @@ function Scene08_FounderReveal() {
                     </div>
                   </div>
                 </Link>
-                
+
                 <div className="founder-name mt-6 text-center md:text-left">
                   <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-[var(--syahi)] font-bold">{member.name}</p>
                   <p className="font-mono text-[9px] tracking-widest uppercase text-[var(--syahi)]/60 mt-1.5">{member.role}</p>
@@ -817,10 +817,10 @@ function Scene09_CityBreath() {
 
   return (
     <section ref={containerRef} className="h-[100dvh] overflow-hidden relative">
-      <img 
-        src={REGISTERS.R3_CITY} 
-        className="city-bg absolute top-[-15%] left-0 w-full h-[130%] object-cover contrast-125 sepia-[0.3]" 
-        alt="Indian Cityscape" 
+      <img
+        src={REGISTERS.R3_CITY}
+        className="city-bg absolute top-[-15%] left-0 w-full h-[130%] object-cover contrast-125 sepia-[0.3]"
+        alt="Indian Cityscape"
       />
     </section>
   );
@@ -851,10 +851,10 @@ function Scene10_ClosingFrame() {
       </div>
 
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'repeating-linear-gradient(45deg, var(--syahi) 0, var(--syahi) 1px, transparent 0, transparent 50%)', backgroundSize: '100px 100px' }} />
-      
+
       <div className="relative p-16 sm:p-24 max-w-3xl w-full flex items-center justify-center text-center mx-4">
         <RecursiveFrame activeColor={true} />
-        
+
         <div className="closing-content relative z-10 flex flex-col items-center">
           <h2 className="font-display text-[clamp(3rem,6vw,5.5rem)] leading-[0.9] tracking-[-0.02em] text-[var(--syahi)]">
             Now it's <em className="text-[var(--nila)]">your move.</em>
@@ -864,7 +864,7 @@ function Scene10_ClosingFrame() {
           </Link>
         </div>
       </div>
-      
+
       <div className="mt-32 w-full px-[var(--container-px)]">
         <p className="font-display text-sm text-[var(--dhul)]">Engineering ideas.</p>
       </div>
