@@ -392,30 +392,6 @@ function TypewriterText({ text }: { text: string }) {
 // ============================================================
 
 export function SplashGate({ children }: { children: React.ReactNode }) {
-  const [state, setState] = useState<"pending" | "splash" | "ready">("pending");
-
-  useEffect(() => {
-    // Only play once per session
-    const seen = sessionStorage.getItem(SPLASH_KEY);
-    setState(seen ? "ready" : "splash");
-  }, []);
-
-  const handleComplete = () => {
-    sessionStorage.setItem(SPLASH_KEY, "1");
-    setState("ready");
-  };
-
-  if (state === "pending") {
-    return <div className="fixed inset-0 z-[100] bg-black" aria-hidden="true" />;
-  }
-
-  if (state === "splash") {
-    return (
-      <AnimatePresence mode="wait">
-        <SplashScreen key="splash" onComplete={handleComplete} />
-      </AnimatePresence>
-    );
-  }
-
+  // Archiving the splash screen for now so it doesn't run on every load
   return <>{children}</>;
 }

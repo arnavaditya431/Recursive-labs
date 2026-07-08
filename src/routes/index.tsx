@@ -245,32 +245,25 @@ function Scene01_RecursiveReveal() {
    ───────────────────────────────────────────────────────────── */
 function Scene02_Statement() {
   return (
-    <section className="section-py-lg border-t border-[var(--rekha)] relative overflow-hidden">
-      <div className="container-editorial grid lg:grid-cols-[60%_40%] min-h-[70vh] items-center gap-12">
-        <div className="flex flex-col justify-center">
-          <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--dhul)] mb-8">
-            01 — The Approach
-          </p>
-          <h2 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.9] tracking-[-0.02em] text-[var(--syahi)] max-w-3xl">
-            We treat your platform as a strategic asset, not a cost centre.
-          </h2>
-          <p className="mt-12 text-lg text-[var(--dhul)] max-w-lg leading-relaxed">
-            By engineers who think in systems. A premium boutique consultancy
-            delivering software engineering, AI, and cloud solutions.
-          </p>
-        </div>
-        
-        {/* Abstract Photography replacing Wireframe */}
-        <div className="relative aspect-square flex items-center justify-center p-8 lg:p-12">
-          <div className="relative w-full h-full max-w-[400px]">
-            <RecursiveFrame activeColor={false} />
-            <img 
-              src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" 
-              className="absolute inset-3 object-cover w-[calc(100%-24px)] h-[calc(100%-24px)] grayscale opacity-90 sepia-[0.1]" 
-              alt="Software Code Representation" 
-            />
-          </div>
-        </div>
+    <section className="relative min-h-[80vh] flex items-center py-24 px-[var(--container-px)] bg-[var(--syahi)] overflow-hidden">
+      {/* Full Bleed Background Video */}
+      <video 
+        src="/approach-bg.mp4" 
+        autoPlay loop muted playsInline
+        className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.3]" 
+      />
+      
+      <div className="relative z-10 max-w-5xl">
+        <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--kagaz)] opacity-70 mb-8">
+          01 — The Approach
+        </p>
+        <h2 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.9] tracking-[-0.02em] text-[var(--kagaz)]">
+          We treat your platform as a strategic asset, not a cost centre.
+        </h2>
+        <p className="mt-12 text-lg text-[var(--kagaz)] opacity-80 max-w-lg leading-relaxed">
+          By engineers who think in systems. A premium boutique consultancy
+          delivering software engineering, AI, and cloud solutions.
+        </p>
       </div>
     </section>
   );
@@ -316,11 +309,11 @@ function Scene04_CinematicParallax() {
 
   return (
     <section ref={containerRef} className="h-[70vh] sm:h-[90vh] overflow-hidden relative bg-[var(--syahi)]">
-      <img 
+      <video 
         ref={imageRef}
-        src={REGISTERS.R2_WORKSPACE} 
+        src="/parallax-bg.mp4" 
+        autoPlay loop muted playsInline
         className="absolute top-[-15%] left-0 w-full h-[130%] object-cover grayscale opacity-70" 
-        alt="Engineering Team Workspace" 
       />
       {/* Optional faint overlay to give it texture */}
       <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, var(--kagaz) 0, var(--kagaz) 1px, transparent 0, transparent 50%)', backgroundSize: '100px 100px' }} />
@@ -496,14 +489,22 @@ function Scene07_ConvictionSequence() {
         <div className="relative h-full w-full hidden lg:block p-12">
           <div className="relative w-full h-full">
             <RecursiveFrame activeColor={false} />
-            <img src={REGISTERS.R2_WORKSPACE} className="absolute inset-3 object-cover w-[calc(100%-24px)] h-[calc(100%-24px)] grayscale" alt="Workspace" />
+            <video 
+              src="/posture-bg.mp4" 
+              autoPlay loop muted playsInline
+              className="absolute inset-3 object-cover w-[calc(100%-24px)] h-[calc(100%-24px)] grayscale" 
+            />
           </div>
         </div>
       </section>
 
       {/* Statement 03: Cinematic Image Overlay */}
-      <section className="h-[100dvh] relative flex items-center px-[var(--container-px)]">
-        <img src={REGISTERS.R3_CITY} className="absolute inset-0 w-full h-full object-cover grayscale brightness-50" alt="City" />
+      <section className="h-[100dvh] relative flex items-center px-[var(--container-px)] bg-[var(--syahi)]">
+        <video 
+          src="/patna-bg.mp4" 
+          autoPlay loop muted playsInline
+          className="absolute inset-0 w-full h-full object-cover grayscale brightness-50" 
+        />
         <h2 className="relative z-10 font-display text-[clamp(3rem,8vw,7.5rem)] leading-[0.9] tracking-[-0.02em] text-[var(--kagaz)] max-w-5xl">
           Designed in Patna.<br />Built for the world.
         </h2>
